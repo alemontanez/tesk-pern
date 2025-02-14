@@ -5,8 +5,8 @@ class User extends Model {}
 
 User.init({
   id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
     primaryKey: true
   },
   username: {
@@ -32,10 +32,28 @@ User.init({
   },
   password_hash: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
-  isActive: {
+  is_active: {
     type: DataTypes.BOOLEAN,
-
+    defaultValue: true
   }
+}, {
+    sequelize,
+    modelName: 'User',
+    tableName: 'users',
+    timestamps: true,
+    underscored: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ['username']
+      },
+      {
+        unique: true,
+        fields: ['email']
+      }
+    ]
 })
+
+export default User

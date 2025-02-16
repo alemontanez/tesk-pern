@@ -5,8 +5,8 @@ class User extends Model {}
 
 User.init({
   id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
   username: {
@@ -31,11 +31,12 @@ User.init({
     allowNull: false
   },
   password_hash: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(255),
     allowNull: false,
-  },
+  }, // hacer en schema con max(128)
   is_active: {
     type: DataTypes.BOOLEAN,
+    allowNull: false,
     defaultValue: true
   }
 }, {

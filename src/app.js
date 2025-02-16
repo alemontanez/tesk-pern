@@ -1,23 +1,17 @@
 import express from 'express'
-import { sequelize } from './config/database.js'
+import morgan from 'morgan'
+import authRoutes from './routes/auth.routes.js'
 
 const app = express()
 
 app.disable('x-powered-by')
 app.use(express.json())
+app.use(morgan('dev'))
 
 app.get('/', (req, res) => {
   res.json('API funcionando.')
 })
 
-async function testDb() {
-  try {
-    await sequelize.authenticate()
-    console.log('Connection to db has been established successfully')
-  } catch (error) {
-    console.log('Unable to connect database', error)
-  }
-}
-testDb()
+app.use('/api', authRoutes)
 
 export default app

@@ -24,6 +24,10 @@ export const registerSchema = z.object({
     .string({ required_error: 'Password is required' })
     .min(6, { message: 'Password must be at least 6 characters' })
     .max(128, { message: 'Password must not exceed 128 characters' })
+    .regex(/^\S+$/, { message: 'Password must not contain spaces' })
+    .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter' })
+    .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter' })
+    .regex(/[0-9]/, { message: 'Password must contain at least one number' })
 })
 
 export const loginSchema = z.object({
@@ -33,6 +37,5 @@ export const loginSchema = z.object({
     .transform((value) => value.toLowerCase()),
   password: z
     .string({ required_error: 'Password is required' })
-    .min(6, { message: 'Password must be at least 6 characters' })
     .max(128, { message: 'Password must not exceed 128 characters' })
 })

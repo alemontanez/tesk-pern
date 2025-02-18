@@ -1,4 +1,5 @@
 import User from '../models/user.model.js'
+import bcrypt from 'bcryptjs'
 
 export const userProfile = async (id) => {
   const user = await User.findByPk(id)
@@ -25,4 +26,21 @@ export const updateProfile = async (id, data) => {
     last_name
   })
   return user
+}
+
+export const passwordService = async (id, currentPassword, newPassword) => {
+  const user = await User.findByPk(id)
+  if (!user) throw new Error('User not found')
+
+  const isPasswordValid = await bcrypt.compare(currentPassword, user.password_hash)
+  if (!isPasswordValid) throw new Error('Invalid current password')
+
+  const isCurrentPassword = await bcrypt.compare(newPassword, user.password_hash)
+  if (isCurrentPassword) throw new Error('New password cannot be the same as the previous one')
+
+  const newPassword_hash = await bcrypt.hash(newPassword, 10)
+
+  await user.update({
+    password_hash: newPassword_hash
+  })
 }

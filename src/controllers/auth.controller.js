@@ -1,5 +1,3 @@
-// Controlador que llama al servicio de autenticación y lo ejecuta.
-// Controla respuestas http al cliente.
 import { loginUser, registerUser } from '../services/auth.service.js'
 import { createAccessToken } from '../utils/jwt.js'
 

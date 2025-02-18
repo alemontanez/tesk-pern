@@ -23,7 +23,7 @@ User.init({
     }
   },
   first_name: {
-    type: DataTypes.STRING(60),
+    type: DataTypes.STRING(50),
     allowNull: false
   },
   last_name: {
@@ -33,7 +33,7 @@ User.init({
   password_hash: {
     type: DataTypes.STRING(255),
     allowNull: false,
-  }, // hacer en schema con max(128)
+  },
   is_active: {
     type: DataTypes.BOOLEAN,
     allowNull: false,

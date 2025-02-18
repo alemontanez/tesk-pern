@@ -1,4 +1,3 @@
-// Configuración de variables de entorno
 import { config } from "dotenv"
 config()
 

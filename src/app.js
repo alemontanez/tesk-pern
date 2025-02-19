@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
 import cookieParser from 'cookie-parser'
+import './models/relationships.js'
 
 const app = express()
 

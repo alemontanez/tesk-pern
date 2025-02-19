@@ -1,5 +1,5 @@
 import { DataTypes, Model} from 'sequelize'
-import { sequelize } from '../config/database'
+import { sequelize } from '../config/database.js'
 
 class Comment extends Model {}
 
@@ -18,7 +18,7 @@ Comment.init({
     allowNull: false
   },
   user_id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false
   }
 }, {

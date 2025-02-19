@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize'
-import { sequelize } from '../config/database'
+import { sequelize } from '../config/database.js'
 
-class Task extends Model {}
+class Task extends Model { }
 
 Task.init({
   id: {
@@ -18,11 +18,11 @@ Task.init({
     allowNull: false
   },
   created_by: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false
   },
   assigned_to: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
   },
   board_id: {
     type: DataTypes.INTEGER,
@@ -42,7 +42,9 @@ Task.init({
   },
   position: {
     type: DataTypes.INTEGER,
-    defaultValue: this.id
+    allowNull: false,
+    defaultValue: 0,
+    validate: { min: 0 }
   }
 }, {
   sequelize,
@@ -62,8 +64,20 @@ Task.init({
     },
     {
       fields: ['priority_id']
+    },
+    {
+      fields: ['due_date']
     }
   ]
+})
+
+Task.addHook('beforeCreate', async (task) => {
+  if (!task.position) {
+    const maxPosition = await Task.max('position', {
+      where: { board_id: task.board_id }
+    })
+    task.position = (maxPosition || 0) + 1
+  }
 })
 
 export default Task

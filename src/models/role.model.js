@@ -1,9 +1,9 @@
 import { DataTypes, Model} from 'sequelize'
-import { sequelize } from '../config/database'
+import { sequelize } from '../config/database.js'
 
-class Roles extends Model {}
+class Role extends Model {}
 
-Roles.init({
+Role.init({
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -31,8 +31,8 @@ Roles.init({
   }
 }, {
   sequelize,
-  modelName: 'Roles',
+  modelName: 'Role',
   tableName: 'roles'
 })
 
-export default Roles
+export default Role

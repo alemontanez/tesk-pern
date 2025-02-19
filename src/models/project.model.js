@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize'
-import { sequelize } from '../config/database'
+import { sequelize } from '../config/database.js'
 
 class Project extends Model {}
 
@@ -18,7 +18,7 @@ Project.init({
     type: DataTypes.STRING(255),
   },
   owner_id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
     allowNull: false,
   }
 }, {

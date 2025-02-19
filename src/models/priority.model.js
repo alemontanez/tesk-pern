@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize'
-import { sequelize } from '../config/database'
+import { sequelize } from '../config/database.js'
 
 class Priority extends Model {}
 
@@ -19,3 +19,5 @@ Priority.init({
   modelName: 'Priority',
   tableName: 'priorities',
 })
+
+export default Priority

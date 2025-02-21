@@ -21,7 +21,7 @@ export const listUserProjects = async (userId) => {
         'username'
       ]
     }],
-    where: { owner_id: userId}
+    where: { owner_id: userId }
   })
   if (!projects) throw new Error('No projects found')
 
@@ -42,6 +42,7 @@ export const getProjectDetails = async (projectId, userId) => {
 export const updateProjectData = async (projectId, updateData, userId) => {
   // Actualiza campos no críticos (nombre, descripción)
   // Solo hecho con owner por ahora
+
   const project = await Project.findByPk(projectId)
   if (!project) throw new Error('Project not found')
 

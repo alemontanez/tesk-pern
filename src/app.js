@@ -22,11 +22,11 @@ app.get('/', (req, res) => {
 
 // Rutas públicas
 app.use('/api', authRoutes)
+
 // Rutas privadas
-app.use(authRequired)
-app.use('/api', userRoutes)
-app.use('/api', projectRoutes)
-app.use('/api', projectUsersRoutes)
-app.use('/api', roleRoutes)
+app.use('/api', authRequired, userRoutes)
+app.use('/api', authRequired, projectRoutes)
+app.use('/api', authRequired, projectUsersRoutes)
+app.use('/api', authRequired, roleRoutes)
 
 export default app

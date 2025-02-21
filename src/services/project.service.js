@@ -1,4 +1,5 @@
 import Project from '../models/project.model.js'
+import User from '../models/user.model.js'
 
 export const createProjectWithOwner = async (projectData, ownerId) => {
   const { name, description } = projectData
@@ -13,7 +14,15 @@ export const createProjectWithOwner = async (projectData, ownerId) => {
 export const listUserProjects = async (userId) => {
   // Obtiene todos los proyectos del usuario (con posibles joins complejos)
   // Solo trae proyectos por owner, no por participar
-  const projects = await Project.findAll({ where: {owner_id: userId}})
+  const projects = await Project.findAll({
+    include: [{
+      model: User,
+      attributes: [
+        'username'
+      ]
+    }],
+    where: { owner_id: userId}
+  })
   if (!projects) throw new Error('No projects found')
 
   return projects
@@ -28,7 +37,7 @@ export const getProjectDetails = async (projectId, userId) => {
   if (project.owner_id !== userId) throw new Error('Unauthorized, user is not owner')
 
   return project
-  }
+}
 
 export const updateProjectData = async (projectId, updateData, userId) => {
   // Actualiza campos no críticos (nombre, descripción)

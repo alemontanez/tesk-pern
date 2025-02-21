@@ -17,6 +17,7 @@ export const createProject = async (req, res) => {
 
 export const getProjects = async (req, res) => {
   // funcion para traer todos los proyectos a los que pertenece el usuario (sirve para listarlos en el aside)
+  // Solo funciona owner
   const { id } = req.user
   try {
     const projects = await listUserProjects(id)
@@ -32,6 +33,7 @@ export const getProjects = async (req, res) => {
 
 export const getProject = async (req, res) => {
   // función para traer un solo proyecto (para cuando entramos a un proyecto)
+  // Solo funciona owner 
   const projectId = req.params.id
   const userId = req.user.id
   try {

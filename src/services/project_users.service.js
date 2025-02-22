@@ -27,13 +27,7 @@ export const createMember = async (userId, projectId, roleId) => {
 }
 
 export const updateMember = async (userId, projectId, newRoleId) => {
-  const user = await User.findByPk(userId)
-  if (!user) throw new Error('User not found')
-
-  const member = await Project_users.findOne({
-    where: { user_id: userId, project_id: projectId }
-  })
-  if (!member) throw new Error('Membership not found')
+  const member = await findMember(userId, projectId)
 
   const role = await Role.findByPk(newRoleId)
   if (!role) throw new Error('Role not found')
@@ -41,4 +35,23 @@ export const updateMember = async (userId, projectId, newRoleId) => {
   await member.update({
     role_id: newRoleId
   })
+}
+
+export const deleteMember = async (userId, projectId) => {
+  const member = await findMember(userId, projectId)
+  await member.destroy({ force: true })
+}
+
+const findMember = async (userId, projectId) => {
+  const user = await User.findByPk(userId)
+  if (!user) throw new Error('User not found')
+
+  const project = await Project.findByPk(projectId)
+  if (!project) throw new Error('Project not found')
+
+  const member = await Project_users.findOne({
+    where: { user_id: userId, project_id: projectId }
+  })
+  if (!member) throw new Error('Membership not found')
+  return member
 }

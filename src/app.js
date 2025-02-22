@@ -29,4 +29,6 @@ app.use('/api', authRequired, projectRoutes)
 app.use('/api', authRequired, projectUsersRoutes)
 app.use('/api', authRequired, roleRoutes)
 
+// Continuar con boards, labels y priorities
+
 export default app

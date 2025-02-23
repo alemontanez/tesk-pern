@@ -5,6 +5,7 @@ import userRoutes from './routes/user.routes.js'
 import projectRoutes from './routes/project.routes.js'
 import projectUsersRoutes from './routes/project_users.routes.js'
 import roleRoutes from './routes/role.routes.js'
+import boardRoutes from './routes/board.routes.js'
 import cookieParser from 'cookie-parser'
 import './models/relationships.js'
 import { authRequired } from './middlewares/jwtValidator.middleware.js'
@@ -28,7 +29,8 @@ app.use('/api', authRequired, userRoutes)
 app.use('/api', authRequired, projectRoutes)
 app.use('/api', authRequired, projectUsersRoutes)
 app.use('/api', authRequired, roleRoutes)
-
-// Continuar con boards, labels y priorities
+app.use('/api', authRequired, boardRoutes)
+// Hacer esquemas para boards
+// Continuar con labels y priorities
 
 export default app

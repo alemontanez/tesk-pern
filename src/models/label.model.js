@@ -16,6 +16,7 @@ Label.init({
   }
 }, {
   sequelize,
+  timestamps: false,
   modelName: 'Label',
   tableName: 'labels',
 })

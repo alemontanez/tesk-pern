@@ -9,10 +9,9 @@ Board.init({
     autoIncrement: true,
     primaryKey: true
   },
-  status_name: {
-    type: DataTypes.INTEGER,
+  name: {
+    type: DataTypes.STRING(50),
     allowNull: false,
-    unique: true
   },
   project_id: {
     type: DataTypes.INTEGER,
@@ -31,8 +30,7 @@ Board.init({
   underscored: true,
   indexes: [
     {
-      unique: true,
-      fields: ['status_name']
+      fields: ['name']
     }
   ]
 })

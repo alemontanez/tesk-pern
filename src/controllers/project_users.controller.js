@@ -1,4 +1,3 @@
-// (getMembershipInfo, createMembership, updateMembership, deleteMembership)
 import { createMember, updateMember, deleteMember } from '../services/project_users.service.js'
 
 export const createMembership = async (req, res) => {
@@ -24,7 +23,6 @@ export const createMembership = async (req, res) => {
 export const getMembershipInfo = async (req, res) => {
 
 }
-
 
 export const updateMembership = async (req, res) => {
   const { user_id, project_id, role_id } = req.body

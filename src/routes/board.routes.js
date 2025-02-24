@@ -1,14 +1,13 @@
 import { Router } from 'express'
 import { createBoard, getBoards, updateBoard, updateBoardLabel } from '../controllers/board.controller.js'
-// importar controladores
-// importar middleware para validaciones
-// importa esquemas
+import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
+import { createBoardSchema, getBoardsSchema, updateBoardLabelSchema, updateBoardSchema } from '../schemas/board.schema.js'
 
 const router = Router()
 
-router.get('/boards', getBoards)
-router.post('/boards', createBoard)
-router.patch('/boards/:id', updateBoard)
-router.patch('/boards/:id/change-label', updateBoardLabel)
+router.get('/boards', validateSchema(getBoardsSchema), getBoards)
+router.post('/boards', validateSchema(createBoardSchema), createBoard)
+router.patch('/boards/:id', validateSchema(updateBoardSchema), updateBoard)
+router.patch('/boards/:id/change-label', validateSchema(updateBoardLabelSchema), updateBoardLabel)
 
 export default router

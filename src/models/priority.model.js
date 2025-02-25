@@ -16,6 +16,7 @@ Priority.init({
   }
 }, {
   sequelize,
+  timestamps: false,
   modelName: 'Priority',
   tableName: 'priorities',
 })

@@ -6,6 +6,8 @@ import projectRoutes from './routes/project.routes.js'
 import projectUsersRoutes from './routes/project_users.routes.js'
 import roleRoutes from './routes/role.routes.js'
 import boardRoutes from './routes/board.routes.js'
+import prioritiesRoutes from './routes/priorities.routes.js'
+import taskRoutes from './routes/task.routes.js'
 import cookieParser from 'cookie-parser'
 import './models/relationships.js'
 import { authRequired } from './middlewares/jwtValidator.middleware.js'
@@ -30,8 +32,8 @@ app.use('/api', authRequired, projectRoutes)
 app.use('/api', authRequired, projectUsersRoutes)
 app.use('/api', authRequired, roleRoutes)
 app.use('/api', authRequired, boardRoutes)
-// Continuar con priorities
-
+app.use('/api', authRequired, prioritiesRoutes)
+app.use('/api', authRequired, taskRoutes)
 
 
 export default app

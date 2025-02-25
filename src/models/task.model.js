@@ -38,7 +38,8 @@ Task.init({
   },
   label_id: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
+    defaultValue: 1
   },
   position: {
     type: DataTypes.INTEGER,

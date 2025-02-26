@@ -1,4 +1,4 @@
-import { createCommentService, getCommentsService } from '../services/comment.service.js'
+import { createCommentService, deleteCommentService, getCommentsService, updateCommentService } from '../services/comment.service.js'
 
 export const getComments = async (req, res) => {
   const { taskId } = req.params
@@ -34,5 +34,28 @@ export const createComment = async (req, res) => {
 }
 
 export const updateComment = async (req, res) => {
-  
+  const { commentId } = req.params
+  const { content } = req.body
+  try {
+    await updateCommentService(commentId, content)
+    res.status(200).json({ message: 'Comment updated successfully' })
+  } catch (error) {
+    if (error.message === 'Comment not found') {
+      return res.status(404).json({ message: error.message })
+    }
+    return res.status(500).json({ message: 'Internal error' })
+  }
+}
+
+export const deleteComment = async (req, res) => {
+  const { commentId } = req.params
+  try {
+    await deleteCommentService(commentId)
+    res.sendStatus(204)
+  } catch (error) {
+    if (error.message === 'Comment not found') {
+      return res.status(404).json({ message: error.message })
+    }
+    return res.status(500).json({ message: 'Internal error' })
+  }
 }

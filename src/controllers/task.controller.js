@@ -42,7 +42,7 @@ export const createTask = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    if (error.message === 'Board not found') {
+    if (error.message === 'Board not found' || error.message === 'Priority not found') {
       return res.status(404).json({ message: error.message })
     }
     return res.status(500).json({ message: 'Internal error' })
@@ -61,7 +61,7 @@ export const updateTask = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    if (error.message === 'Task not found') {
+    if (error.message === 'Task not found' || error.message === 'Priority not found') {
       return res.status(404).json({ message: error.message })
     }
     return res.status(500).json({ message: 'Internal error' })

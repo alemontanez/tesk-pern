@@ -21,3 +21,19 @@ export const createCommentService = async (userId, taskId, content) => {
   })
   return comment
 }
+
+export const updateCommentService = async (id, content) => {
+  const comment = await Comment.findByPk(id)
+  if (!comment) throw new Error('Comment not found')
+
+  await comment.update({
+    content
+  })
+}
+
+export const deleteCommentService = async (id) => {
+  const comment = await Comment.findByPk(id)
+  if (!comment) throw new Error('Comment not found')
+
+  await comment.destroy({ force: true })
+}

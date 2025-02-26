@@ -1,5 +1,7 @@
 import express from 'express'
 import morgan from 'morgan'
+import cookieParser from 'cookie-parser'
+
 import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
 import projectRoutes from './routes/project.routes.js'
@@ -8,7 +10,7 @@ import roleRoutes from './routes/role.routes.js'
 import boardRoutes from './routes/board.routes.js'
 import prioritiesRoutes from './routes/priorities.routes.js'
 import taskRoutes from './routes/task.routes.js'
-import cookieParser from 'cookie-parser'
+import commentRoutes from './routes/comment.routes.js'
 import './models/relationships.js'
 import { authRequired } from './middlewares/jwtValidator.middleware.js'
 
@@ -34,6 +36,6 @@ app.use('/api', authRequired, roleRoutes)
 app.use('/api', authRequired, boardRoutes)
 app.use('/api', authRequired, prioritiesRoutes)
 app.use('/api', authRequired, taskRoutes)
-
+app.use('/api', authRequired, commentRoutes)
 
 export default app

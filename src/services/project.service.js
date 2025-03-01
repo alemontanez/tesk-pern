@@ -17,8 +17,9 @@ export const listUserProjects = async (userId) => {
   const projects = await Project.findAll({
     include: [{
       model: User,
+      as: 'owner',
       attributes: [
-        'username'
+        'username',
       ]
     }],
     where: { owner_id: userId }

@@ -40,6 +40,7 @@ export const updateComment = async (req, res) => {
     await updateCommentService(commentId, content)
     res.status(200).json({ message: 'Comment updated successfully' })
   } catch (error) {
+    console.log(error)
     if (error.message === 'Comment not found') {
       return res.status(404).json({ message: error.message })
     }
@@ -53,6 +54,7 @@ export const deleteComment = async (req, res) => {
     await deleteCommentService(commentId)
     res.sendStatus(204)
   } catch (error) {
+    console.log(error)
     if (error.message === 'Comment not found') {
       return res.status(404).json({ message: error.message })
     }

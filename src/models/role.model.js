@@ -28,6 +28,11 @@ Role.init({
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false
+  },
+  is_owner: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   }
 }, {
   sequelize,

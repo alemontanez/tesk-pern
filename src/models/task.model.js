@@ -19,7 +19,6 @@ Task.init({
   },
   created_by: {
     type: DataTypes.UUID,
-    allowNull: false
   },
   assigned_to: {
     type: DataTypes.UUID,

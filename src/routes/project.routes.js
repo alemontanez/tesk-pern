@@ -9,6 +9,6 @@ router.post('/projects', validateSchema(createProjectSchema), createProject)
 router.get('/projects', getProjects)
 router.get('/projects/:id', getProject)
 router.patch('/projects/:id', validateSchema(updateProjectSchema), updateProject)
-router.delete('/projects', deleteProject)
+router.delete('/projects/:id', deleteProject)
 
 export default router

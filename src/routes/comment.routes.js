@@ -7,7 +7,7 @@ const router = Router()
 
 router.get('/tasks/:taskId/comments', getComments)
 router.post('/tasks/:taskId/comments', validateSchema(commentSchema), createComment)
-router.patch('comments/:commentId', validateSchema(commentSchema), updateComment)
-router.delete('comments/:commentId', deleteComment)
+router.patch('/comments/:commentId', validateSchema(commentSchema), updateComment)
+router.delete('/comments/:commentId', deleteComment)
 
 export default router

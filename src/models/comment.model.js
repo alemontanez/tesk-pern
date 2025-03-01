@@ -19,7 +19,7 @@ Comment.init({
   },
   user_id: {
     type: DataTypes.UUID,
-    allowNull: false
+    allowNull: true
   }
 }, {
   sequelize,

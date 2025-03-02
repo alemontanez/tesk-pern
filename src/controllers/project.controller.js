@@ -1,10 +1,10 @@
-import { createProjectWithOwner, getProjectDetails, listUserProjects, updateProjectData } from "../services/project.service.js"
+import { createProjectService, getProjectService, getUserProjectsService, updateProjectData } from "../services/project.service.js"
 
 export const createProject = async (req, res) => {
   const { id } = req.user
-  const data = req.body
+  const { name, description } = req.body
   try {
-    const project = await createProjectWithOwner(data, id)
+    const project = await createProjectService(id, name, description)
     res.status(201).json({
       message: 'Project created successfully',
       project
@@ -15,13 +15,11 @@ export const createProject = async (req, res) => {
   }
 }
 
-export const getProjects = async (req, res) => {
-  // funcion para traer todos los proyectos a los que pertenece el usuario (sirve para listarlos en el aside)
-  // Solo funciona owner
+export const getUserProjects = async (req, res) => {
   const { id } = req.user
   try {
-    const projects = await listUserProjects(id)
-    res.status(200).json({ projects })
+    const projects = await getUserProjectsService(id)
+    res.status(200).json(projects)
   } catch (error) {
     console.log(error)
     if (error.message === 'No projects found') {
@@ -32,12 +30,10 @@ export const getProjects = async (req, res) => {
 }
 
 export const getProject = async (req, res) => {
-  // función para traer un solo proyecto (para cuando entramos a un proyecto)
-  // Solo funciona owner 
   const projectId = req.params.id
   const userId = req.user.id
   try {
-    const project = await getProjectDetails(projectId, userId)
+    const project = await getProjectService(projectId, userId)
     res.status(200).json({ project })
   } catch (error) {
     if (error.message === 'Project not found') {
@@ -51,19 +47,20 @@ export const getProject = async (req, res) => {
 }
 
 export const updateProject = async (req, res) => {
-  // función para editar datos de un proyecto
-  // Solo para owner
   const projectId = req.params.id
   const userId = req.user.id
-  const data = req.body
+  const { name, description } = req.body
   try {
-    const project = await updateProjectData(projectId, data, userId)
-    res.status(200).json({ message: 'Project updated successfully' })
+    const project = await updateProjectData(projectId, userId, name, description)
+    res.status(200).json({ 
+      message: 'Project updated successfully',
+      project
+    })
   } catch (error) {
     if (error.message === 'Project not found') {
       return res.status(404).json({ message: error.message })
     }
-    if (error.message === 'Unauthorized, user is not owner') {
+    if (error.message === 'The user does not have permissions') {
       return res.status(401).json({ message: error.message })
     }
     return res.status(500).json({ message: 'Internal error' })

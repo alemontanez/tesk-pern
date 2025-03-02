@@ -1,56 +1,56 @@
 import Project from '../models/project.model.js'
 import User from '../models/user.model.js'
+import Project_users from '../models/project_users.model.js'
+import Role from '../models/role.model.js'
+import { Op } from 'sequelize'
 
-export const createProjectWithOwner = async (projectData, ownerId) => {
-  const { name, description } = projectData
+export const createProjectService = async (userId, name, description) => {
   const project = await Project.create({
     name,
     description,
-    owner_id: ownerId
+    owner_id: userId
   })
   return project
 }
 
-export const listUserProjects = async (userId) => {
-  // Obtiene todos los proyectos del usuario (con posibles joins complejos)
-  // Solo trae proyectos por owner, no por participar
-  const projects = await Project.findAll({
-    include: [{
-      model: User,
-      as: 'owner',
-      attributes: [
-        'username',
-      ]
-    }],
-    where: { owner_id: userId }
+export const getUserProjectsService = async (userId) => {
+  const projects = await Project_users.findAll({
+    where: { user_id: userId },
+    include: Project
   })
   if (!projects) throw new Error('No projects found')
-
   return projects
 }
 
-export const getProjectDetails = async (projectId, userId) => {
-  // Trae un proyecto específico + verifica que el usuario tenga acceso
-  // Solo para owner por ahora
-  const project = await Project.findByPk(projectId)
+export const getProjectService = async (projectId, userId) => {
+  const project = await Project_users.findOne({
+    where: { [Op.and]: [{ project_id: projectId }, { user_id: userId }] },
+    include: Project
+  })
   if (!project) throw new Error('Project not found')
-
-  if (project.owner_id !== userId) throw new Error('Unauthorized, user is not owner')
-
   return project
 }
 
-export const updateProjectData = async (projectId, updateData, userId) => {
-  // Actualiza campos no críticos (nombre, descripción)
-  // Solo hecho con owner por ahora
-
+export const updateProjectData = async (projectId, userId, name, description) => {
   const project = await Project.findByPk(projectId)
   if (!project) throw new Error('Project not found')
 
-  if (project.owner_id !== userId) throw new Error('Unauthorized, user is not owner')
-
-  await project.update(updateData)
-  return project
+  const verifyPermissions = await Project_users.findOne({
+    where: { [Op.and]: [{ project_id: projectId }, { user_id: userId }] }
+  })
+  if (!verifyPermissions) throw new Error('The user does not have permissions')
+  const role = await Role.findOne({
+    where: { id: verifyPermissions.role_id }
+  })
+  if (role.name === 'admin' || role.name === 'owner') {
+    await project.update({
+      name,
+      description
+    })
+    return project
+  } else {
+    throw new Error('The user does not have permissions')
+  }
 }
 
 export const deleteProjectWithDependencies = async (projectId) => {

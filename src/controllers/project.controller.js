@@ -1,4 +1,4 @@
-import { createProjectService, getProjectService, getUserProjectsService, updateProjectData } from "../services/project.service.js"
+import { createProjectService, deleteProjectWithDependencies, getProjectService, getUserProjectsService, updateProjectData } from '../services/project.service.js'
 
 export const createProject = async (req, res) => {
   const { id } = req.user
@@ -52,7 +52,7 @@ export const updateProject = async (req, res) => {
   const { name, description } = req.body
   try {
     const project = await updateProjectData(projectId, userId, name, description)
-    res.status(200).json({ 
+    res.status(200).json({
       message: 'Project updated successfully',
       project
     })
@@ -68,6 +68,19 @@ export const updateProject = async (req, res) => {
 }
 
 export const deleteProject = async (req, res) => {
-  // función para eliminar un proyecto
-  // va a hacer falta modificar en el modelo para que borre en cascada
+  const projectId = req.params.id
+  const userId = req.user.id
+  try {
+    await deleteProjectWithDependencies(projectId, userId)
+    res.sendStatus(204)
+  } catch (error) {
+    console.log(error)
+    if (error.message === 'Project not found') {
+      return res.status(404).json({ message: error.message })
+    }
+    if (error.message === 'The user does not have permissions') {
+      return res.status(401).json({ message: error.message })
+    }
+    return res.status(500).json({ message: 'Internal error' })
+  }
 }

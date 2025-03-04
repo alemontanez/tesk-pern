@@ -1,17 +1,17 @@
 import { z } from 'zod'
 
 export const memberSchema = z.object({
-  user_id: z
+  userId: z
     .string({ required_error: 'User id is required' })
     .uuid({ message: 'Invalid user id' }),
-  project_id: z
+  projectId: z
     .number({
       required_error: 'Project id is required',
       invalid_type_error: 'Project id must be a number'
     })
     .int()
     .positive(),
-  role_id: z
+  roleId: z
     .number({
       required_error: 'Role id is required',
       invalid_type_error: 'Role id must be a number'
@@ -21,10 +21,10 @@ export const memberSchema = z.object({
 })
 
 export const deleteMemberSchema = z.object({
-  user_id: z
+  userId: z
     .string({ required_error: 'User id is required' })
     .uuid({ message: 'Invalid user id' }),
-  project_id: z
+  projectId: z
     .number({
       required_error: 'Project id is required',
       invalid_type_error: 'Project id must be a number'

@@ -1,7 +1,6 @@
 import Project from '../models/project.model.js'
 import Project_users from '../models/project_users.model.js'
 import Role from '../models/role.model.js'
-import { Op } from 'sequelize'
 
 export const createProjectService = async (userId, name, description) => {
   const project = await Project.create({
@@ -23,7 +22,7 @@ export const getUserProjectsService = async (userId) => {
 
 export const getProjectService = async (projectId, userId) => {
   const project = await Project_users.findOne({
-    where: { [Op.and]: [{ project_id: projectId }, { user_id: userId }] },
+    where: { project_id: projectId, user_id: userId },
     include: Project
   })
   if (!project) throw new Error('Project not found')
@@ -35,7 +34,7 @@ export const updateProjectData = async (projectId, userId, name, description) =>
   if (!project) throw new Error('Project not found')
 
   const verifyPermissions = await Project_users.findOne({
-    where: { [Op.and]: [{ project_id: projectId }, { user_id: userId }] }
+    where: { project_id: projectId, user_id: userId }
   })
   if (!verifyPermissions) throw new Error('The user does not have permissions')
   const role = await Role.findOne({
@@ -57,7 +56,7 @@ export const deleteProjectWithDependencies = async (projectId, userId) => {
   if (!project) throw new Error('Project not found')
 
   const verifyPermissions = await Project_users.findOne({
-    where: { [Op.and]: [{ project_id: projectId }, { user_id: userId }] }
+    where: { project_id: projectId, user_id: userId }
   })
   if (!verifyPermissions) throw new Error('The user does not have permissions')
   const role = await Role.findOne({

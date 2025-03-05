@@ -15,10 +15,10 @@ Task.belongsTo(User, { foreignKey: 'created_by' })
 User.hasMany(Task, { foreignKey: 'assigned_to', onDelete: 'SET NULL' })
 Task.belongsTo(User, { foreignKey: 'assigned_to' })
 
-User.hasMany(Project_users, { foreignKey: 'user_id', onDelete: 'CASCADE' })
+User.hasMany(Project_users, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true })
 Project_users.belongsTo(User, { foreignKey: 'user_id' })
 
-User.hasMany(Project, { foreignKey: 'owner_id', onDelete: 'CASCADE' })
+User.hasMany(Project, { foreignKey: 'owner_id', onDelete: 'CASCADE', hooks: true })
 Project.belongsTo(User, { foreignKey: 'owner_id', as: 'owner' })
 
 User.hasMany(Comment, { foreignKey: 'user_id', onDelete: 'SET NULL' })
@@ -29,10 +29,10 @@ Task.hasMany(Comment, { foreignKey: 'task_id', onDelete: 'CASCADE' })
 Comment.belongsTo(Task, { foreignKey: 'task_id' })
 
 // Relaciones Project
-Project.hasMany(Project_users, { foreignKey: 'project_id', onDelete: 'CASCADE' })
+Project.hasMany(Project_users, { foreignKey: 'project_id', onDelete: 'CASCADE', hooks: true })
 Project_users.belongsTo(Project, { foreignKey: 'project_id' })
 
-Project.hasMany(Board, { foreignKey: 'project_id', onDelete: 'CASCADE' })
+Project.hasMany(Board, { foreignKey: 'project_id', onDelete: 'CASCADE', hooks: true })
 Board.belongsTo(Project, { foreignKey: 'project_id' })
 
 // Relaciones Role
@@ -40,7 +40,7 @@ Role.hasMany(Project_users, { foreignKey: 'role_id' })
 Project_users.belongsTo(Role, { foreignKey: 'role_id' })
 
 // Relaciones Board
-Board.hasMany(Task, { foreignKey: 'board_id', onDelete: 'CASCADE' })
+Board.hasMany(Task, { foreignKey: 'board_id', onDelete: 'CASCADE', hooks: true })
 Task.belongsTo(Board, { foreignKey: 'board_id' })
 
 // Relaciones Label

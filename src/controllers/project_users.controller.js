@@ -24,10 +24,6 @@ export const createMembership = async (req, res) => {
   }
 }
 
-export const getMembershipInfo = async (req, res) => {
-
-}
-
 export const updateMembership = async (req, res) => {
   const requesterId = req.user.id
   const { userId, projectId, roleId } = req.body

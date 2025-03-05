@@ -1,6 +1,5 @@
 import Project_users from '../models/project_users.model.js'
 import User from '../models/user.model.js'
-import Project from '../models/project.model.js'
 import Role from '../models/role.model.js'
 
 export const createMember = async (requesterId, userId, projectId, roleId) => {
@@ -73,7 +72,6 @@ export const updateMember = async (requesterId, userId, projectId, newRoleId) =>
 }
 
 export const deleteMember = async (requesterId, userId, projectId) => {
-
   const verifyRequester = await Project_users.findOne({
     where: { user_id: requesterId, project_id: projectId },
     include: [{
@@ -84,8 +82,6 @@ export const deleteMember = async (requesterId, userId, projectId) => {
   if (!verifyRequester) throw new Error('Requester does not have permissions')
   const user = await User.findByPk(userId)
   if (!user) throw new Error('User not found')
-  // const userRole = await Role.findByPk(newRoleId)
-  // if (!userRole || userRole.name === 'owner') throw new Error('Role not found')
   const member = await Project_users.findOne({
     where: { user_id: userId, project_id: projectId },
     include: [{

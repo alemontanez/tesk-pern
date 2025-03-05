@@ -13,6 +13,11 @@ Label.init({
     type: DataTypes.STRING,
     unique: true,
     allowNull: false
+  },
+  hex_code: {
+    type: DataTypes.STRING(7),
+    unique: true,
+    allowNull: false
   }
 }, {
   sequelize,

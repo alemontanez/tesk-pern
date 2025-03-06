@@ -37,7 +37,7 @@ Board.belongsTo(Project, { foreignKey: 'project_id' })
 
 // Relaciones Role
 Role.hasMany(Project_users, { foreignKey: 'role_id' })
-Project_users.belongsTo(Role, { foreignKey: 'role_id' })
+Project_users.belongsTo(Role, { foreignKey: 'role_id', as: 'role' })
 
 // Relaciones Board
 Board.hasMany(Task, { foreignKey: 'board_id', onDelete: 'CASCADE', hooks: true })

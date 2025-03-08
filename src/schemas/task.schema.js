@@ -11,10 +11,10 @@ export const createTaskSchema = z.object({
     .trim()
     .min(2, { message: 'Description must be at least 2 characters' })
     .max(500, { message: 'Description must not exceed 500 characters' }),
-  due_date: z
+  dueDate: z
     .string()
     .date(), // formato YYYY-MM-DD
-  priority_id: z
+  priorityId: z
     .number({
       required_error: 'Project id is required',
       invalid_type_error: 'Project id must be a number'
@@ -34,20 +34,20 @@ export const updateTaskSchema = z.object({
     .trim()
     .min(2, { message: 'Description must be at least 2 characters' })
     .max(500, { message: 'Description must not exceed 500 characters' }),
-  assigned_to: z
+  assignedTo: z
     .string({ required_error: 'Assigned user is required' })
     .uuid({ message: 'Invalid assigned user id' }),
-  due_date: z
+  dueDate: z
     .string()
     .date(), // formato YYYY-MM-DD
-  priority_id: z
+  priorityId: z
     .number({
       required_error: 'Priority id is required',
       invalid_type_error: 'Priority id must be a number'
     })
     .int()
     .positive(),
-  label_id: z
+  labelId: z
     .number({
       required_error: 'Label id is required',
       invalid_type_error: 'Label id must be a number'

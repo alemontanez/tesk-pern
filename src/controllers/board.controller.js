@@ -75,7 +75,7 @@ export const updateBoardLabel = async (req, res) => {
       return res.status(403).json({ message: 'Access denied: insufficient permissions' })
     }
     if (error.message === 'Board not found' || error.message === 'Label not found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
     return res.status(500).json({ message: 'Internal error' })
   }

@@ -40,7 +40,7 @@ export const fetchTask = async (userId, projectId, boardId, taskId) => {
       attributes: []
     }],
     where: {
-      id: taskId,
+      id: taskId
     }
   })
   if (!task) throw new Error('Task not found')
@@ -75,7 +75,7 @@ export const updateTaskService = async (userId, projectId, boardId, taskId, titl
   const role = await checkPermissions(userId, projectId)
   if (!role.can_edit) throw new Error('Forbidden')
   const verifyAssignedUser = await checkPermissions(assignedTo, projectId)
-  if(!verifyAssignedUser.can_edit) throw new Error('Access denied: insufficient permissions')
+  if (!verifyAssignedUser.can_edit) throw new Error('Access denied: insufficient permissions')
   const task = await Task.findOne({
     include: [{
       model: Board,
@@ -107,10 +107,23 @@ export const updateTaskService = async (userId, projectId, boardId, taskId, titl
   return updatedTask
 }
 
-export const deleteTaskService = async (taskId) => {
-  const task = await Task.findByPk(taskId)
+export const deleteTaskService = async (userId, projectId, boardId, taskId) => {
+  const role = await checkPermissions(userId, projectId)
+  if (!role.can_manage) throw new Error('Forbidden')
+  const task = await Task.findOne({
+    include: [{
+      model: Board,
+      where: {
+        id: boardId,
+        project_id: projectId
+      },
+      attributes: []
+    }],
+    where: {
+      id: taskId
+    }
+  })
   if (!task) throw new Error('Task not found')
 
   await task.destroy({ force: true })
-  // Modificar cascada del model para que funcione
 }

@@ -84,16 +84,19 @@ export const updateTask = async (req, res) => {
 }
 
 export const deleteTask = async (req, res) => {
-  const { id } = req.user
-  const { taskId } = req.params
+  const userId = req.user.id
+  const { projectId, boardId, taskId } = req.params
   try {
-    await deleteTaskService(taskId)
+    await deleteTaskService(userId, projectId, boardId, taskId)
     res.sendStatus(204)
   } catch (error) {
     console.log(error)
-    if (error.message === 'Task not found') {
-      return res.status(404).json({ message: error.message })
+    if (error.message === 'Forbidden') {
+      return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    if (error.message === 'Task not found') {
+      return res.status(404).json({ error: [error.message] })
+    }
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }

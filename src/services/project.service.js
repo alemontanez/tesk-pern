@@ -12,24 +12,37 @@ export const createProjectService = async (userId, name, description) => {
 }
 
 export const getUserProjectsService = async (userId) => {
-  const projects = await Project_users.findAll({
-    where: { user_id: userId },
-    include: Project
+  const projects = await Project.findAll({
+    include: [{
+      model: Project_users,
+      where: {
+        user_id: userId
+      },
+      attributes: []
+    }]
   })
   if (!projects) throw new Error('No projects found')
   return projects
 }
 
-export const getProjectService = async (projectId, userId) => {
-  const project = await Project_users.findOne({
-    where: { project_id: projectId, user_id: userId },
-    include: Project
+export const getProjectService = async (userId, projectId) => {
+  const project = await Project.findOne({
+    where: {
+      id: projectId
+    },
+    include: [{
+      model: Project_users,
+      where: {
+        user_id: userId
+      },
+      attributes: ['role_id']
+    }]
   })
   if (!project) throw new Error('Project not found')
   return project
 }
 
-export const updateProjectData = async (projectId, userId, name, description) => {
+export const updateProjectData = async (userId, projectId, name, description) => {
   const project = await Project.findByPk(projectId)
   if (!project) throw new Error('Project not found')
 
@@ -51,7 +64,7 @@ export const updateProjectData = async (projectId, userId, name, description) =>
   }
 }
 
-export const deleteProjectWithDependencies = async (projectId, userId) => {
+export const deleteProjectWithDependencies = async (userId, projectId) => {
   const project = await Project.findByPk(projectId)
   if (!project) throw new Error('Project not found')
 

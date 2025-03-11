@@ -30,7 +30,7 @@ Comment.belongsTo(Task, { foreignKey: 'task_id' })
 
 // Relaciones Project
 Project.hasMany(Project_users, { foreignKey: 'project_id', onDelete: 'CASCADE', hooks: true })
-Project_users.belongsTo(Project, { foreignKey: 'project_id' })
+Project_users.belongsTo(Project, { foreignKey: 'project_id'})
 
 Project.hasMany(Board, { foreignKey: 'project_id', onDelete: 'CASCADE', hooks: true })
 Board.belongsTo(Project, { foreignKey: 'project_id' })

@@ -1,29 +1,24 @@
-import Task from '../models/task.model.js'
 import Board from '../models/board.model.js'
+import Task from '../models/task.model.js'
 import Priority from '../models/priority.model.js'
-import { checkPermissions } from '../utils/checkPermissions.js'
 import Label from '../models/label.model.js'
-
+import { checkPermissions } from '../utils/checkPermissions.js'
 
 export const fetchTasks = async (userId, projectId, boardId) => {
   const role = await checkPermissions(userId, projectId)
   if (!role.can_view) throw new Error('Forbidden')
-  const board = await Board.findByPk(boardId)
+  const board = await Board.findOne({
+    where: {
+      id: boardId,
+      project_id: projectId
+    }
+  })
   if (!board) throw new Error('Board not found')
   const tasks = await Task.findAll({
     where: {
       board_id: boardId
-    },
-    include: [{
-      model: Board,
-      where: {
-        id: boardId,
-        project_id: projectId
-      },
-      attributes: []
-    }]
+    }
   })
-  if (!tasks || tasks.length === 0) throw new Error('Tasks not found')
   return tasks
 }
 

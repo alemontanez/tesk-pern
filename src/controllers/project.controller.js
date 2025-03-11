@@ -11,7 +11,7 @@ export const createProject = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: 'Internal error' })
+    res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -23,9 +23,9 @@ export const getUserProjects = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'No projects found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -34,15 +34,15 @@ export const getProject = async (req, res) => {
   const userId = req.user.id
   try {
     const project = await getProjectService(projectId, userId)
-    res.status(200).json({ project })
+    res.status(200).json(project)
   } catch (error) {
     if (error.message === 'Project not found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
     if (error.message === 'Unauthorized, user is not owner') {
-      return res.status(401).json({ message: error.message })
+      return res.status(401).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -58,12 +58,12 @@ export const updateProject = async (req, res) => {
     })
   } catch (error) {
     if (error.message === 'Project not found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
     if (error.message === 'The user does not have permissions') {
-      return res.status(401).json({ message: error.message })
+      return res.status(401).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -76,11 +76,11 @@ export const deleteProject = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Project not found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
     if (error.message === 'The user does not have permissions') {
-      return res.status(401).json({ message: error.message })
+      return res.status(401).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }

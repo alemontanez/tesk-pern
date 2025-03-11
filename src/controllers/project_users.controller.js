@@ -12,15 +12,15 @@ export const createMembership = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Requester does not have permissions') {
-      return res.status(401).json({ message: error.message })
+      return res.status(401).json({ error: [error.message] })
     }
     if (error.message === 'User not found' || error.message === 'Role not found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
     if (error.message === 'The user already belongs to this project') {
-      return res.status(409).json({ message: error.message })
+      return res.status(409).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -35,12 +35,12 @@ export const updateMembership = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Requester does not have permissions') {
-      return res.status(401).json({ message: error.message })
+      return res.status(401).json({ error: [error.message] })
     }
     if (error.message === 'Member not found' || error.message === 'Role not found' || error.message === 'User not found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -53,11 +53,11 @@ export const deleteMembership = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Requester does not have permissions') {
-      return res.status(401).json({ message: error.message })
+      return res.status(401).json({ error: [error.message] })
     }
     if (error.message === 'User not found' || error.message === 'Member not found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }

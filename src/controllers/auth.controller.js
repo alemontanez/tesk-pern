@@ -9,21 +9,14 @@ export const register = async (req, res) => {
     res.cookie('token', token)
     res.status(201).json({
       message: 'User created successfully',
-      user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        is_active: user.is_active,
-      }
+      user
     })
   } catch (error) {
     console.log(error)
     if (error.message === 'Username already exists' || error.message === 'Email already exists') {
-      return res.status(409).json({ message: error.message })
+      return res.status(409).json({ error: [error.message] })
     }
-    res.status(500).json({ message: 'Internal error' })
+    res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -37,9 +30,9 @@ export const login = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Invalid credentials') {
-      return res.status(400).json({ message: error.message })
+      return res.status(400).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 

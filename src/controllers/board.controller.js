@@ -9,9 +9,9 @@ export const getBoards = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Forbidden') {
-      return res.status(403).json({ message: 'Access denied: insufficient permissions' })
+      return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -28,12 +28,12 @@ export const createBoard = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Forbidden') {
-      return res.status(403).json({ message: 'Access denied: insufficient permissions' })
+      return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
     }
     if (error.message === 'The selected name is already in use') {
-      return res.status(409).json({ message: error.message })
+      return res.status(409).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -50,15 +50,15 @@ export const updateBoard = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Forbidden') {
-      return res.status(403).json({ message: 'Access denied: insufficient permissions' })
+      return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
     }
     if (error.message === 'Board not found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
     if (error.message === 'Board name already exists') {
-      return res.status(409).json({ message: error.message })
+      return res.status(409).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -72,12 +72,12 @@ export const updateBoardLabel = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Forbidden') {
-      return res.status(403).json({ message: 'Access denied: insufficient permissions' })
+      return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
     }
     if (error.message === 'Board not found' || error.message === 'Label not found') {
       return res.status(404).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -90,12 +90,12 @@ export const deleteBoard = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Forbidden') {
-      return res.status(403).json({ message: 'Access denied: insufficient permissions' })
+      return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
     }
     if (error.message === 'Board not found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 

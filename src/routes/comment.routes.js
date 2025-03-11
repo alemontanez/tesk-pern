@@ -5,9 +5,9 @@ import { createComment, deleteComment, getComments, updateComment } from '../con
 
 const router = Router()
 
-router.get('/tasks/:taskId/comments', getComments)
-router.post('/tasks/:taskId/comments', validateSchema(commentSchema), createComment)
-router.patch('/comments/:commentId', validateSchema(commentSchema), updateComment)
-router.delete('/comments/:commentId', deleteComment)
+router.get('/projects/:projectId/boards/:boardId/tasks/:taskId/comments', getComments)
+router.post('/projects/:projectId/boards/:boardId/tasks/:taskId/comments', validateSchema(commentSchema), createComment)
+router.patch('/projects/:projectId/boards/:boardId/tasks/:taskId/comments/:commentId', validateSchema(commentSchema), updateComment)
+router.delete('/projects/:projectId/boards/:boardId/tasks/:taskId/comments/:commentId', deleteComment)
 
 export default router

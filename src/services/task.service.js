@@ -11,6 +11,9 @@ export const fetchTasks = async (userId, projectId, boardId) => {
   const board = await Board.findByPk(boardId)
   if (!board) throw new Error('Board not found')
   const tasks = await Task.findAll({
+    where: {
+      board_id: boardId
+    },
     include: [{
       model: Board,
       where: {
@@ -18,10 +21,7 @@ export const fetchTasks = async (userId, projectId, boardId) => {
         project_id: projectId
       },
       attributes: []
-    }],
-    where: {
-      board_id: boardId
-    }
+    }]
   })
   if (!tasks || tasks.length === 0) throw new Error('Tasks not found')
   return tasks
@@ -31,6 +31,9 @@ export const fetchTask = async (userId, projectId, boardId, taskId) => {
   const role = await checkPermissions(userId, projectId)
   if (!role.can_view) throw new Error('Forbidden')
   const task = await Task.findOne({
+    where: {
+      id: taskId
+    },
     include: [{
       model: Board,
       where: {
@@ -38,10 +41,7 @@ export const fetchTask = async (userId, projectId, boardId, taskId) => {
         project_id: projectId
       },
       attributes: []
-    }],
-    where: {
-      id: taskId
-    }
+    }]
   })
   if (!task) throw new Error('Task not found')
   return task
@@ -78,16 +78,16 @@ export const updateTaskService = async (userId, projectId, boardId, taskId, titl
   if (!verifyAssignedUser.can_edit) throw new Error('Access denied: insufficient permissions')
   const task = await Task.findOne({
     include: [{
+      where: {
+        id: taskId
+      },
       model: Board,
       where: {
         id: boardId,
         project_id: projectId
       },
       attributes: []
-    }],
-    where: {
-      id: taskId
-    }
+    }]
   })
   if (!task) throw new Error('Task not found')
 
@@ -112,18 +112,17 @@ export const deleteTaskService = async (userId, projectId, boardId, taskId) => {
   if (!role.can_manage) throw new Error('Forbidden')
   const task = await Task.findOne({
     include: [{
+      where: {
+        id: taskId
+      },
       model: Board,
       where: {
         id: boardId,
         project_id: projectId
       },
       attributes: []
-    }],
-    where: {
-      id: taskId
-    }
+    }]
   })
   if (!task) throw new Error('Task not found')
-
   await task.destroy({ force: true })
 }

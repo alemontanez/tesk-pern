@@ -8,6 +8,7 @@ import projectRoutes from './routes/project.routes.js'
 import projectUsersRoutes from './routes/project_users.routes.js'
 import roleRoutes from './routes/role.routes.js'
 import boardRoutes from './routes/board.routes.js'
+import labelRoutes from './routes/label.routes.js'
 import prioritiesRoutes from './routes/priorities.routes.js'
 import taskRoutes from './routes/task.routes.js'
 import commentRoutes from './routes/comment.routes.js'
@@ -34,6 +35,7 @@ app.use('/api', authRequired, projectRoutes)
 app.use('/api', authRequired, projectUsersRoutes)
 app.use('/api', authRequired, roleRoutes)
 app.use('/api', authRequired, boardRoutes)
+app.use('/api', authRequired, labelRoutes)
 app.use('/api', authRequired, prioritiesRoutes)
 app.use('/api', authRequired, taskRoutes)
 app.use('/api', authRequired, commentRoutes)

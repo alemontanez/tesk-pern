@@ -16,8 +16,8 @@ export const createTaskSchema = z.object({
     .date(), // formato YYYY-MM-DD
   priorityId: z
     .number({
-      required_error: 'Project id is required',
-      invalid_type_error: 'Project id must be a number'
+      required_error: 'Priority id is required',
+      invalid_type_error: 'Priority id must be a number'
     })
     .int()
     .positive(),

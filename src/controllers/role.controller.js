@@ -7,9 +7,9 @@ export const getRoles = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error === 'Roles not found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }
 
@@ -21,8 +21,8 @@ export const getRole = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Role not found') {
-      return res.status(404).json({ message: error.message })
+      return res.status(404).json({ error: [error.message] })
     }
-    return res.status(500).json({ message: 'Internal error' })
+    return res.status(500).json({ error: ['Internal error'] })
   }
 }

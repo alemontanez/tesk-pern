@@ -12,7 +12,7 @@ export const createTaskSchema = z.object({
     .min(2, { message: 'Description must be at least 2 characters' })
     .max(500, { message: 'Description must not exceed 500 characters' }),
   dueDate: z
-    .string()
+    .string({ required_error: 'Due date is required' })
     .date(), // formato YYYY-MM-DD
   priorityId: z
     .number({

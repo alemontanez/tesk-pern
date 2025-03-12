@@ -19,8 +19,8 @@ export const updateBoardSchema = z.object({
 export const updateBoardLabelSchema = z.object({
   labelId: z
     .number({
-      required_error: 'Label id is required',
-      invalid_type_error: 'Label id must be a number'
+      required_error: 'labelId is required',
+      invalid_type_error: 'labelId must be a number'
     })
     .int()
     .positive()

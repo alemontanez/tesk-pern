@@ -5,7 +5,10 @@ import Role from '../models/role.model.js'
 export const createMember = async (requesterId, userId, projectId, roleId) => {
   const verifyRequester = await Project_users.findOne({
     where: { user_id: requesterId, project_id: projectId },
-    include: Role
+    include: [{
+      model: Role,
+      as: 'role'
+    }]
   })
   if (!verifyRequester) throw new Error('Requester does not have permissions')
   const user = await User.findByPk(userId)
@@ -16,10 +19,10 @@ export const createMember = async (requesterId, userId, projectId, roleId) => {
     where: { user_id: userId, project_id: projectId }
   })
   if (existingMember) throw new Error('The user already belongs to this project')
-  if (!(verifyRequester.Role.name === 'admin' || verifyRequester.Role.name === 'owner')) {
+  if (!(verifyRequester.role.name === 'admin' || verifyRequester.role.name === 'owner')) {
     throw new Error('Requester does not have permissions')
   }
-  if (verifyRequester.Role.name === 'admin') {
+  if (verifyRequester.role.name === 'admin') {
     if (userRole.name === 'admin') {
       throw new Error('Requester does not have permissions')
     }
@@ -37,6 +40,7 @@ export const updateMember = async (requesterId, userId, projectId, newRoleId) =>
     where: { user_id: requesterId, project_id: projectId },
     include: [{
       model: Role,
+      as: 'role',
       attributes: ['name']
     }]
   })
@@ -49,20 +53,21 @@ export const updateMember = async (requesterId, userId, projectId, newRoleId) =>
     where: { user_id: userId, project_id: projectId },
     include: [{
       model: Role,
+      as: 'role',
       attributes: ['name']
     }]
   })
   if (!member) throw new Error('Member not found')
-  if (!(verifyRequester.Role.name === 'admin' || verifyRequester.Role.name === 'owner')) {
+  if (!(verifyRequester.role.name === 'admin' || verifyRequester.role.name === 'owner')) {
     throw new Error('Requester does not have permissions')
   }
-  if (verifyRequester.Role.name === 'admin') {
-    if (member.Role.name === 'admin') {
+  if (verifyRequester.role.name === 'admin') {
+    if (member.role.name === 'admin') {
       throw new Error('Requester does not have permissions')
     }
   }
-  if (member.Role.name === 'admin') {
-    if (!verifyRequester.Role.name === 'owner') {
+  if (member.role.name === 'admin') {
+    if (!verifyRequester.role.name === 'owner') {
       throw new Error('Requester does not have permissions')
     }
   }
@@ -76,6 +81,7 @@ export const deleteMember = async (requesterId, userId, projectId) => {
     where: { user_id: requesterId, project_id: projectId },
     include: [{
       model: Role,
+      as: 'role',
       attributes: ['name']
     }]
   })
@@ -86,20 +92,21 @@ export const deleteMember = async (requesterId, userId, projectId) => {
     where: { user_id: userId, project_id: projectId },
     include: [{
       model: Role,
+      as: 'role',
       attributes: ['name']
     }]
   })
   if (!member) throw new Error('Member not found')
-  if (!(verifyRequester.Role.name === 'admin' || verifyRequester.Role.name === 'owner')) {
+  if (!(verifyRequester.role.name === 'admin' || verifyRequester.role.name === 'owner')) {
     throw new Error('Requester does not have permissions')
   }
-  if (verifyRequester.Role.name === 'admin') {
-    if (member.Role.name === 'admin' || member.Role.name === 'owner') {
+  if (verifyRequester.role.name === 'admin') {
+    if (member.role.name === 'admin' || member.role.name === 'owner') {
       throw new Error('Requester does not have permissions')
     }
   }
-  if (member.Role.name === 'admin') {
-    if (!verifyRequester.Role.name === 'owner') {
+  if (member.role.name === 'admin') {
+    if (!verifyRequester.role.name === 'owner') {
       throw new Error('Requester does not have permissions')
     }
   }

@@ -106,10 +106,10 @@ export const deleteTaskService = async (userId, projectId, boardId, taskId) => {
   const role = await checkPermissions(userId, projectId)
   if (!role.can_manage) throw new Error('Forbidden')
   const task = await Task.findOne({
+    where: {
+      id: taskId
+    },
     include: [{
-      where: {
-        id: taskId
-      },
       model: Board,
       where: {
         id: boardId,
@@ -119,5 +119,6 @@ export const deleteTaskService = async (userId, projectId, boardId, taskId) => {
     }]
   })
   if (!task) throw new Error('Task not found')
+
   await task.destroy({ force: true })
 }

@@ -87,7 +87,7 @@ export const deleteTask = async (req, res) => {
   const userId = req.user.id
   const { projectId, boardId, taskId } = req.params
   try {
-    await deleteTaskService(userId, projectId, boardId, taskId)
+    const task = await deleteTaskService(userId, projectId, boardId, taskId)
     res.sendStatus(204)
   } catch (error) {
     console.log(error)

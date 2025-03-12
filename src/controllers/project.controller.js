@@ -11,6 +11,9 @@ export const createProject = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
+    if (error.message === 'Project name already exists') {
+      return res.status(409).json({ error: [error.message] })
+    }
     res.status(500).json({ error: ['Internal error'] })
   }
 }

@@ -3,6 +3,13 @@ import Project_users from '../models/project_users.model.js'
 import Role from '../models/role.model.js'
 
 export const createProjectService = async (userId, name, description) => {
+  const checkName = await Project.findOne({
+    where: {
+      owner_id: userId,
+      name: name
+    }
+  })
+  if (checkName) throw new Error('Project name already exists')
   const project = await Project.create({
     name,
     description,

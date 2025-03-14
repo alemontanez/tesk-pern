@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
 
@@ -14,8 +15,16 @@ import taskRoutes from './routes/task.routes.js'
 import commentRoutes from './routes/comment.routes.js'
 import './models/relationships.js'
 import { authRequired } from './middlewares/jwtValidator.middleware.js'
+import { FRONTEND_URL } from './config/config.js'
 
 const app = express()
+
+app.use(cors({
+  origin: FRONTEND_URL,
+  methods: ['GET', 'POST', 'DELETE', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}))
 
 app.disable('x-powered-by')
 app.use(express.json())

@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from '../services/auth.service.js'
+import { loginUser, registerUser, verifyTokenService } from '../services/auth.service.js'
 import { createAccessToken } from '../utils/jwt.js'
 
 export const register = async (req, res) => {
@@ -40,3 +40,20 @@ export const logout = (req, res) => {
   res.clearCookie('token')
   return res.sendStatus(200)
 }
+
+export const verifyToken = async (req, res) => {
+  const { token } = req.cookies
+  if (!token) return res.send(false)
+
+  try {
+    const user = await verifyTokenService(token)
+    return res.json(user)
+  } catch (error) {
+    console.log(error)
+    if (error.message === 'Unauthorized') {
+      return res.status(401).json({ error: [error.message] })
+    }
+    return res.stats(500).json({ error: ['Internal error'] })
+  }
+}
+

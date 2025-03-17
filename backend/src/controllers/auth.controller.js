@@ -2,9 +2,9 @@ import { loginUser, registerUser, verifyTokenService } from '../services/auth.se
 import { createAccessToken } from '../utils/jwt.js'
 
 export const register = async (req, res) => {
-  const { username, email, first_name, last_name, password } = req.body
+  const { username, email, firstName, lastName, password } = req.body
   try {
-    const user = await registerUser({ username, email, first_name, last_name, password })
+    const user = await registerUser({ username, email, firstName, lastName, password })
     const token = await createAccessToken({ id: user.id })
     res.cookie('token', token)
     res.status(201).json({

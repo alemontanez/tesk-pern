@@ -1,0 +1,120 @@
+/* src/components/Navbar.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #fff;
+  font-family: sans-serif;
+}
+
+/* ========== Secciones compartidas (logo, etc.) ========== */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-icon {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* ========== Navbar interno (usuario logueado) ========== */
+.navbar-internal .navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-internal .navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Estilos para los enlaces */
+.navbar-internal .navbar-right a {
+  color: #374151;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar-internal .navbar-right a.active {
+  color: #2563eb;
+  border-bottom: 2px solid #2563eb;
+  padding-bottom: 2px;
+}
+
+.logout-button {
+  background-color: transparent;
+  border: none;
+  color: #2563eb;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.logout-button:hover {
+  text-decoration: underline;
+}
+
+/* ========== Navbar público (usuario NO logueado) ========== */
+.navbar-public .navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-public .navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Sección de links (Features, Pricing, About) */
+.navbar-public .nav-links {
+  margin-left: 2rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar-public .nav-links a {
+  color: #374151;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar-public .nav-links a:hover {
+  color: #000;
+}
+
+/* Link de login */
+.login-link {
+  color: #374151;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+/* Botón "Get Started" */
+.get-started-button {
+  background-color: #2563eb;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.get-started-button:hover {
+  background-color: #1d4ed8;
+}

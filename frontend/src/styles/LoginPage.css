@@ -1,0 +1,121 @@
+/* LoginPage.css */
+
+/* Contenedor principal que centra el contenido vertical y horizontalmente */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fafafa; /* Color de fondo suave */
+  font-family: Arial, sans-serif;
+}
+
+/* Caja que contiene el formulario y el texto */
+.login-box {
+  background-color: #fff;
+  padding: 2rem;
+  width: 350px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* Título principal */
+.login-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+/* Subtítulo descriptivo */
+.login-subtitle {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* Estilos para el formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  text-align: left; /* Alinear las etiquetas a la izquierda */
+}
+
+/* Grupo de formulario (label + input) */
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Grupo que contiene la label y el enlace de "Forgot password?" */
+.password-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Enlace de "Forgot password?" */
+.forgot-link {
+  font-size: 0.8rem;
+  color: #666;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* Botón de login */
+.login-button {
+  width: 100%;
+  padding: 0.7rem;
+  background-color: #2563eb; /* Azul */
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.login-button:hover {
+  background-color: #1d4ed8; /* Azul más oscuro */
+}
+
+/* Mensajes de error */
+.error-message {
+  color: #d00;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+/* Texto de registro */
+.signup-text {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+}
+
+.signup-text a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}

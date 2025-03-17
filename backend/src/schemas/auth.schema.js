@@ -12,13 +12,13 @@ export const registerSchema = z.object({
     .trim()
     .email({ message: 'Invalid email' })
     .transform((value) => value.toLowerCase()),
-  first_name: z
+  firstName: z
     .string({ required_error: 'First name is required' })
     .trim()
     .min(2, { message: 'First name must be at least 2 characters' })
     .max(50, { message: 'First name must not exceed 50 characters' })
     .regex(/^[A-Za-zÀ-ÿ]+(?:\s[A-Za-zÀ-ÿ]+)*$/, { message: 'First name can only contain letters' }),
-  last_name: z
+  lastName: z
     .string({ required_error: 'Last name is required' })
     .trim()
     .min(2, { message: 'Last name must be at least 2 characters' })

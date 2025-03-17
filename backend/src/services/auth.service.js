@@ -3,8 +3,8 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config/config.js'
 
-export const registerUser = async ({ username, email, first_name, last_name, password }) => {
-  const password_hash = await bcrypt.hash(password, 10)
+export const registerUser = async ({ username, email, firstName, lastName, password }) => {
+  const passwordHash = await bcrypt.hash(password, 10)
   const existingUsername = await User.findOne({ where: { username: username } })
   if (existingUsername) throw new Error('Username already exists')
 
@@ -14,9 +14,9 @@ export const registerUser = async ({ username, email, first_name, last_name, pas
   const user = await User.create({
     username,
     email,
-    first_name,
-    last_name,
-    password_hash
+    first_name: firstName,
+    last_name: lastName,
+    password_hash: passwordHash
   })
   return user
 }

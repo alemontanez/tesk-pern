@@ -1,0 +1,25 @@
+/* src/layouts/MainLayout.css */
+
+/* El contenedor principal se mostrará en columna:
+   - Navbar arriba
+   - Contenido (menu + página) debajo */
+   .main-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  /* Contiene el SideMenu y la página a la derecha */
+  .layout-content {
+    display: flex;
+    flex: 1; /* ocupa el espacio restante */
+  }
+  
+  /* El contenedor central de la página (lo que no es menú lateral) */
+  .main-page {
+    flex: 1;
+    padding: 2rem;
+    background-color: #f9fafb; /* Fondo claro */
+    overflow-y: auto; /* Para que el contenido sea desplazable si excede la pantalla */
+  }
+  

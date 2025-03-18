@@ -2,6 +2,8 @@ import Board from '../models/board.model.js'
 import Project from '../models/project.model.js'
 import Project_users from '../models/project_users.model.js'
 import Role from '../models/role.model.js'
+import { checkPermissions } from '../utils/checkPermissions.js'
+
 
 export const createProjectService = async (userId, name, description) => {
   const checkName = await Project.findOne({
@@ -34,6 +36,8 @@ export const getUserProjectsService = async (userId) => {
 }
 
 export const getProjectService = async (userId, projectId) => {
+  const role = await checkPermissions(userId, projectId)
+  if (!role.can_view) throw new Error('Forbidden')
   const project = await Project.findOne({
     where: {
       id: projectId

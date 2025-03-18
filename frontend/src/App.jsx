@@ -9,6 +9,7 @@ import DashboardPage from './pages/private/DashboardPage'
 import HomePage from './pages/private/HomePage'
 import MainLayout from './layouts/MainLayout'
 import ProjectPage from './pages/private/ProjectPage'
+import BoardPage from './pages/private/BoardPage'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route element={<MainLayout />}>
                 <Route path='/dashboard' element={<DashboardPage />} />
                 <Route path='/dashboard/projects/:projectId' element={<ProjectPage />} />
+                <Route path='/dashboard/projects/:projectId/boards/:boardId' element={<BoardPage />} />
                 <Route path='/home' element={<HomePage />} />
               </Route>
             </Route>

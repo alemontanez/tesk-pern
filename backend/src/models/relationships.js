@@ -10,10 +10,10 @@ import Label from './label.model.js'
 
 // Relaciones User
 User.hasMany(Task, { foreignKey: 'created_by', onDelete: 'SET NULL' })
-Task.belongsTo(User, { foreignKey: 'created_by' })
+Task.belongsTo(User, { foreignKey: 'created_by', as: 'createdBy' })
 
 User.hasMany(Task, { foreignKey: 'assigned_to', onDelete: 'SET NULL' })
-Task.belongsTo(User, { foreignKey: 'assigned_to' })
+Task.belongsTo(User, { foreignKey: 'assigned_to', as: 'assignedTo' })
 
 User.hasMany(Project_users, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true })
 Project_users.belongsTo(User, { foreignKey: 'user_id' })

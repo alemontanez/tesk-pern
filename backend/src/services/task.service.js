@@ -2,6 +2,7 @@ import Board from '../models/board.model.js'
 import Task from '../models/task.model.js'
 import Priority from '../models/priority.model.js'
 import Label from '../models/label.model.js'
+import User from '../models/user.model.js'
 import { checkPermissions } from '../utils/checkPermissions.js'
 
 export const fetchTasks = async (userId, projectId, boardId) => {
@@ -23,7 +24,14 @@ export const fetchTasks = async (userId, projectId, boardId) => {
       where: {
         board_id: boardId
       },
-      required: false
+      attributes: ['id', 'title', 'description', 'due_date', 'updatedAt'],
+      required: false,
+      include: [
+        { model: Label, attributes: ['hex_code'] },
+        { model: Priority, attributes: ['name'] },
+        { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo'},
+        { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy'}
+      ]
     }]
   })
   return tasks

@@ -1,0 +1,64 @@
+/* src/pages/boards/BoardPage.css */
+
+.board-page {
+  padding: 2rem;
+  background-color: #f9fafb;
+  min-height: calc(100vh - 60px); /* Ajusta según la altura de tu navbar, si es necesario */
+}
+
+.board-header {
+  margin-bottom: 1.5rem;
+}
+
+.board-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.board-description {
+  color: #6b7280;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.tasks-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.task-card {
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.task-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.task-description {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.no-tasks {
+  font-size: 1rem;
+  color: #6b7280;
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.board-page-errors {
+  padding: 2rem;
+  text-align: center;
+  color: #d00;
+}

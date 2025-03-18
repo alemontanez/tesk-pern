@@ -1,0 +1,90 @@
+/* src/pages/dashboard/DashboardPage.css */
+
+.dashboard-page {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Título de la página */
+.page-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+/* Contenedor de acciones (filtros, búsqueda, etc.) */
+.dashboard-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Tabs (All Projects, Recent, Starred) */
+.tabs {
+  display: flex;
+  gap: 1rem;
+}
+
+.tab-button {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tab-button.active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+/* Sección derecha: barra de búsqueda y botón de nuevo proyecto */
+.actions-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search-input {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+/* Botón + New Project */
+.new-project-button {
+  background-color: #2563eb;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.new-project-button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Contenedor de tarjetas */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+  gap: 1rem; /* Separación entre tarjetas */
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-container {
+    grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+  }
+}

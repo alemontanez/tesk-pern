@@ -40,11 +40,8 @@ export const getProject = async (req, res) => {
     res.status(200).json(project)
   } catch (error) {
     console.log(error)
-    if (error.message === 'Forbidden') {
-      return res.status(403).json({ error: [error.message]})
-    }
-    if (error.message === 'Project not found') {
-      return res.status(404).json({ error: [error.message] })
+    if (error.message === 'Project not found' || error.message === 'Forbidden') {
+      return res.status(404).json({ error: ['Project not found'] })
     }
     return res.status(500).json({ error: ['Internal error'] })
   }

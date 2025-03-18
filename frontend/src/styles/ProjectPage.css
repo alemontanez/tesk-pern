@@ -1,0 +1,108 @@
+/* src/pages/projects/ProjectPage.css */
+
+.project-page {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* Encabezado (título, descripción y pestañas) */
+.project-header {
+  margin-bottom: 1.5rem;
+}
+
+.project-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+}
+
+.project-description {
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+/* Pestañas */
+.project-tabs {
+  display: flex;
+  gap: 1rem;
+}
+
+.tab-button {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tab-button.active {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+/* Barra de búsqueda y botón para crear nuevo board */
+.project-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-boards {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.new-board-button {
+  background-color: #2563eb;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.new-board-button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Grid de tarjetas */
+.boards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+/* Tarjeta "Create a new board" */
+.create-board-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.plus-icon {
+  font-size: 2rem;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+
+.create-board-text {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.create-board-subtext {
+  font-size: 0.9rem;
+  color: #6b7280;
+}

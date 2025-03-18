@@ -17,6 +17,7 @@ export const ProjectProvider = ({ children }) => {
 
   const fetchProjects = async () => {
     try {
+      setErrors([])
       const res = await getProjects()
       setProjects(res.data)
     } catch (error) {
@@ -26,7 +27,9 @@ export const ProjectProvider = ({ children }) => {
 
   const createNewProject = async (project) => {
     try {
+      setErrors([])
       await createProject(project)
+      fetchProjects()
     } catch (error) {
       setErrors(error.response.data.error)
     }
@@ -34,6 +37,7 @@ export const ProjectProvider = ({ children }) => {
 
   const fetchProject = async (projectId) => {
     try {
+      setErrors([])
       const res = await getProject(projectId)
       return res
     } catch (error) {
@@ -50,7 +54,7 @@ export const ProjectProvider = ({ children }) => {
       createNewProject,
       fetchProject,
       projects,
-      errors
+      errors,
     }}>
       {children}
     </ProjectContext.Provider>

@@ -1,0 +1,47 @@
+/* src/pages/projects/BoardCard.css */
+
+.board-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Encabezado de la tarjeta (nombre, íconos) */
+.board-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.board-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Subtítulo o descripción */
+.board-subtitle {
+  color: #6b7280;
+  margin: 0.5rem 0;
+}
+
+/* Botón "View Board" */
+.view-board-button {
+  background-color: #fff;
+  border: 1px solid #2563eb;
+  color: #2563eb;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: auto; /* empuja el botón hacia la parte inferior */
+}
+
+.view-board-button:hover {
+  background-color: #2563eb;
+  color: #fff;
+}

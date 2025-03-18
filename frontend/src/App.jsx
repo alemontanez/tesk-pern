@@ -8,6 +8,7 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import DashboardPage from './pages/private/DashboardPage'
 import HomePage from './pages/private/HomePage'
 import MainLayout from './layouts/MainLayout'
+import ProjectPage from './pages/private/ProjectPage'
 
 function App() {
   return (
@@ -24,10 +25,11 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route element={<MainLayout />}>
                 <Route path='/dashboard' element={<DashboardPage />} />
+                <Route path='/dashboard/projects/:projectId' element={<ProjectPage />} />
                 <Route path='/home' element={<HomePage />} />
               </Route>
             </Route>
-            <Route path='/*' element={<Navigate to='/dashboard' />} />
+            <Route path='/*' element={<Navigate to='/home' />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

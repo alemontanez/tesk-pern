@@ -14,13 +14,13 @@ export default function SideMenu() {
 
       <ul className='menu-links'>
         <li>
-          <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'active' : ''}>
-            <span className='icon'>🏠</span> Dashboard
+          <NavLink to='/home' className={({ isActive }) => isActive ? 'active' : ''}>
+            <span className='icon'>🏠</span> Home
           </NavLink>
         </li>
         <li>
-          <NavLink to='/home' className={({ isActive }) => isActive ? 'active' : ''}>
-            <span className='icon'>📁</span> Home
+          <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'active' : ''}>
+            <span className='icon'>📁</span> Dashboard
           </NavLink>
         </li>
         <li>

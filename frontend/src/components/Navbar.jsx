@@ -15,11 +15,11 @@ export default function Navbar () {
           </div>
         </div>
         <div className='navbar-right'>
-          <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'active' : ''}>
-            Dashboard
-          </NavLink>
           <NavLink to='/home' className={({ isActive }) => isActive ? 'active' : ''}>
             Home
+          </NavLink>
+          <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'active' : ''}>
+            Dashboard
           </NavLink>
           <NavLink to='/projects' className={({ isActive }) => isActive ? 'active' : ''}>
             Projects

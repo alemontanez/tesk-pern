@@ -1,7 +1,7 @@
 import { ProjectProvider } from '../context/ProjectContext'
 import { BoardProvider } from '../context/BoardContext'
-import SideMenu from '../components/SideMenu'
 import { Outlet } from 'react-router-dom'
+import SideMenu from '../components/SideMenu'
 import '../styles/MainLayout.css'
 
 export default function MainLayout() {

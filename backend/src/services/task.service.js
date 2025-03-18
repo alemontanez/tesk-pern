@@ -14,11 +14,6 @@ export const fetchTasks = async (userId, projectId, boardId) => {
     }
   })
   if (!board) throw new Error('Board not found')
-  // const tasks = await Task.findAll({
-  //   where: {
-  //     board_id: boardId
-  //   }
-  // })
   const tasks = await Board.findOne({
     where: {
       id: boardId,
@@ -28,6 +23,7 @@ export const fetchTasks = async (userId, projectId, boardId) => {
       where: {
         board_id: boardId
       },
+      required: false
     }]
   })
   return tasks

@@ -15,14 +15,19 @@ export default function BoardPage() {
       setBoard(res)
     }
     getBoard(projectId, boardId)
-  }, [boardId])
+  }, [projectId, boardId])
 
   console.log(board)
   
   return (
     <div>
-      <p>Project: {projectId}</p>
-      <p>Board:</p>
+      <h2>{board.name}</h2>
+      {board.Tasks.map(task => (
+        <div>
+          <h3>{task.title}</h3>
+          <span>{task.description}</span>
+        </div>
+      ))}
     </div>
   )
 }

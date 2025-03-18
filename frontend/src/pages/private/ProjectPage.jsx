@@ -4,14 +4,14 @@ import { useProject } from '../../context/ProjectContext'
 import BoardCard from '../../components/BoardCard'
 import '../../styles/ProjectPage.css'
 
-export default function ProjectPage () {
+export default function ProjectPage() {
   const { projectId } = useParams()
   const { fetchProject, errors } = useProject()
   const [project, setProject] = useState({})
   const [boards, setBoards] = useState([])
 
   useEffect(() => {
-    async function getProject (id) {
+    async function getProject(id) {
       const res = await fetchProject(id)
       setProject(res.data)
       setBoards(res.data.Boards)

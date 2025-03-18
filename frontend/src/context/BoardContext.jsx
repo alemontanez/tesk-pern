@@ -14,8 +14,12 @@ export const useBoard = () => {
 export const BoardProvider = ({ children }) => {
 
   const fetchBoard = async (projectId, boardId) => {
-    const res = await getBoard(projectId, boardId)
-    return res
+    try {
+      const res = await getBoard(projectId, boardId)
+      return res.data
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

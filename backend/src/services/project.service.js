@@ -1,3 +1,4 @@
+import Board from '../models/board.model.js'
 import Project from '../models/project.model.js'
 import Project_users from '../models/project_users.model.js'
 import Role from '../models/role.model.js'
@@ -42,8 +43,14 @@ export const getProjectService = async (userId, projectId) => {
       where: {
         user_id: userId
       },
-      attributes: ['role_id']
-    }]
+      attributes: []
+    }],
+    include: [{
+      model: Board,
+      where: {
+        project_id: projectId
+      }
+    }],
   })
   if (!project) throw new Error('Project not found')
   return project

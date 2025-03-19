@@ -17,7 +17,8 @@ export default function TaskDetailPage () {
       title: '',
       description: '',
       dueDate: '',
-      priority: '1'
+      priority: '1',
+
     }
   })
 
@@ -47,11 +48,16 @@ export default function TaskDetailPage () {
   const onSubmit = async formData => {
     const updatedData = {
       ...formData,
-      priority_id: parseInt(formData.priority, 10)
+      priorityId: parseInt(formData.priority, 10),
+      createdBy: task.created_by,
+      assignedTo: task.assigned_to,
+      boardId: task.board_id,
+      labelId: task.label_id
     }
-    await updateTask(task.id, updatedData)
+    await updateTask(projectId, boardId, taskId, updatedData)
     const updatedTask = await fetchTask(projectId, boardId, taskId)
     setTask(updatedTask)
+    navigate(`/dashboard/projects/${projectId}/boards/${boardId}`)
   }
 
   const onSubmitComment = async commentData => {
@@ -97,10 +103,10 @@ export default function TaskDetailPage () {
           <div className='form-group'>
             <label>Prioridad</label>
             <select {...register('priority', { required: true })}>
-              <option value='1'>1 - Baja</option>
-              <option value='2'>2 - Media</option>
-              <option value='3'>3 - Alta</option>
-              <option value='4'>4 - Crítica</option>
+              <option value='1'>Baja</option>
+              <option value='2'>Media</option>
+              <option value='3'>Alta</option>
+              <option value='4'>Crítica</option>
             </select>
           </div>
 

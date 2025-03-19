@@ -12,17 +12,17 @@ export default function DashboardPage() {
 
       <div className='dashboard-actions'>
         <div className='tabs'>
-          <button className='tab-button active'>All Projects</button>
-          <button className='tab-button'>Recent</button>
-          <button className='tab-button'>Starred</button>
+          <button className='tab-button active'>Todos</button>
+          <button className='tab-button'>Recientes</button>
+          <button className='tab-button'>Fijados</button>
         </div>
         <div className='actions-right'>
           <input
             type='text'
             className='search-input'
-            placeholder='Search projects...'
+            placeholder='Buscar proyectos...'
           />
-          <Link className='new-project-button' to={'/dashboard/create-project'}>+ New Project</Link>
+          <Link className='new-project-button' to={'/dashboard/create-project'}>+ Crear proyecto</Link>
         </div>
       </div>
 

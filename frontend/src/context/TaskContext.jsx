@@ -36,8 +36,10 @@ export const TaskProvider = ({ children }) => {
 
   const updateTask = async (projectId, boardId, taskId, taskData) => {
     try {
+      console.log(taskData)
       await updateTaskRequest(projectId, boardId, taskId, taskData)
     } catch (error) {
+      console.log(error)
       setErrors(error.response.data.error)
     }
   }

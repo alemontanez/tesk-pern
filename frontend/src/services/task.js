@@ -9,5 +9,5 @@ export const getTask = async (projectId, boardId, taskId) => {
 }
 
 export const updateTaskRequest = async (projectId, boardId, taskId, task) => {
-  return api.patch(`/projects/${projectId}/boards/${boardId}/tasks/${taskId}`)
+  return api.patch(`/projects/${projectId}/boards/${boardId}/tasks/${taskId}`, task)
 }

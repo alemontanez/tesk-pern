@@ -10,7 +10,7 @@ export default function BoardCard ({ projectId, board }) {
       </div>
 
       <p className='board-subtitle'>
-        {board.tasksCount || 0} tasks
+        {board.tasksCount || 0} tareas
       </p>
 
       {/* Aquí podrías mostrar más detalles, p. ej. prioridad, estado, etc. */}
@@ -18,7 +18,7 @@ export default function BoardCard ({ projectId, board }) {
         className='view-board-button'
         to={`/dashboard/projects/${projectId}/boards/${board.id}`}
       >
-        View Board
+        Ver Tablero
       </Link>
     </div>
   )

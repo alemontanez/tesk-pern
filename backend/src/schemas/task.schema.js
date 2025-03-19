@@ -25,17 +25,17 @@ export const createTaskSchema = z.object({
 
 export const updateTaskSchema = z.object({
   title: z
-    .string()
+    .string({ required_error: 'Title is required' })
     .trim()
     .min(2, { message: 'Title must be at least 2 characters' })
     .max(100, { message: 'Title must not exceed 100 characters' }),
   description: z
-    .string()
+    .string({ required_error: 'Description is required' })
     .trim()
     .min(2, { message: 'Description must be at least 2 characters' })
     .max(500, { message: 'Description must not exceed 500 characters' }),
   assignedTo: z
-    .string()
+    .string({ required_error: 'User assigned is required' })
     .uuid({ message: 'Invalid assigned user id' }),
   dueDate: z
     .string()

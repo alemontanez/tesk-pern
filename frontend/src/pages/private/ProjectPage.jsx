@@ -39,9 +39,9 @@ export default function ProjectPage() {
 
         {/* Pestañas: Boards, Members, Settings */}
         <div className='project-tabs'>
-          <button className='tab-button active'>Boards</button>
-          <button className='tab-button'>Members</button>
-          <button className='tab-button'>Settings</button>
+          <button className='tab-button active'>Tableros</button>
+          <button className='tab-button'>Miembros</button>
+          <button className='tab-button'>Ajustes</button>
         </div>
       </div>
 
@@ -49,10 +49,10 @@ export default function ProjectPage() {
       <div className='project-actions'>
         <input
           type='text'
-          placeholder='Search boards...'
+          placeholder='Buscar tableros...'
           className='search-boards'
         />
-        <Link className='new-board-button' to={`/dashboard/projects/${projectId}/create-board`}>+ New Board</Link>
+        <Link className='new-board-button' to={`/dashboard/projects/${projectId}/create-board`}>+ Crear Tablero</Link>
       </div>
 
       {/* Contenedor de tableros en forma de grid */}
@@ -68,9 +68,9 @@ export default function ProjectPage() {
         {/* Tarjeta para crear un nuevo board */}
         <div className='create-board-card'>
           <div className='plus-icon'>+</div>
-          <p className='create-board-text'>Create a new board</p>
+          <p className='create-board-text'>Crear un nuevo tablero</p>
           <span className='create-board-subtext'>
-            Add a new board to organize your tasks
+            Añade un nuevo tablero para organizar tus tareas
           </span>
         </div>
       </div>

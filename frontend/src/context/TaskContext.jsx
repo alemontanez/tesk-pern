@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { createTask, getTask, updateTaskRequest } from '../services/task'
+import { createTask, deleteTaskRequest, getTask, updateTaskRequest } from '../services/task'
 
 const TaskContext = createContext()
 
@@ -29,19 +29,25 @@ export const TaskProvider = ({ children }) => {
       const res = await getTask(projectId, boardId, taskId)
       return res.data
     } catch (error) {
-      console.log(error)
       setErrors(error.response.data.error)
     }
   }
 
   const updateTask = async (projectId, boardId, taskId, taskData) => {
     try {
-      console.log(taskData)
       await updateTaskRequest(projectId, boardId, taskId, taskData)
+    } catch (error) {
+      setErrors(error.response.data.error)
+    }
+  }
+
+  const deleteTask = async (projectId, boardId, taskId) => {
+    try {
+      await deleteTaskRequest(projectId, boardId, taskId)
     } catch (error) {
       console.log(error)
       setErrors(error.response.data.error)
-    }
+    } 
   }
 
   return (
@@ -49,6 +55,7 @@ export const TaskProvider = ({ children }) => {
       createNewTask,
       fetchTask,
       updateTask,
+      deleteTask,
       errors
     }}>
       {children}

@@ -11,3 +11,7 @@ export const getTask = async (projectId, boardId, taskId) => {
 export const updateTaskRequest = async (projectId, boardId, taskId, task) => {
   return api.patch(`/projects/${projectId}/boards/${boardId}/tasks/${taskId}`, task)
 }
+
+export const deleteTaskRequest = async (projectId, boardId, taskId) => {
+  return api.delete(`/projects/${projectId}/boards/${boardId}/tasks/${taskId}`)
+}

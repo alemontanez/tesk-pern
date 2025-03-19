@@ -6,7 +6,7 @@ import '../../styles/TaskDetailPage.css'
 
 export default function TaskDetailPage () {
   const { projectId, boardId, taskId } = useParams()
-  const { fetchTask, updateTask, createComment } = useTask()
+  const { fetchTask, updateTask, createComment, deleteTask } = useTask()
   const navigate = useNavigate()
   const [task, setTask] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -121,6 +121,10 @@ export default function TaskDetailPage () {
           </div>
 
           <button type='submit'>Guardar Cambios</button>
+          <button type='button' className='delete-button' onClick={() => {
+            deleteTask(projectId, boardId, taskId)
+            navigate(`/dashboard/projects/${projectId}/boards/${boardId}`)
+          }}>Eliminar tarea</button>
         </form>
       </section>
 

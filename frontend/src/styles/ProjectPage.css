@@ -61,11 +61,12 @@
 .new-board-button {
   background-color: #2563eb;
   color: #fff;
-  padding: 0.5rem 1rem;
+  padding: 0.3rem 1rem;
   border: none;
   border-radius: 6px;
   font-weight: 500;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .new-board-button:hover {

@@ -1,0 +1,125 @@
+/* src/pages/boards/TaskDetailPage.css */
+
+.task-detail-page {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.task-detail-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.task-edit-section {
+  margin-bottom: 2rem;
+}
+
+.task-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.form-group input[readOnly] {
+  background-color: #f3f4f6;
+}
+
+.error-message {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #d00;
+}
+
+button[type='submit'] {
+  background-color: #3b82f6;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button[type='submit']:hover {
+  background-color: #2563eb;
+}
+
+.task-comments-section {
+  margin-top: 2rem;
+}
+
+.task-comments-section h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #374151;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.comment-card {
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background-color: #f9fafb;
+}
+
+.comment-content {
+  margin: 0;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.comment-date {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #374151;
+  margin-top: 2rem;
+}

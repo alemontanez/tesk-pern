@@ -20,15 +20,15 @@ const LoginPage = () => {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h2 className="login-title">Login</h2>
-        <p className="login-subtitle">Enter your credentials to access your account</p>
+        <h2 className="login-title">Ingresar a mi usuario</h2>
+        <p className="login-subtitle">Introduce tus credenciales para poder acceder</p>
 
         <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <label>Email</label>
             <input
               type="email"
-              placeholder="me@example.com"
+              placeholder="usuario@ejemplo.com"
               {...register('email', { required: 'El email es obligatorio' })}
             />
             {formErrors.email && (
@@ -37,8 +37,8 @@ const LoginPage = () => {
           </div>
 
           <div className="form-group password-group">
-            <label>Password</label>
-            <Link to="/forgot-password" className="forgot-link">Forgot password?</Link>
+            <label>Contraseña</label>
+            <Link to="/forgot-password" className="forgot-link">Olvidé mi contraseña</Link>
           </div>
           <div className="form-group">
             <input
@@ -50,7 +50,7 @@ const LoginPage = () => {
             )}
           </div>
 
-          <button type="submit" className="login-button">Login</button>
+          <button type="submit" className="login-button">Ingresar</button>
         </form>
 
         {authErrors && authErrors.map((error, i) => (
@@ -58,7 +58,7 @@ const LoginPage = () => {
         ))}
 
         <p className="signup-text">
-          Don’t have an account? <Link to="/register">Sign up</Link>
+          ¿No estás registrado? <Link to="/register">Crea una cuenta</Link>
         </p>
       </div>
     </div>

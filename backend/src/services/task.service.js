@@ -3,6 +3,7 @@ import Task from '../models/task.model.js'
 import Priority from '../models/priority.model.js'
 import Label from '../models/label.model.js'
 import User from '../models/user.model.js'
+import Comment from '../models/comment.model.js'
 import { checkPermissions } from '../utils/checkPermissions.js'
 
 export const fetchTasks = async (userId, projectId, boardId) => {
@@ -29,8 +30,8 @@ export const fetchTasks = async (userId, projectId, boardId) => {
       include: [
         { model: Label, attributes: ['hex_code'] },
         { model: Priority, attributes: ['name'] },
-        { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo'},
-        { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy'}
+        { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo' },
+        { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy' }
       ]
     }]
   })
@@ -44,14 +45,23 @@ export const fetchTask = async (userId, projectId, boardId, taskId) => {
     where: {
       id: taskId
     },
-    include: [{
-      model: Board,
-      where: {
-        id: boardId,
-        project_id: projectId
-      },
-      attributes: []
-    }]
+    include: [
+      {
+        model: Board,
+        where: {
+          id: boardId,
+          project_id: projectId
+        },
+        attributes: []
+      }, 
+      {
+        model: Comment,
+        where: {
+          task_id: taskId
+        },
+        required: false
+      }
+    ]
   })
   if (!task) throw new Error('Task not found')
   return task

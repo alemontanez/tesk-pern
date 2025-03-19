@@ -23,28 +23,28 @@ const RegisterPage = () => {
   return (
     <div className="register-container">
       <div className="register-box">
-        <h1 className="register-title">Create an account</h1>
-        <p className="register-subtitle">Enter your information to get started</p>
+        <h1 className="register-title">Crear una cuenta</h1>
+        <p className="register-subtitle">Ingresa tus datos para registrarte</p>
 
         <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="name-fields">
             <div className="form-group">
-              <label>First name</label>
+              <label>Nombre</label>
               <input
                 type="text"
-                placeholder="John"
-                {...register('firstName', { required: 'First name is required' })}
+                placeholder="Tu nombre"
+                {...register('firstName', { required: 'El nombre es requerido' })}
               />
               {formErrors.firstName && (
                 <p className="error-message">{formErrors.firstName.message}</p>
               )}
             </div>
             <div className="form-group">
-              <label>Last name</label>
+              <label>Apellido</label>
               <input
                 type="text"
-                placeholder="Doe"
-                {...register('lastName', { required: 'Last name is required' })}
+                placeholder="Tu apellido"
+                {...register('lastName', { required: 'El apellido es requerido' })}
               />
               {formErrors.lastName && (
                 <p className="error-message">{formErrors.lastName.message}</p>
@@ -53,11 +53,11 @@ const RegisterPage = () => {
           </div>
 
           <div className="form-group">
-            <label>Username</label>
+            <label>Usuario</label>
             <input
               type="text"
-              placeholder="johndoe123"
-              {...register('username', { required: 'Username is required' })}
+              placeholder="Tu usuario"
+              {...register('username', { required: 'El usuario es requerido' })}
             />
             {formErrors.username && (
               <p className="error-message">{formErrors.username.message}</p>
@@ -68,8 +68,8 @@ const RegisterPage = () => {
             <label>Email</label>
             <input
               type="email"
-              placeholder="me@example.com"
-              {...register('email', { required: 'Email is required' })}
+              placeholder="usuario@ejemplo.com"
+              {...register('email', { required: 'El email es requerido' })}
             />
             {formErrors.email && (
               <p className="error-message">{formErrors.email.message}</p>
@@ -77,14 +77,14 @@ const RegisterPage = () => {
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label>Contraseña</label>
             <input
               type="password"
               {...register('password', {
-                required: 'Password is required',
+                required: 'La contraseña es requerida',
                 minLength: {
                   value: 6,
-                  message: 'Password must be at least 6 characters long'
+                  message: 'La contraseña debe tener al menos 6 caracteres'
                 }
               })}
             />
@@ -94,13 +94,13 @@ const RegisterPage = () => {
           </div>
 
           <div className="form-group">
-            <label>Confirm Password</label>
+            <label>Confirmar contraseña</label>
             <input
               type="password"
               {...register('confirmPassword', {
-                required: 'Please confirm your password',
+                required: 'Falta confirmar la contraseña',
                 validate: (value) =>
-                  value === passwordValue || 'Passwords do not match'
+                  value === passwordValue || 'Las contraseñas no coinciden'
               })}
             />
             {formErrors.confirmPassword && (
@@ -108,7 +108,7 @@ const RegisterPage = () => {
             )}
           </div>
 
-          <button type="submit" className="register-button">Create account</button>
+          <button type="submit" className="register-button">Registrarse</button>
         </form>
 
         {authErrors &&
@@ -118,7 +118,7 @@ const RegisterPage = () => {
         }
 
         <p className="login-text">
-          Already have an account? <Link to="/login">Login</Link>
+          ¿Ya estas registrado? <Link to="/login">Ingresar</Link>
         </p>
       </div>
     </div>

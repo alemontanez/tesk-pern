@@ -1,5 +1,5 @@
 import { useContext, createContext, useState } from 'react'
-import { getBoard } from '../services/board'
+import { createBoard, getBoard } from '../services/board'
 
 export const BoardContext = createContext()
 
@@ -25,9 +25,18 @@ export const BoardProvider = ({ children }) => {
     }
   }
 
+  const createNewBoard = async (projectId, projectData) => {
+    try {
+      await createBoard(projectId, projectData)
+    } catch (error) {
+      setErrors(error.response.data.error)
+    }
+  }
+
   return (
     <BoardContext.Provider value={{
       fetchBoard,
+      createNewBoard,
       errors
     }}>
       {children}

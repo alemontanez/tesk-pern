@@ -10,6 +10,10 @@ import HomePage from './pages/private/HomePage'
 import MainLayout from './layouts/MainLayout'
 import ProjectPage from './pages/private/ProjectPage'
 import BoardPage from './pages/private/BoardPage'
+import ProjectForm from './pages/private/ProjectForm'
+import BoardForm from './pages/private/BoardForm'
+import TaskForm from './pages/private/TaskForm'
+import TaskDetailPage from './pages/private/TaskDetailPage'
 
 function App() {
   return (
@@ -25,10 +29,14 @@ function App() {
             {/* Private: */}
             <Route element={<ProtectedRoute />}>
               <Route element={<MainLayout />}>
-                <Route path='/dashboard' element={<DashboardPage />} />
-                <Route path='/dashboard/projects/:projectId' element={<ProjectPage />} />
-                <Route path='/dashboard/projects/:projectId/boards/:boardId' element={<BoardPage />} />
                 <Route path='/home' element={<HomePage />} />
+                <Route path='/dashboard' element={<DashboardPage />} />
+                <Route path='/dashboard/create-project' element={<ProjectForm />} />
+                <Route path='/dashboard/projects/:projectId' element={<ProjectPage />} />
+                <Route path='/dashboard/projects/:projectId/create-board' element={<BoardForm />} />
+                <Route path='/dashboard/projects/:projectId/boards/:boardId' element={<BoardPage />} />
+                <Route path='/dashboard/projects/:projectId/boards/:boardId/create-task' element={<TaskForm />} />
+                <Route path='/dashboard/projects/:projectId/boards/:boardId/tasks/:taskId' element={<TaskDetailPage />} />
               </Route>
             </Route>
             <Route path='/*' element={<Navigate to='/home' />} />

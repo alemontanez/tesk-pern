@@ -1,12 +1,15 @@
-/* src/pages/boards/BoardPage.css */
-
 .board-page {
+  display: flex;
+  flex-direction: column;
   padding: 2rem;
   background-color: #f9fafb;
-  min-height: calc(100vh - 60px); /* Ajusta según la altura de tu navbar, si es necesario */
+  min-height: 100vh;
 }
 
 .board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1.5rem;
 }
 
@@ -16,47 +19,36 @@
   margin: 0;
 }
 
-.board-description {
-  color: #6b7280;
-  font-size: 1rem;
-  margin-top: 0.5rem;
+.create-task-button {
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-.tasks-section {
+.create-task-button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Grid de tarjetas */
+.tasks-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
-}
-
-.task-card {
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.task-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0 0 0.5rem 0;
-}
-
-.task-description {
-  color: #6b7280;
-  font-size: 0.95rem;
-  margin: 0;
 }
 
 .no-tasks {
   font-size: 1rem;
   color: #6b7280;
-  grid-column: 1 / -1;
   text-align: center;
+  margin-top: 2rem;
 }
 
+/* Sección de errores */
 .board-page-errors {
   padding: 2rem;
   text-align: center;

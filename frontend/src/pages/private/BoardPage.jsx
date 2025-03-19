@@ -1,18 +1,18 @@
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useBoard } from '../../context/BoardContext'
 import { useEffect, useState } from 'react'
+import TaskCard from '../../components/TaskCard'
+import '../../styles/BoardPage.css'
 
 export default function BoardPage() {
-
   const [board, setBoard] = useState({})
   const [tasks, setTasks] = useState([])
-
   const { projectId, boardId } = useParams()
   const { fetchBoard, errors } = useBoard()
 
   useEffect(() => {
-    async function getBoard(projectId, boardId) {
-      const res = await fetchBoard(projectId, boardId)
+    async function getBoard(projId, brdId) {
+      const res = await fetchBoard(projId, brdId)
       setBoard(res)
       setTasks(res.Tasks)
     }
@@ -21,32 +21,31 @@ export default function BoardPage() {
 
   if (errors.length > 0) {
     return (
-      <div>
+      <div className='board-page-errors'>
         {errors.map((error, i) => (
           <h2 key={i}>{error}</h2>
         ))}
       </div>
     )
-  } else {
-    return (
-      <div>
-        <h2>{board.name}</h2>
-        {
-          tasks.length > 0 ? (
-            tasks.map(task => (
-              <div key={task.id}>
-                <h3 style={{color: task.Label.hex_code}}>{task.title}</h3>
-                <p>{task.description}</p>
-                <p>{task.due_date}</p>
-                <p>{task.Priority.name}</p>
-                <hr />
-              </div>
-            ))
-          ) : (
-            <p>Aún no hay tareas</p>
-          )
-        }
-      </div>
-    )
   }
+
+  return (
+    <div className='board-page'>
+      <header className='board-header'>
+        <h1 className='board-title'>{board.name}</h1>
+        <Link className='create-task-button' to={`/dashboard/projects/${projectId}/boards/${boardId}/create-task`}>+ Crear tarea</Link>
+      </header>
+
+      {tasks.length > 0 ? (
+        <div className='tasks-grid'>
+          {tasks.map(task => (
+            <TaskCard key={task.id} task={task} url={`/dashboard/projects/${projectId}/boards/${boardId}/tasks/${task.id}`}/>
+          ))}
+        </div>
+      ) : (
+        <p className='no-tasks'>Aún no hay tareas</p>
+      )}
+    </div>
+  )
 }
+

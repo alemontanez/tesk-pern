@@ -52,7 +52,7 @@ export default function ProjectPage() {
           placeholder='Search boards...'
           className='search-boards'
         />
-        <button className='new-board-button'>+ New Board</button>
+        <Link className='new-board-button' to={`/dashboard/projects/${projectId}/create-board`}>+ New Board</Link>
       </div>
 
       {/* Contenedor de tableros en forma de grid */}

@@ -1,21 +1,28 @@
 import { NavLink } from 'react-router-dom'
 import '../styles/SideMenu.css'
+import { useUser } from '../context/UserContext'
 
 export default function SideMenu() {
+
+  const { profile } = useUser()
+  const firstInitial = profile?.first_name ? profile.first_name.substring(0, 1).toUpperCase() : ''
+  const lastInitial = profile?.last_name ? profile.last_name.substring(0, 1).toUpperCase() : ''
+  
+
   return (
     <aside className='side-menu'>
       <div className='user-info'>
-        <div className='avatar'>JD</div>
+        <div className='avatar'>{firstInitial}{lastInitial}</div>
         <div className='user-details'>
-          <h3>John Doe</h3>
-          <p>john@example.com</p>
+          <h3>{profile.first_name} {profile.last_name}</h3>
+          <p>{profile.email}</p>
         </div>
       </div>
 
       <ul className='menu-links'>
         <li>
           <NavLink to='/home' className={({ isActive }) => isActive ? 'active' : ''}>
-            <span className='icon'>🏠</span> Home
+            <span className='icon'>🏠</span> Inicio
           </NavLink>
         </li>
         <li>
@@ -25,42 +32,42 @@ export default function SideMenu() {
         </li>
         <li>
           <NavLink to='/projects' className={({ isActive }) => isActive ? 'active' : ''}>
-            <span className='icon'>📌</span> Projects
+            <span className='icon'>📌</span> Proyectos
           </NavLink>
         </li>
         <li>
           <NavLink to='/teams' className={({ isActive }) => isActive ? 'active' : ''}>
-            <span className='icon'>👥</span> Teams
+            <span className='icon'>👥</span> Equipos
           </NavLink>
         </li>
         <li>
           <NavLink to='/calendar' className={({ isActive }) => isActive ? 'active' : ''}>
-            <span className='icon'>📅</span> Calendar
+            <span className='icon'>📅</span> Calendario
           </NavLink>
         </li>
         <li>
           <NavLink to='/reports' className={({ isActive }) => isActive ? 'active' : ''}>
-            <span className='icon'>📊</span> Reports
+            <span className='icon'>📊</span> Reportes
           </NavLink>
         </li>
         <li>
           <NavLink to='/documentation' className={({ isActive }) => isActive ? 'active' : ''}>
-            <span className='icon'>📖</span> Documentation
+            <span className='icon'>📖</span> Documentación
           </NavLink>
         </li>
         <li>
           <NavLink to='/search' className={({ isActive }) => isActive ? 'active' : ''}>
-            <span className='icon'>🔍</span> Search
+            <span className='icon'>🔍</span> Búsqueda
           </NavLink>
         </li>
         <li>
           <NavLink to='/automations' className={({ isActive }) => isActive ? 'active' : ''}>
-            <span className='icon'>⚡</span> Automations
+            <span className='icon'>⚡</span> Automatizaciones
           </NavLink>
         </li>
         <li>
           <NavLink to='/settings' className={({ isActive }) => isActive ? 'active' : ''}>
-            <span className='icon'>⚙️</span> Settings
+            <span className='icon'>⚙️</span> Ajustes
           </NavLink>
         </li>
       </ul>

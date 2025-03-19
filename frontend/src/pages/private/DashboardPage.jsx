@@ -1,4 +1,5 @@
 import { useProject } from '../../context/ProjectContext'
+import { Link } from 'react-router-dom'
 import ProjectCard from '../../components/ProjectCard'
 import '../../styles/DashboardPage.css'
 
@@ -21,7 +22,7 @@ export default function DashboardPage() {
             className='search-input'
             placeholder='Search projects...'
           />
-          <button className='new-project-button'>+ New Project</button>
+          <Link className='new-project-button' to={'/dashboard/create-project'}>+ New Project</Link>
         </div>
       </div>
 

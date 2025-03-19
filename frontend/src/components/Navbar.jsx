@@ -16,18 +16,18 @@ export default function Navbar () {
         </div>
         <div className='navbar-right'>
           <NavLink to='/home' className={({ isActive }) => isActive ? 'active' : ''}>
-            Home
+            Inicio
           </NavLink>
           <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'active' : ''}>
             Dashboard
           </NavLink>
           <NavLink to='/projects' className={({ isActive }) => isActive ? 'active' : ''}>
-            Projects
+            Proyectos
           </NavLink>
           <NavLink to='/teams' className={({ isActive }) => isActive ? 'active' : ''}>
-            Teams
+            Equipos
           </NavLink>
-          <button onClick={logout} className='logout-button'>Log out</button>
+          <button onClick={logout} className='logout-button'>Cerrar sesión</button>
         </div>
       </nav>
     )
@@ -40,14 +40,14 @@ export default function Navbar () {
             <span className='logo-text'>Tesk</span>
           </div>
           <div className='nav-links'>
-            <NavLink to='/features'>Features</NavLink>
-            <NavLink to='/pricing'>Pricing</NavLink>
-            <NavLink to='/about'>About</NavLink>
+            <NavLink to='/'>Características</NavLink>
+            <NavLink to='/'>Precios</NavLink>
+            <NavLink to='/'>Sobre nosotros</NavLink>
           </div>
         </div>
         <div className='navbar-right'>
-          <Link to='/login' className='login-link'>Log in</Link>
-          <Link to='/register' className='get-started-button'>Get Started</Link>
+          <Link to='/login' className='login-link'>Ingresar</Link>
+          <Link to='/register' className='get-started-button'>Registrarse</Link>
         </div>
       </nav>
     )

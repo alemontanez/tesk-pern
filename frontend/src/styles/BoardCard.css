@@ -2,6 +2,7 @@
 
 .board-card {
   border: 1px solid #e5e7eb;
+  border-top: 4px solid #2563eb;
   border-radius: 8px;
   padding: 1rem;
   background-color: #fff;

@@ -9,6 +9,7 @@ export default function DashboardPage() {
   return (
     <div className='dashboard-page'>
       <h1 className='page-title'>Dashboard</h1>
+      <p className='page-description'>Tus proyectos</p>
 
       <div className='dashboard-actions'>
         <div className='tabs'>

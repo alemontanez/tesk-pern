@@ -1,4 +1,5 @@
 import Board from '../models/board.model.js'
+import Label from '../models/label.model.js'
 import Project from '../models/project.model.js'
 import Project_users from '../models/project_users.model.js'
 import Role from '../models/role.model.js'
@@ -53,7 +54,11 @@ export const getProjectService = async (userId, projectId) => {
       model: Board,
       where: {
         project_id: projectId
-      }
+      },
+      include: [{
+        model: Label,
+        attributes: ['hex_code']
+      }]
     }],
   })
   if (!project) throw new Error('Project not found')

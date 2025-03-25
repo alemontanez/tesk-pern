@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom'
 import '../styles/BoardCard.css'
 
-export default function BoardCard ({ projectId, board }) {
+export default function BoardCard({ projectId, board }) {
   return (
-    <div className='board-card'>
+    <div
+      className='board-card'
+      style={{ border: `1px solid ${board.Label?.hex_code || '#e5e7eb'}`, borderTop: `5px solid ${board.Label?.hex_code || '#e5e7eb'}` }}
+    >
       <div className='board-card-header'>
-        <h3 className='board-title'>{board.name}</h3>
-        {/* Ícono de favorito, menú, etc. opcional */}
+        <h3 className='board-card-title'>{board.name}</h3>
       </div>
 
-      <p className='board-subtitle'>
+      <p className='board-card-subtitle'>
         {board.tasksCount || 0} tareas
       </p>
-
-      {/* Aquí podrías mostrar más detalles, p. ej. prioridad, estado, etc. */}
       <Link
         className='view-board-button'
         to={`/dashboard/projects/${projectId}/boards/${board.id}`}

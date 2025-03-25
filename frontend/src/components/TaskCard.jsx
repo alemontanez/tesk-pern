@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import '../styles/TaskCard.css'
 
-export default function TaskCard ({ task, url }) {
+export default function TaskCard({ task, url }) {
   return (
-    <div 
+    <div
       className='task-card'
       style={{ borderLeft: `5px solid ${task.Label?.hex_code || '#e5e7eb'}` }}
     >

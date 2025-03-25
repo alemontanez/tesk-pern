@@ -1,5 +1,3 @@
-/* src/pages/projects/ProjectPage.css */
-
 .project-page {
   display: flex;
   flex-direction: column;
@@ -75,7 +73,7 @@
 /* Grid de tarjetas */
 .boards-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 

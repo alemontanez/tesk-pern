@@ -31,7 +31,7 @@ export default function ProjectPage() {
 
   return (
     <div className='project-page'>
-
+      <Link to={'/dashboard'} className='project-go-back'>⬅️ Volver al dashboard</Link>
       {/* Encabezado del proyecto */}
       <div className='project-header'>
         <h1 className='project-title'>{project.name}</h1>

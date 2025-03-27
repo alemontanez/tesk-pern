@@ -73,8 +73,20 @@
 /* Grid de tarjetas */
 .boards-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
+}
+
+@media (max-width: 1300px) {
+  .boards-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1070px) {
+  .boards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Tarjeta "Create a new board" */
@@ -103,4 +115,10 @@
 .create-board-subtext {
   font-size: 0.9rem;
   color: #6b7280;
+}
+
+.project-go-back {
+  text-decoration: none;
+  color: #1d4ed8;
+  width: fit-content;
 }

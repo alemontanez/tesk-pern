@@ -1,7 +1,7 @@
 .board-page {
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  /* padding: 2rem; */
   background-color: #f9fafb;
   min-height: 100vh;
 }
@@ -16,7 +16,7 @@
 .board-title {
   font-size: 1.8rem;
   font-weight: bold;
-  margin: 0;
+  margin: 16px 6px;
 }
 
 .create-task-button {
@@ -53,4 +53,10 @@
   padding: 2rem;
   text-align: center;
   color: #d00;
+}
+
+.board-go-back {
+  text-decoration: none;
+  color: #1d4ed8;
+  width: fit-content;
 }

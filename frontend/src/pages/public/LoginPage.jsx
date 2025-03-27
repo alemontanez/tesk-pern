@@ -2,9 +2,10 @@ import { useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
 import '../../styles/LoginPage.css'
+import { useEffect } from 'react'
 
 const LoginPage = () => {
-  const { signin, errors: authErrors } = useAuth()
+  const { isAuthenticated ,signin, errors: authErrors } = useAuth()
   const {
     register,
     handleSubmit,
@@ -12,9 +13,16 @@ const LoginPage = () => {
   } = useForm()
   const navigate = useNavigate()
 
+  
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home')
+    }
+  }, [])
+
   const onSubmit = async (data) => {
     await signin(data)
-    navigate('/dashboard')
+    navigate('/home')
   }
 
   return (

@@ -31,6 +31,7 @@ export default function BoardPage() {
 
   return (
     <div className='board-page'>
+      <Link to={`/dashboard/projects/${projectId}`} className='project-go-back'>⬅️ Volver al proyecto</Link>
       <header className='board-header'>
         <h1 className='board-title'>{board.name}</h1>
         <Link className='create-task-button' to={`/dashboard/projects/${projectId}/boards/${boardId}/create-task`}>+ Crear tarea</Link>

@@ -10,7 +10,6 @@ export default function BoardCard({ projectId, board }) {
       <div className='board-card-header'>
         <h3 className='board-card-title'>{board.name}</h3>
       </div>
-
       <p className='board-card-subtitle'>
         {board.tasksCount || 0} tareas
       </p>

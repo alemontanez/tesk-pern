@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { countBoardTasks, createBoard, deleteBoard, getBoards, updateBoard, updateBoardLabel } from '../controllers/board.controller.js'
+import { createBoard, deleteBoard, getBoards, updateBoard, updateBoardLabel } from '../controllers/board.controller.js'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
 import { createBoardSchema, updateBoardLabelSchema, updateBoardSchema } from '../schemas/board.schema.js'
 

@@ -1,4 +1,4 @@
-import { changeLabel, countBoardTasksService, createProjectBoard, deleteBoardService, getProjectBoards, updateBoardName } from '../services/board.service.js'
+import { changeLabel, createProjectBoard, deleteBoardService, getProjectBoards, updateBoardName } from '../services/board.service.js'
 
 export const getBoards = async (req, res) => {
   const { projectId } = req.params

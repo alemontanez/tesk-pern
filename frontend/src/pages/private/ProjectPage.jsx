@@ -29,6 +29,8 @@ export default function ProjectPage() {
     )
   }
 
+  console.log(boards)
+
   return (
     <div className='project-page'>
       <Link to={'/dashboard'} className='project-go-back'>⬅️ Volver al dashboard</Link>

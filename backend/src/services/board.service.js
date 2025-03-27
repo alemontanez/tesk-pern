@@ -1,6 +1,5 @@
 import Board from '../models/board.model.js'
 import Label from '../models/label.model.js'
-import Task from '../models/task.model.js'
 import { checkPermissions } from '../utils/checkPermissions.js'
 
 export const getProjectBoards = async (userId, projectId) => {

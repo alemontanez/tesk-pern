@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import '../styles/BoardCard.css'
 
 export default function BoardCard({ projectId, board }) {
+
   return (
     <div
       className='board-card'
@@ -11,7 +12,7 @@ export default function BoardCard({ projectId, board }) {
         <h3 className='board-card-title'>{board.name}</h3>
       </div>
       <p className='board-card-subtitle'>
-        {board.tasksCount || 0} tareas
+        {board.taskCount || 0} tareas
       </p>
       <Link
         className='view-board-button'

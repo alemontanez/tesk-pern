@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createBoard, deleteBoard, getBoards, updateBoard, updateBoardLabel } from '../controllers/board.controller.js'
+import { countBoardTasks, createBoard, deleteBoard, getBoards, updateBoard, updateBoardLabel } from '../controllers/board.controller.js'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
 import { createBoardSchema, updateBoardLabelSchema, updateBoardSchema } from '../schemas/board.schema.js'
 
@@ -10,5 +10,6 @@ router.post('/projects/:projectId/boards', validateSchema(createBoardSchema), cr
 router.patch('/projects/:projectId/boards/:boardId', validateSchema(updateBoardSchema), updateBoard)
 router.patch('/projects/:projectId/boards/:boardId/change-label', validateSchema(updateBoardLabelSchema), updateBoardLabel)
 router.delete('/projects/:projectId/boards/:boardId', deleteBoard)
+router.get('/projects/:projectId/boards/:boardId/countTasks', countBoardTasks)
 
 export default router

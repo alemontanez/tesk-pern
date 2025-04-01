@@ -7,3 +7,4 @@ export const getBoard = async (projectId, boardId) => {
 export const createBoard = async (projectId, board) => {
   return api.post(`/projects/${projectId}/boards`, board)
 }
+

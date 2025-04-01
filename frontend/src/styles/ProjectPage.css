@@ -122,3 +122,11 @@
   color: #1d4ed8;
   width: fit-content;
 }
+
+
+.boards-not-found {
+  display: flex;
+  justify-content: center;
+  margin-top: 110px;
+  color: #91969e;
+}

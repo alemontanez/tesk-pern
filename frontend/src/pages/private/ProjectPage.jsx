@@ -1,14 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useProject } from '../../context/ProjectContext'
 import BoardCard from '../../components/BoardCard'
+import Spinner from '../../components/Spinner'
 import '../../styles/ProjectPage.css'
 
 export default function ProjectPage() {
   const { projectId } = useParams()
-  const { fetchProject, errors } = useProject()
+  const { fetchProject, searchBoards, errors } = useProject()
   const [project, setProject] = useState({})
   const [boards, setBoards] = useState([])
+  const [timer, setTimer] = useState(null)
+  const [loading, setLoading] = useState(false)
+
 
   useEffect(() => {
     async function getProject(id) {
@@ -29,7 +33,18 @@ export default function ProjectPage() {
     )
   }
 
-  console.log(boards)
+  const handleSearch = (e) => {
+    const query = e.target.value.trim()
+    setLoading(true)
+    if (timer) clearTimeout(timer)
+
+    const newTimer = setTimeout(async () => {
+      const res = await searchBoards(projectId, query)
+      setBoards(res)
+      setLoading(false)
+    }, 1000)
+    setTimer(newTimer)
+  }
 
   return (
     <div className='project-page'>
@@ -53,30 +68,43 @@ export default function ProjectPage() {
           type='text'
           placeholder='Buscar tableros...'
           className='search-boards'
+          onChange={handleSearch}
         />
         <Link className='new-board-button' to={`/dashboard/projects/${projectId}/create-board`}>+ Crear Tablero</Link>
       </div>
 
       {/* Contenedor de tableros en forma de grid */}
-      <div className='boards-container'>
-        {boards.map(board => (
-          <BoardCard
-            key={board.id}
-            projectId={project.id}
-            board={board}
-          />
-        ))}
+      {loading ? (
+        <>
+          <Spinner></Spinner>
+        </>
+      ) : (
+        <>
+          {
+            boards.length > 0 ? (
+              <div className='boards-container'>
+                {boards.map(board => (
+                  <BoardCard
+                    key={board.id}
+                    projectId={project.id}
+                    board={board}
+                  />
+                ))}
+                <div className='create-board-card'>
+                  <div className='plus-icon'>+</div>
+                  <p className='create-board-text'>Crear un nuevo tablero</p>
+                  <span className='create-board-subtext'>
+                    Añade un nuevo tablero para organizar tus tareas
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div className='boards-not-found'>No se encontraron tableros que coincidan con la búsqueda.</div>
+            )
+          }
+        </>
 
-        {/* Tarjeta para crear un nuevo board */}
-        <div className='create-board-card'>
-          <div className='plus-icon'>+</div>
-          <p className='create-board-text'>Crear un nuevo tablero</p>
-          <span className='create-board-subtext'>
-            Añade un nuevo tablero para organizar tus tareas
-          </span>
-        </div>
-      </div>
-
+      )}
     </div>
   )
 }

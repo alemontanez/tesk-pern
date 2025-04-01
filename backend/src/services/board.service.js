@@ -1,26 +1,8 @@
 import Board from '../models/board.model.js'
 import Label from '../models/label.model.js'
+import Task from '../models/task.model.js'
 import { checkPermissions } from '../utils/checkPermissions.js'
-
-export const getProjectBoards = async (userId, projectId) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_view) throw new Error('Forbidden')
-  const boards = await Board.findAll({
-    where: { project_id: projectId }
-  })
-  const boardsWithCount = await Promise.all(
-    boards.map(async (board) => {
-      const result = await Task.findAndCountAll({
-        where: { board_id: board.id }
-      })
-      return {
-        ...board.toJSON(),
-        taskCount: result.count
-      }
-    })
-  )
-  return boardsWithCount
-}
+import { Op } from 'sequelize'
 
 export const createProjectBoard = async (userId, projectId, name) => {
   const role = await checkPermissions(userId, projectId)
@@ -67,4 +49,27 @@ export const deleteBoardService = async (userId, projectId, boardId) => {
   const board = await Board.findByPk(boardId)
   if (!board) throw new Error('Board not found')
   board.destroy({ force: true })
+}
+
+export const searchBoardsService = async (userId, projectId, query) => {
+  const role = await checkPermissions(userId, projectId)
+  if (!role.can_view) throw new Error('Forbidden')
+  const boards = await Board.findAll({
+    where: {
+      project_id: projectId,
+      name: { [Op.iLike]: `${query}%` }
+    }
+  })
+  const boardsWithCount = await Promise.all(
+    boards.map(async (board) => {
+      const result = await Task.findAndCountAll({
+        where: { board_id: board.id }
+      })
+      return {
+        ...board.toJSON(),
+        taskCount: result.count
+      }
+    })
+  )
+  return boardsWithCount
 }

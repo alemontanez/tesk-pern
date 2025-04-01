@@ -1,19 +1,4 @@
-import { changeLabel, createProjectBoard, deleteBoardService, getProjectBoards, updateBoardName } from '../services/board.service.js'
-
-export const getBoards = async (req, res) => {
-  const { projectId } = req.params
-  const userId = req.user.id
-  try {
-    const boards = await getProjectBoards(userId, projectId)
-    res.status(200).json(boards)
-  } catch (error) {
-    console.log(error)
-    if (error.message === 'Forbidden') {
-      return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
-    }
-    return res.status(500).json({ error: ['Internal error'] })
-  }
-}
+import { changeLabel, createProjectBoard, deleteBoardService, searchBoardsService, updateBoardName } from '../services/board.service.js'
 
 export const createBoard = async (req, res) => {
   const { projectId } = req.params
@@ -98,3 +83,19 @@ export const deleteBoard = async (req, res) => {
     return res.status(500).json({ error: ['Internal error'] })
   }
 }
+
+export const searchBoards = async (req, res) => {
+  const { projectId } = req.params
+  const userId = req.user.id
+  try {
+    const boards = await searchBoardsService(userId, projectId, req.query.search)
+    res.status(200).json(boards)
+  } catch (error) {
+    console.log(error)
+    if (error.message === 'Forbidden') {
+      return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
+    }
+    return res.status(500).json({ error: ['Internal error'] })
+  }
+}
+

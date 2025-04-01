@@ -11,3 +11,7 @@ export const getProjects = () => {
 export const getProject = (projectId) => {
   return api.get(`/projects/${projectId}`)
 }
+
+export const searchProjectBoards = async (projectId, query) => {
+  return api.get(`/projects/${projectId}/boards?search=${query}`)
+}

@@ -13,6 +13,7 @@ import labelRoutes from './routes/label.routes.js'
 import prioritiesRoutes from './routes/priorities.routes.js'
 import taskRoutes from './routes/task.routes.js'
 import commentRoutes from './routes/comment.routes.js'
+import membershipsRoutes from './routes/memberships.routes.js'
 import './models/relationships.js'
 import { authRequired } from './middlewares/jwtValidator.middleware.js'
 import { FRONTEND_URL } from './config/config.js'
@@ -48,5 +49,6 @@ app.use('/api', authRequired, labelRoutes)
 app.use('/api', authRequired, prioritiesRoutes)
 app.use('/api', authRequired, taskRoutes)
 app.use('/api', authRequired, commentRoutes)
+app.use('/api', authRequired, membershipsRoutes)
 
 export default app

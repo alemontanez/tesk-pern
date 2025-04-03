@@ -3,10 +3,11 @@ import { useParams, Link } from 'react-router-dom'
 import { useProject } from '../../context/ProjectContext'
 import BoardsPanel from '../../components/BoardsPanel'
 import '../../styles/ProjectPage.css'
+import MembersPanel from '../../components/MembersPanel'
 
 export default function ProjectPage() {
   const { projectId } = useParams()
-  const { fetchProject, searchBoards, errors } = useProject()
+  const { fetchProject, searchBoards, getMembers, errors } = useProject()
   const [project, setProject] = useState({})
   const [boards, setBoards] = useState([])
   const [timer, setTimer] = useState(null)
@@ -55,25 +56,25 @@ export default function ProjectPage() {
       <Link to={'/dashboard'} className='project-go-back'>
         ⬅️ Volver al dashboard
       </Link>
-      
+
       <div className='project-header'>
         <h1 className='project-title'>{project.name}</h1>
         <p className='project-description'>{project.description}</p>
 
         <div className='project-tabs'>
-          <button 
+          <button
             className={`tab-button ${activeTab === 'boards' ? 'active' : ''}`}
             onClick={() => setActiveTab('boards')}
           >
             Tableros
           </button>
-          <button 
+          <button
             className={`tab-button ${activeTab === 'members' ? 'active' : ''}`}
             onClick={() => setActiveTab('members')}
           >
             Miembros
           </button>
-          <button 
+          <button
             className={`tab-button ${activeTab === 'settings' ? 'active' : ''}`}
             onClick={() => setActiveTab('settings')}
           >
@@ -91,7 +92,10 @@ export default function ProjectPage() {
         />
       )}
       {activeTab === 'members' && (
-        <p>members</p>
+        <MembersPanel
+          projectId={projectId}
+          getMembers={getMembers}
+        />
       )}
       {activeTab === 'settings' && (
         <p>settings</p>

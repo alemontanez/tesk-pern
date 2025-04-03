@@ -1,0 +1,97 @@
+/* Contenedor principal */
+.members-panel {
+  width: 100%;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Encabezado con título y botón */
+.members-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.members-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.add-member-button {
+  background-color: #2563eb;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-member-button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Lista de miembros */
+.members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Tarjeta de cada miembro */
+.member-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.member-card:hover {
+  background-color: #f9fafb;
+}
+
+/* Avatar circular con iniciales */
+.member-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #1f2937;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-right: 1rem;
+  font-size: 1rem;
+}
+
+/* Contenedor del nombre y email */
+.member-info {
+  flex: 1;
+}
+
+.member-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.member-email {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* Rol (Admin, Member, etc.) */
+.member-role {
+  color: #6b7280;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+

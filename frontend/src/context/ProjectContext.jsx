@@ -1,4 +1,4 @@
-import { createProject, getProjects, getProject, searchProjectBoards } from '../services/project'
+import { createProject, getProjects, getProject, searchProjectBoards, getProjectMembers } from '../services/project'
 import { useState, createContext, useContext, useEffect } from 'react'
 
 const ProjectContext = createContext()
@@ -56,6 +56,17 @@ export const ProjectProvider = ({ children }) => {
     }
   }
 
+  const getMembers = async (projectId) => {
+    try {
+      setErrors([])
+      const res = await getProjectMembers(projectId)
+      return res.data
+    } catch (error) {
+      console.log(error)
+      setErrors(error.response.data.error)
+    }
+  }
+
   useEffect(() => {
     fetchProjects()
   }, [])
@@ -65,6 +76,7 @@ export const ProjectProvider = ({ children }) => {
       createNewProject,
       fetchProject,
       searchBoards,
+      getMembers,
       projects,
       errors
     }}>

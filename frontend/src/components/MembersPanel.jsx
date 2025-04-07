@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import AddMembersModal from './AddMembersModal'
 import '../styles/MembersPanel.css'
 
 export default function MembersPanel({ projectId, getMembers }) {
   const [members, setMembers] = useState([])
+  const [renderModal, setRenderModal] = useState(false)
 
   useEffect(() => {
     async function fetchMembers(id) {
@@ -10,7 +12,7 @@ export default function MembersPanel({ projectId, getMembers }) {
       setMembers(data)
     }
     fetchMembers(projectId)
-  }, [projectId])
+  }, [projectId, renderModal])
 
   const getInitials = (firstName = '', lastName = '') => {
     const f = firstName.charAt(0).toUpperCase()
@@ -18,11 +20,19 @@ export default function MembersPanel({ projectId, getMembers }) {
     return f + l
   }
 
+  const openModal = () => {
+    setRenderModal(true)
+  }
+
+  const closeModal = () => {
+    setRenderModal(false)
+  }
+
   return (
     <div className='members-panel'>
       <div className='members-header'>
-        <h2>Team Members</h2>
-        <button className='add-member-button'>+ Add Member</button>
+        <h2>Usuarios del proyecto</h2>
+        <button className='add-member-button' onClick={openModal}>+ Agregar usuario</button>
       </div>
 
       <div className='members-list'>
@@ -50,6 +60,10 @@ export default function MembersPanel({ projectId, getMembers }) {
           )
         })}
       </div>
+
+      {renderModal &&
+        <AddMembersModal projectId={projectId} handleClose={closeModal} />
+      }
     </div>
   )
 }

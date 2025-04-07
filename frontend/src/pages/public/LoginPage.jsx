@@ -5,7 +5,7 @@ import '../../styles/LoginPage.css'
 import { useEffect } from 'react'
 
 const LoginPage = () => {
-  const { isAuthenticated ,signin, errors: authErrors } = useAuth()
+  const { isAuthenticated, signin, errors: authErrors } = useAuth()
   const {
     register,
     handleSubmit,
@@ -13,7 +13,7 @@ const LoginPage = () => {
   } = useForm()
   const navigate = useNavigate()
 
-  
+
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/home')
@@ -46,7 +46,6 @@ const LoginPage = () => {
 
           <div className="form-group password-group">
             <label>Contraseña</label>
-            <Link to="/forgot-password" className="forgot-link">Olvidé mi contraseña</Link>
           </div>
           <div className="form-group">
             <input
@@ -56,8 +55,8 @@ const LoginPage = () => {
             {formErrors.password && (
               <p className="error-message">{formErrors.password.message}</p>
             )}
+            <Link to="/forgot-password" className="forgot-link">Olvidé mi contraseña</Link>
           </div>
-
           <button type="submit" className="login-button">Ingresar</button>
         </form>
 

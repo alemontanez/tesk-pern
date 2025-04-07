@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useProject } from '../../context/ProjectContext'
 import BoardsPanel from '../../components/BoardsPanel'
-import '../../styles/ProjectPage.css'
 import MembersPanel from '../../components/MembersPanel'
+import '../../styles/ProjectPage.css'
 
 export default function ProjectPage() {
   const { projectId } = useParams()

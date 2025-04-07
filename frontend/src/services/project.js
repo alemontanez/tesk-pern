@@ -19,3 +19,11 @@ export const searchProjectBoards = async (projectId, query) => {
 export const getProjectMembers = async (projectId) => {
   return api.get(`/projects/${projectId}/memberships`)
 }
+
+export const fetchUsers = async (projectId, query) => {
+  return api.get(`/projects/${projectId}/memberships/users?search=${query}`)
+}
+
+export const addProjectMember = (projectId, memberId) => {
+  return api.post(`/projects/${projectId}/memberships`, {memberId})
+}

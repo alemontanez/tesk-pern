@@ -12,7 +12,9 @@ export default function BoardCard({ projectId, board }) {
         <h3 className='board-card-title'>{board.name}</h3>
       </div>
       <p className='board-card-subtitle'>
-        {board.taskCount || 0} tareas
+        {board.taskCount == 0 && <span>Sin tareas</span>}
+        {board.taskCount == 1 && <span>1 tarea</span>}
+        {board.taskCount > 1 && <span>{board.taskCount} tareas</span>}
       </p>
       <Link
         className='view-board-button'

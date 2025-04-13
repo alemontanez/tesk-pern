@@ -118,3 +118,23 @@ export const deleteProjectWithDependencies = async (userId, projectId) => {
     throw new Error('The user does not have permissions')
   }
 }
+
+export const getUserRoleService = async (userId, projectId) => {
+  const project = await Project.findByPk(projectId)
+  if (!project) throw new Error('Project not found')
+
+  const getRole = await Project_users.findOne({
+    where: {
+      user_id: userId,
+      project_id: projectId
+    },
+    attributes: [],
+    include: [{
+      model: Role,
+      as: 'role',
+    }]
+  })
+  if (!getRole) throw new Error('Member not found')
+
+  return getRole.role
+}

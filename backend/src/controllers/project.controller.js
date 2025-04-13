@@ -1,4 +1,4 @@
-import { createProjectService, deleteProjectWithDependencies, getProjectService, getUserProjectsService, updateProjectData } from '../services/project.service.js'
+import { createProjectService, deleteProjectWithDependencies, getProjectService, getUserProjectsService, getUserRoleService, updateProjectData } from '../services/project.service.js'
 
 export const createProject = async (req, res) => {
   const userId = req.user.id
@@ -33,7 +33,7 @@ export const getUserProjects = async (req, res) => {
 }
 
 export const getProject = async (req, res) => {
-  const projectId = req.params.id
+  const { projectId } = req.params
   const userId = req.user.id
   try {
     const project = await getProjectService(userId, projectId)
@@ -48,7 +48,7 @@ export const getProject = async (req, res) => {
 }
 
 export const updateProject = async (req, res) => {
-  const projectId = req.params.id
+  const { projectId } = req.params
   const userId = req.user.id
   const { name, description } = req.body
   try {
@@ -58,18 +58,18 @@ export const updateProject = async (req, res) => {
       project
     })
   } catch (error) {
+    if (error.message === 'The user does not have permissions') {
+      return res.status(403).json({ error: [error.message] })
+    }
     if (error.message === 'Project not found') {
       return res.status(404).json({ error: [error.message] })
-    }
-    if (error.message === 'The user does not have permissions') {
-      return res.status(401).json({ error: [error.message] })
     }
     return res.status(500).json({ error: ['Internal error'] })
   }
 }
 
 export const deleteProject = async (req, res) => {
-  const projectId = req.params.id
+  const { projectId } = req.params
   const userId = req.user.id
   try {
     await deleteProjectWithDependencies(userId, projectId)
@@ -81,6 +81,21 @@ export const deleteProject = async (req, res) => {
     }
     if (error.message === 'The user does not have permissions') {
       return res.status(401).json({ error: [error.message] })
+    }
+    return res.status(500).json({ error: ['Internal error'] })
+  }
+}
+
+export const getUserRole = async (req, res) => {
+  const { projectId } = req.params
+  const userId = req.user.id
+  try {
+    const data = await getUserRoleService(userId, projectId)
+    res.status(200).json(data)
+  } catch (error) {
+    console.log(error)
+    if (error.message === 'Project not found' || error.message === 'Member not found') {
+      return res.status(404).json({ error: [error.message]})
     }
     return res.status(500).json({ error: ['Internal error'] })
   }

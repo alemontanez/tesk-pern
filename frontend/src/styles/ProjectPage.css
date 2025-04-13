@@ -70,6 +70,16 @@
   background-color: #1d4ed8;
 }
 
+.new-board-button-disabled {
+  background-color: #f4f4f4;
+  color: #c1c4ca;
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
 /* Grid de tarjetas */
 .boards-container {
   display: grid;

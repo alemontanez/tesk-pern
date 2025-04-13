@@ -1,20 +1,26 @@
-import { useParams, Link } from 'react-router-dom'
-import { useBoard } from '../../context/BoardContext'
 import { useEffect, useState } from 'react'
+import { useParams, Link } from 'react-router-dom'
+import { useProject } from '../../context/ProjectContext'
+import { useBoard } from '../../context/BoardContext'
 import TaskCard from '../../components/TaskCard'
 import '../../styles/BoardPage.css'
+import Tooltip from '../../components/Tooltip'
 
 export default function BoardPage() {
+  const { getPermissions } = useProject()
+  const { fetchBoard, errors } = useBoard()
+  const { projectId, boardId } = useParams()
   const [board, setBoard] = useState({})
   const [tasks, setTasks] = useState([])
-  const { projectId, boardId } = useParams()
-  const { fetchBoard, errors } = useBoard()
+  const [userRole, setUserRole] = useState({})
 
   useEffect(() => {
-    async function getBoard(projId, brdId) {
-      const res = await fetchBoard(projId, brdId)
+    async function getBoard(projectId, boardId) {
+      const res = await fetchBoard(projectId, boardId)
       setBoard(res)
       setTasks(res.Tasks)
+      const permissions = await getPermissions(projectId)
+      setUserRole(permissions)
     }
     getBoard(projectId, boardId)
   }, [projectId, boardId])
@@ -34,13 +40,28 @@ export default function BoardPage() {
       <Link to={`/dashboard/projects/${projectId}`} className='project-go-back'>⬅️ Volver al proyecto</Link>
       <header className='board-header'>
         <h1 className='board-title'>{board.name}</h1>
-        <Link className='create-task-button' to={`/dashboard/projects/${projectId}/boards/${boardId}/create-task`}>+ Crear tarea</Link>
+        {userRole.can_edit ? (
+          <Link
+            className='create-task-button'
+            to={`/dashboard/projects/${projectId}/boards/${boardId}/create-task`}
+          >
+            + Crear tarea
+          </Link>
+        ) : (
+          <Tooltip message='No tenes permisos para realizar esta acción'>
+            <button
+              className='create-task-button-disabled'
+            >
+              + Crear tarea
+            </button>
+          </Tooltip>
+        )}
       </header>
 
       {tasks.length > 0 ? (
         <div className='tasks-grid'>
           {tasks.map(task => (
-            <TaskCard key={task.id} task={task} url={`/dashboard/projects/${projectId}/boards/${boardId}/tasks/${task.id}`}/>
+            <TaskCard key={task.id} task={task} url={`/dashboard/projects/${projectId}/boards/${boardId}/tasks/${task.id}`} />
           ))}
         </div>
       ) : (

@@ -1,0 +1,45 @@
+/* src/components/Tooltip.css */
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  width: max-content;
+  max-width: 150px;
+  background-color: rgba(63, 94, 134, 0.708); /* Color oscuro con transparencia */
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  position: absolute;
+  z-index: 10;
+  bottom: 120%; /* Posiciona el tooltip arriba del elemento */
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none; /* Para que no interfiera con el hover */
+}
+
+/* Triángulo indicador (opcional) */
+.tooltip-text::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(63, 94, 134, 0.708) transparent transparent transparent;
+}
+
+/* Mostrar el tooltip al hacer hover */
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

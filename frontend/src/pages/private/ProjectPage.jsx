@@ -3,27 +3,32 @@ import { useParams, Link } from 'react-router-dom'
 import { useProject } from '../../context/ProjectContext'
 import BoardsPanel from '../../components/BoardsPanel'
 import MembersPanel from '../../components/MembersPanel'
+import ProjectSettings from '../../components/ProjectSettings'
+import Tooltip from '../../components/Tooltip'
 import '../../styles/ProjectPage.css'
 
 export default function ProjectPage() {
   const { projectId } = useParams()
-  const { fetchProject, searchBoards, getMembers, errors } = useProject()
+  const { fetchProject, searchBoards, getMembers, getPermissions, errors } = useProject()
   const [project, setProject] = useState({})
   const [boards, setBoards] = useState([])
   const [timer, setTimer] = useState(null)
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('boards')
+  const [userRole, setUserRole] = useState({})
 
   useEffect(() => {
     async function getProject(id) {
       const res = await fetchProject(id)
       setProject(res.data)
       setBoards(res.data.Boards)
+      const permissions = await getPermissions(id)
+      setUserRole(permissions)
     }
     if (activeTab === 'boards') {
       getProject(projectId)
     }
-  }, [projectId, activeTab])
+  }, [])
 
   const handleSearch = (e) => {
     const query = e.target.value.trim()
@@ -36,19 +41,6 @@ export default function ProjectPage() {
       setLoading(false)
     }, 1000)
     setTimer(newTimer)
-  }
-
-  if (errors.length > 0) {
-    return (
-      <div>
-        <Link to={'/dashboard'} className='project-go-back'>
-          ⬅️ Volver al dashboard
-        </Link>
-        {errors.map((error, i) => (
-          <h2 key={i}>{error}</h2>
-        ))}
-      </div>
-    )
   }
 
   return (
@@ -74,12 +66,19 @@ export default function ProjectPage() {
           >
             Miembros
           </button>
-          <button
-            className={`tab-button ${activeTab === 'settings' ? 'active' : ''}`}
-            onClick={() => setActiveTab('settings')}
-          >
-            Ajustes
-          </button>
+          {userRole.can_manage ?
+            <button
+              className={`tab-button ${activeTab === 'settings' ? 'active' : ''}`}
+              onClick={() => setActiveTab('settings')}
+            >
+              Ajustes
+            </button> :
+            <Tooltip message='No tenes permisos para realizar esta acción'>
+              <button className='tab-button' disabled>
+                Ajustes
+              </button>
+            </Tooltip>
+          }
         </div>
       </div>
 
@@ -89,16 +88,22 @@ export default function ProjectPage() {
           loading={loading}
           projectId={projectId}
           onSearch={handleSearch}
+          userRole={userRole}
         />
       )}
       {activeTab === 'members' && (
         <MembersPanel
           projectId={projectId}
           getMembers={getMembers}
+          getPermissions={getPermissions}
+          userRole={userRole}
         />
       )}
       {activeTab === 'settings' && (
-        <p>settings</p>
+        <ProjectSettings
+          project={project}
+          userRole={userRole}
+        />
       )}
     </div>
   )

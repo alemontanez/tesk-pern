@@ -1,4 +1,4 @@
-import { createProject, getProjects, getProject, searchProjectBoards, getProjectMembers, fetchUsers, addProjectMember } from '../services/project'
+import { createProject, getProjects, getProject, searchProjectBoards, getProjectMembers, fetchUsers, addProjectMember, updateProjectService, fetchPermissions } from '../services/project'
 import { useState, createContext, useContext, useEffect } from 'react'
 
 const ProjectContext = createContext()
@@ -88,6 +88,28 @@ export const ProjectProvider = ({ children }) => {
     }
   }
 
+  const updateProject = async (projectId, data) => {
+    try {
+      await updateProjectService(projectId, data)
+    } catch (error) {
+      console.log(error)
+      setErrors(error.response.data.error)
+    }
+  }
+
+  const clearErrors = () => {
+    setErrors([])
+  }
+
+  const getPermissions = async (projectId) => {
+    try {
+      const res = await fetchPermissions(projectId)
+      return res.data
+    } catch (error) {
+      setErrors(error.response.data.error)
+    }
+  }
+
   useEffect(() => {
     fetchProjects()
   }, [])
@@ -100,6 +122,9 @@ export const ProjectProvider = ({ children }) => {
       getMembers,
       searchUsers,
       addMember,
+      updateProject,
+      clearErrors,
+      getPermissions,
       projects,
       errors
     }}>

@@ -2,10 +2,11 @@ import { useForm } from 'react-hook-form'
 import { useBoard } from '../../context/BoardContext'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import Swal from 'sweetalert2'
 import '../../styles/BoardForm.css'
 
 export default function BoardForm ({ defaultValues }) {
-  const { createNewBoard, updateBoard } = useBoard()
+  const { createNewBoard, updateBoard, errors } = useBoard()
   const { projectId } = useParams()
   const navigate = useNavigate()
 
@@ -13,7 +14,7 @@ export default function BoardForm ({ defaultValues }) {
     register,
     handleSubmit,
     reset,
-    formState: { errors }
+    formState: { errors: formErrors }
   } = useForm({
     defaultValues: defaultValues || { name: '' }
   })
@@ -41,8 +42,8 @@ export default function BoardForm ({ defaultValues }) {
           type='text'
           {...register('name', { required: 'El nombre es obligatorio' })}
         />
-        {errors.name && (
-          <p className='error-message'>{errors.name.message}</p>
+        {formErrors.name && (
+          <p className='error-message'>{formErrors.name.message}</p>
         )}
       </div>
       <button type='submit'>

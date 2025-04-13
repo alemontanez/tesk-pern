@@ -1,14 +1,33 @@
 import { useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useProject } from '../context/ProjectContext'
+import Swal from 'sweetalert2'
 import Spinner from './Spinner'
 import '../styles/AddMembersModal.css'
 
 export default function AddMembersModal({ projectId, handleClose }) {
 
-  const { searchUsers, addMember } = useProject()
+  const { searchUsers, addMember, errors, clearErrors } = useProject()
   const [loading, setLoading] = useState(false)
   const [timer, setTimer] = useState(null)
   const [users, setUsers] = useState([])
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      console.log('Error:', errors)
+      Swal.fire({
+        title: 'Error de Permisos',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        allowOutsideClick: false,
+        allowEscapeKey: false
+      });
+      clearErrors()
+      navigate('/dashboard')
+    } 
+  }, [errors])
 
   const handleSearch = (e) => {
     const query = e.target.value.trim()
@@ -40,7 +59,7 @@ export default function AddMembersModal({ projectId, handleClose }) {
     getUsers(projectId)
   }, [])
 
-  return (
+  if (errors.length === 0 ) return (
     <div className='members-modal'>
       <div className='members-modal-container'>
 
@@ -55,7 +74,7 @@ export default function AddMembersModal({ projectId, handleClose }) {
             className='search-users'
             onChange={handleSearch}
           />
-
+          
           <div className='users-container'>
             {loading
               ? <Spinner />

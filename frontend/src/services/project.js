@@ -27,3 +27,11 @@ export const fetchUsers = async (projectId, query) => {
 export const addProjectMember = (projectId, memberId) => {
   return api.post(`/projects/${projectId}/memberships`, {memberId})
 }
+
+export const updateProjectService = async (projectId, data) => {
+  return api.patch(`/projects/${projectId}`, data)
+}
+
+export const fetchPermissions = async (projectId) => {
+  return api.get(`/projects/${projectId}/permissions`)
+}

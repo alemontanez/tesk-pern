@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import AddMembersModal from './AddMembersModal'
 import '../styles/MembersPanel.css'
+import Tooltip from './Tooltip'
 
-export default function MembersPanel({ projectId, getMembers }) {
+export default function MembersPanel({ projectId, getMembers, userRole }) {
   const [members, setMembers] = useState([])
   const [renderModal, setRenderModal] = useState(false)
 
@@ -32,7 +33,21 @@ export default function MembersPanel({ projectId, getMembers }) {
     <div className='members-panel'>
       <div className='members-header'>
         <h2>Usuarios del proyecto</h2>
-        <button className='add-member-button' onClick={openModal}>+ Agregar usuario</button>
+        {userRole.can_manage ?
+          <button
+            className='add-member-button'
+            onClick={openModal}
+          >
+            + Agregar usuario
+          </button> :
+          <Tooltip message='No tenes permisos para realizar esta acción'>
+            <button
+              className='add-member-button-disabled'
+            >
+              + Agregar usuario
+            </button>
+          </Tooltip>
+        }
       </div>
 
       <div className='members-list'>

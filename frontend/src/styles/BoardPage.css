@@ -34,6 +34,17 @@
   background-color: #1d4ed8;
 }
 
+.create-task-button-disabled {
+  background-color: #f4f4f4;
+  color: #c1c4ca;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 /* Grid de tarjetas */
 .tasks-grid {
   display: grid;

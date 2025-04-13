@@ -22,6 +22,8 @@ export const permissionMiddleware = (requiredPermission) => {
       if (!projectUser.role[requiredPermission]) {
         return res.status(403).json({ error: 'Forbidden' })
       }
+
+      req.role = projectUser.role
       next()
     } catch (error) {
       next(error)

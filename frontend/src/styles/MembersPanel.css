@@ -32,6 +32,17 @@
   background-color: #1d4ed8;
 }
 
+.add-member-button-disabled {
+  background: #f4f4f4;
+  color: #c1c4ca;
+  padding: 0.5rem 1rem;
+  border: none;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
 /* Lista de miembros */
 .members-list {
   display: flex;

@@ -39,6 +39,7 @@ export default function BoardPage() {
       </div>
     )
   }
+  console.log(tasks)
 
   const [timer, setTimer] = useState(null)
 
@@ -51,7 +52,6 @@ export default function BoardPage() {
       const res = await searchTasks(projectId, boardId, query)
       setTasks(res)
       setLoading(false)
-      console.log(query)
     }, 1000)
     setTimer(newTimer)
   }

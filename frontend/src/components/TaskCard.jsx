@@ -11,6 +11,9 @@ export default function TaskCard({ task, url }) {
         <h3 className='task-title'>{task.title}</h3>
         <p className='task-description'>{task.description}</p>
         <p className='task-info'>
+          <strong>Fecha de creación:</strong> {task.createdAt}
+        </p>
+        <p className='task-info'>
           <strong>Fecha límite:</strong> {task.due_date}
         </p>
         <p className='task-info'>

@@ -26,7 +26,7 @@ export const fetchTasks = async (userId, projectId, boardId) => {
       where: {
         board_id: boardId
       },
-      attributes: ['id', 'title', 'description', 'due_date', 'updatedAt'],
+      attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt'],
       required: false,
       include: [
         { model: Label, attributes: ['hex_code'] },

@@ -1,4 +1,4 @@
-import { fetchTask, fetchTasks, createTaskService, updateTaskService, deleteTaskService } from '../services/task.service.js'
+import { fetchTask, fetchTasks, createTaskService, updateTaskService, deleteTaskService, searchTasksService } from '../services/task.service.js'
 
 export const getTasks = async (req, res) => {
   const userId = req.user.id
@@ -14,6 +14,18 @@ export const getTasks = async (req, res) => {
     if (error.message === 'Board not found') {
       return res.status(404).json({ error: [error.message] })
     }
+    return res.status(500).json({ error: ['Internal error'] })
+  }
+}
+
+export const searchTasks = async (req, res) => {
+  const { boardId } = req.params
+  const { query } = req.query
+  try {
+    const tasks = await searchTasksService(boardId, query)
+    res.status(200).json(tasks)
+  } catch (error) {
+    console.log(error)
     return res.status(500).json({ error: ['Internal error'] })
   }
 }

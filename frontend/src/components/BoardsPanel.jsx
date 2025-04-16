@@ -23,7 +23,7 @@ const BoardsPanel = ({ boards, loading, projectId, onSearch, userRole }) => {
           >
             + Crear Tablero
           </Link> :
-          <Tooltip message='No tenes permisos para realizar esta acción'>
+          <Tooltip>
             <button
               className='new-board-button-disabled'
             >

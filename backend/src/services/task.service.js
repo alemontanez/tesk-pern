@@ -5,6 +5,7 @@ import Label from '../models/label.model.js'
 import User from '../models/user.model.js'
 import Comment from '../models/comment.model.js'
 import { checkPermissions } from '../utils/checkPermissions.js'
+import { Op } from 'sequelize'
 
 export const fetchTasks = async (userId, projectId, boardId) => {
   const role = await checkPermissions(userId, projectId)
@@ -38,6 +39,23 @@ export const fetchTasks = async (userId, projectId, boardId) => {
   return tasks
 }
 
+export const searchTasksService = async (boardId, query) => {
+  const tasks = await Task.findAll({
+    where: {
+      board_id: boardId,
+      title: { [Op.iLike]: `%${query}%` }
+    },
+    attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt'],
+    include: [
+      { model: Label, attributes: ['hex_code'] },
+      { model: Priority, attributes: ['name'] },
+      { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo' },
+      { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy' }
+    ]
+  })
+  return tasks
+}
+
 export const fetchTask = async (userId, projectId, boardId, taskId) => {
   const role = await checkPermissions(userId, projectId)
   if (!role.can_view) throw new Error('Forbidden')
@@ -53,7 +71,7 @@ export const fetchTask = async (userId, projectId, boardId, taskId) => {
           project_id: projectId
         },
         attributes: []
-      }, 
+      },
       {
         model: Comment,
         where: {

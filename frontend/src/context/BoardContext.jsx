@@ -1,5 +1,5 @@
 import { useContext, createContext, useState } from 'react'
-import { createBoard, getBoard } from '../services/board'
+import { createBoard, getBoard, searchBoardTasks } from '../services/board'
 import Swal from 'sweetalert2'
 
 export const BoardContext = createContext()
@@ -42,6 +42,15 @@ export const BoardProvider = ({ children }) => {
     }
   }
 
+  const searchTasks = async (projectId, boardId, query) => {
+    try {
+      const res = await searchBoardTasks(projectId, boardId, query)
+      return res.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const clearErrors = () => {
     setErrors([])
   }
@@ -51,6 +60,7 @@ export const BoardProvider = ({ children }) => {
       fetchBoard,
       createNewBoard,
       clearErrors,
+      searchTasks,
       errors
     }}>
       {children}

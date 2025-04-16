@@ -73,7 +73,7 @@ export default function ProjectPage() {
             >
               Ajustes
             </button> :
-            <Tooltip message='No tenes permisos para realizar esta acción'>
+            <Tooltip>
               <button className='tab-button' disabled>
                 Ajustes
               </button>

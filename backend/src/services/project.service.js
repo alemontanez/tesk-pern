@@ -41,40 +41,40 @@ export const getUserProjectsService = async (userId) => {
 export const getProjectService = async (userId, projectId) => {
   const role = await checkPermissions(userId, projectId)
   if (!role.can_view) throw new Error('Forbidden')
-    const project = await Project.findOne({
-      where: { id: projectId },
-      include: [
-        {
-          model: Project_users,
-          where: { user_id: userId },
-          attributes: []
-        },
-        {
-          model: Board,
-          where: { project_id: projectId },
-          include: [
-            {
-              model: Label,
-              attributes: ['hex_code']
-            },
-            {
-              model: Task,
-              attributes: [],
-              required: false
-            }
-          ],
-          attributes: {
-            include: [
-              [Sequelize.literal(`(
-                SELECT COUNT(*)
-                FROM tasks
-                WHERE tasks.board_id = "Boards"."id"
-              )`), 'taskCount']
-            ]
+  const project = await Project.findOne({
+    where: { id: projectId },
+    include: [
+      {
+        model: Project_users,
+        where: { user_id: userId },
+        attributes: []
+      },
+      {
+        model: Board,
+        where: { project_id: projectId },
+        include: [
+          {
+            model: Label,
+            attributes: ['hex_code']
+          },
+          {
+            model: Task,
+            attributes: [],
+            required: false
           }
+        ],
+        attributes: {
+          include: [
+            [Sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM tasks
+              WHERE tasks.board_id = "Boards"."id"
+              )`), 'taskCount']
+          ]
         }
-      ]
-    })
+      }
+    ]
+  })
   if (!project) throw new Error('Project not found')
   return project
 }

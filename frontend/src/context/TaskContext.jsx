@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 import { createTask, deleteTaskRequest, getTask, updateTaskRequest } from '../services/task'
+import { useNavigate } from 'react-router-dom'
 
 const TaskContext = createContext()
 
@@ -14,6 +15,7 @@ export const useTask = () => {
 export const TaskProvider = ({ children }) => {
 
   const [errors, setErrors] = useState([])
+  const navigate = useNavigate()
 
   const createNewTask = async (projectId, boardId, taskData) => {
     try {
@@ -29,6 +31,7 @@ export const TaskProvider = ({ children }) => {
       const res = await getTask(projectId, boardId, taskId)
       return res.data
     } catch (error) {
+      navigate(`/dashboard/projects/${projectId}/boards/${boardId}`)
       setErrors(error.response.data.error)
     }
   }

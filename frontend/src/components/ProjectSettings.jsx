@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useProject } from '../context/ProjectContext'
-import Swal from 'sweetalert2'
 import '../styles/ProjectSettings.css'
 
 const ProjectSettings = ({ project, onUpdateSuccess }) => {
@@ -21,14 +20,8 @@ const ProjectSettings = ({ project, onUpdateSuccess }) => {
   // Manejar errores de permisos
   useEffect(() => {
     if (apiErrors.some(error => error.includes('The user does not have permissions'))) {
-      Swal.fire({
-        title: 'Acceso denegado',
-        text: 'No tienes permisos para modificar este proyecto',
-        icon: 'error',
-        confirmButtonText: 'Aceptar'
-      }).then(() => {
-        clearErrors()
-      })
+      alert('Error: Acceso denegado')
+      clearErrors()
     }
   }, [apiErrors, clearErrors])
 
@@ -52,7 +45,7 @@ const ProjectSettings = ({ project, onUpdateSuccess }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="settings-section">
           <h3>Configuración del Proyecto</h3>
-          
+
           <div className="form-group">
             <label>Nombre del Proyecto</label>
             <input

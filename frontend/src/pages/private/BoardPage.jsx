@@ -39,7 +39,6 @@ export default function BoardPage() {
       </div>
     )
   }
-  console.log(tasks)
 
   const [timer, setTimer] = useState(null)
 

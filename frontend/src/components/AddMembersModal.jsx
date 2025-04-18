@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useProject } from '../context/ProjectContext'
-import Swal from 'sweetalert2'
 import Spinner from './Spinner'
 import '../styles/AddMembersModal.css'
 
@@ -17,13 +16,7 @@ export default function AddMembersModal({ projectId, handleClose }) {
   useEffect(() => {
     if (errors.length > 0) {
       console.log('Error:', errors)
-      Swal.fire({
-        title: 'Error de Permisos',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-        allowOutsideClick: false,
-        allowEscapeKey: false
-      });
+      alert('Error de permisos')
       clearErrors()
       navigate('/dashboard')
     } 

@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form'
 import { useBoard } from '../../context/BoardContext'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
-import Swal from 'sweetalert2'
 import '../../styles/BoardForm.css'
 
 export default function BoardForm ({ defaultValues }) {

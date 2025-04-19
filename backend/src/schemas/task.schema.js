@@ -38,14 +38,14 @@ export const updateTaskSchema = z.object({
     .string({ required_error: 'User assigned is required' })
     .uuid({ message: 'Invalid assigned user id' }),
   dueDate: z
-    .string()
+    .string({ required_error: 'dueDate is required' })
     .date(), // formato YYYY-MM-DD
   priorityId: z
-    .number({ invalid_type_error: 'Priority id must be a number' })
+    .number({ required_error: 'priorityId is required', invalid_type_error: 'Priority id must be a number' })
     .int()
     .positive(),
   labelId: z
-    .number({ invalid_type_error: 'Label id must be a number' })
+    .number({ required_error: 'labelId is required', invalid_type_error: 'Label id must be a number' })
     .int()
     .positive(),
 })

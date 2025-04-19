@@ -115,10 +115,10 @@ export const updateTaskService = async (userId, projectId, boardId, taskId, titl
   const verifyAssignedUser = await checkPermissions(assignedTo, projectId)
   if (!verifyAssignedUser.can_edit) throw new Error('Access denied: insufficient permissions')
   const task = await Task.findOne({
+    where: {
+      id: taskId
+    },
     include: [{
-      where: {
-        id: taskId
-      },
       model: Board,
       where: {
         id: boardId,

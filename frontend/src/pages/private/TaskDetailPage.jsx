@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useTask } from '../../context/TaskContext'
+import { format } from 'date-fns'
 import '../../styles/TaskDetailPage.css'
 
 export default function TaskDetailPage () {
@@ -18,7 +19,6 @@ export default function TaskDetailPage () {
       description: '',
       dueDate: '',
       priority: '1',
-
     }
   })
 
@@ -33,17 +33,16 @@ export default function TaskDetailPage () {
     async function loadTask () {
       const data = await fetchTask(projectId, boardId, taskId)
       setTask(data)
-      const formattedDueDate = data.due_date ? data.due_date.slice(0, 10) : ''
       reset({
         title: data.title,
         description: data.description,
-        dueDate: formattedDueDate,
+        dueDate: format(data.due_date, 'yyyy-MM-dd'),
         priority: data.priority_id ? data.priority_id.toString() : '1'
       })
       setLoading(false)
     }
     loadTask()
-  }, [projectId, boardId, taskId, reset, fetchTask])
+  }, [taskId])
 
   const onSubmit = async formData => {
     const updatedData = {
@@ -91,6 +90,10 @@ export default function TaskDetailPage () {
               {...register('description', { required: 'La descripción es obligatoria' })}
             />
             {errors.description && <p className='error-message'>{errors.description.message}</p>}
+          </div>
+          <div className='form-group'>
+            <label>Fecha de creación</label>
+            <input type="date" value={format(task.createdAt, 'yyyy-MM-dd')} readOnly />
           </div>
           <div className='form-group'>
             <label>Fecha Límite</label>

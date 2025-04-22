@@ -41,7 +41,7 @@ export const getTask = async (req, res) => {
     if (error.message === 'Forbidden') {
       return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
     }
-    if (error.message === 'Task not found') {
+    if (error.message === 'Task not found' || error.message === 'Creator user not found' || error.message === 'Assigned user not found') {
       return res.status(404).json({ error: [error.message] })
     }
     return res.status(500).json({ error: ['Internal error'] })

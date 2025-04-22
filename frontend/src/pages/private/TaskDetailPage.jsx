@@ -5,11 +5,12 @@ import { useTask } from '../../context/TaskContext'
 import { format } from 'date-fns'
 import '../../styles/TaskDetailPage.css'
 
-export default function TaskDetailPage () {
+export default function TaskDetailPage() {
   const { projectId, boardId, taskId } = useParams()
   const { fetchTask, updateTask, createComment, deleteTask } = useTask()
   const navigate = useNavigate()
   const [task, setTask] = useState(null)
+  const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
 
   // Formulario para editar la tarea
@@ -30,32 +31,30 @@ export default function TaskDetailPage () {
   })
 
   useEffect(() => {
-    async function loadTask () {
+    async function loadTask() {
       const data = await fetchTask(projectId, boardId, taskId)
-      setTask(data)
+      setTask(data.task)
+      setData(data)
       reset({
-        title: data.title,
-        description: data.description,
-        dueDate: format(data.due_date, 'yyyy-MM-dd'),
-        priority: data.priority_id ? data.priority_id.toString() : '1'
+        title: data.task.title,
+        description: data.task.description,
+        dueDate: format(data.task.due_date, 'yyyy-MM-dd'),
+        priority: data.task.priority_id ? data.task.priority_id.toString() : '1'
       })
       setLoading(false)
     }
     loadTask()
   }, [taskId])
 
-  const onSubmit = async formData => {
+  const onSubmit = async (formData) => {
     const updatedData = {
       ...formData,
       priorityId: parseInt(formData.priority, 10),
       createdBy: task.created_by,
-      assignedTo: task.assigned_to,
       boardId: task.board_id,
       labelId: task.label_id
     }
     await updateTask(projectId, boardId, taskId, updatedData)
-    const updatedTask = await fetchTask(projectId, boardId, taskId)
-    setTask(updatedTask)
     navigate(`/dashboard/projects/${projectId}/boards/${boardId}`)
   }
 
@@ -91,10 +90,13 @@ export default function TaskDetailPage () {
             />
             {errors.description && <p className='error-message'>{errors.description.message}</p>}
           </div>
+
+          {/* Genera error de fecha en la consola */}
           <div className='form-group'>
             <label>Fecha de creación</label>
             <input type="date" value={format(task.createdAt, 'yyyy-MM-dd')} readOnly />
           </div>
+
           <div className='form-group'>
             <label>Fecha Límite</label>
             <input
@@ -115,19 +117,52 @@ export default function TaskDetailPage () {
 
           {/* Campos de solo lectura para mostrar los IDs (por ahora) */}
           <div className='form-group'>
-            <label>Creado Por (ID)</label>
-            <input type='text' value={task.created_by} readOnly />
-          </div>
-          <div className='form-group'>
-            <label>Actualizado (Timestamp)</label>
-            <input type='text' value={task.updatedAt} readOnly />
+            <label>Creado Por</label>
+            <input type='text' value={data.creator.name} readOnly />
           </div>
 
-          <button type='submit'>Guardar Cambios</button>
-          <button type='button' className='delete-button' onClick={() => {
-            deleteTask(projectId, boardId, taskId)
-            navigate(`/dashboard/projects/${projectId}/boards/${boardId}`)
-          }}>Eliminar tarea</button>
+          <div className='form-group'>
+            <label>Usuario asignado</label>
+            <select
+              {...register('assignedTo', { required: true })}
+              defaultValue={data.task.assigned_to}
+            >
+              {data.users.map((user, i) => (
+                <option
+                  key={i}
+                  value={user.id}
+                >
+                  {user.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Genera error de fecha en la consola */}
+          <div className='form-group'>
+            <label>Última actualización</label>
+            <input type='text' value={format(task.updatedAt, 'dd/MM/yyyy p')} readOnly />
+          </div>
+
+          <button type='submit'>
+            Guardar Cambios
+          </button>
+          <button
+            type='button'
+            className='delete-button' onClick={() => {
+              deleteTask(projectId, boardId, taskId)
+              navigate(`/dashboard/projects/${projectId}/boards/${boardId}`)
+            }}
+          >
+            Eliminar tarea
+          </button>
+          <button
+            type='button'
+            className='cancel-button'
+            onClick={() => navigate(`/dashboard/projects/${projectId}/boards/${boardId}`)}
+          >
+            Cancelar
+          </button>
         </form>
       </section>
 

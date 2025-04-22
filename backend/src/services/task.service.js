@@ -4,8 +4,9 @@ import Priority from '../models/priority.model.js'
 import Label from '../models/label.model.js'
 import User from '../models/user.model.js'
 import Comment from '../models/comment.model.js'
+import Project_users from '../models/project_users.model.js'
 import { checkPermissions } from '../utils/checkPermissions.js'
-import { Op } from 'sequelize'
+import { Op, fn, col } from 'sequelize'
 
 export const fetchTasks = async (userId, projectId, boardId) => {
   const role = await checkPermissions(userId, projectId)
@@ -74,15 +75,45 @@ export const fetchTask = async (userId, projectId, boardId, taskId) => {
       },
       {
         model: Comment,
-        where: {
-          task_id: taskId
-        },
+        where: { task_id: taskId },
         required: false
       }
     ]
   })
   if (!task) throw new Error('Task not found')
-  return task
+
+  const users = await User.findAll({
+    attributes: ['id', [fn('CONCAT', col('first_name'), ' ', col('last_name')), 'name']],
+    include: [{
+      model: Project_users,
+      where: { project_id: projectId },
+      attributes: []
+    }]
+  })
+
+  const priorities = await Priority.findAll({
+    attributes: ['id', 'name']
+  })
+
+  const creator = await User.findOne({
+    where: { id: task.created_by },
+    attributes: [[fn('CONCAT', col('first_name'), ' ', col('last_name')), 'name']]
+  })
+  if (!creator) throw new Error('Creator user not found')
+
+  const assignedUser = await User.findOne({
+    where: { id: task.assigned_to },
+    attributes: [[fn('CONCAT', col('first_name'), ' ', col('last_name')), 'name']]
+  })
+  if (!assignedUser) throw new Error('Assigned user not found')
+
+  return {
+    task,
+    users,
+    priorities,
+    creator,
+    assignedUser
+  }
 }
 
 export const createTaskService = async (userId, projectId, boardId, title, description, dueDate, priorityId) => {

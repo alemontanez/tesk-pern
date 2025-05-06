@@ -16,6 +16,7 @@ export default function ProjectPage() {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('boards')
   const [userRole, setUserRole] = useState({})
+  const [shouldRefresh, setShouldRefresh] = useState(false)
 
   useEffect(() => {
     async function getProject(id) {
@@ -28,7 +29,7 @@ export default function ProjectPage() {
     if (activeTab === 'boards') {
       getProject(projectId)
     }
-  }, [])
+  }, [shouldRefresh])
 
   const handleSearch = (e) => {
     const query = e.target.value.trim()
@@ -55,26 +56,26 @@ export default function ProjectPage() {
 
         <div className='project-tabs'>
           <button
-            className={`tab-button ${activeTab === 'boards' ? 'active' : ''}`}
+            className={`project-tab-button ${activeTab === 'boards' ? 'active' : ''}`}
             onClick={() => setActiveTab('boards')}
           >
             Tableros
           </button>
           <button
-            className={`tab-button ${activeTab === 'members' ? 'active' : ''}`}
+            className={`project-tab-button ${activeTab === 'members' ? 'active' : ''}`}
             onClick={() => setActiveTab('members')}
           >
             Miembros
           </button>
           {userRole.can_manage ?
             <button
-              className={`tab-button ${activeTab === 'settings' ? 'active' : ''}`}
+              className={`project-tab-button ${activeTab === 'settings' ? 'active' : ''}`}
               onClick={() => setActiveTab('settings')}
             >
               Ajustes
             </button> :
             <Tooltip>
-              <button className='tab-button' disabled>
+              <button className='project-tab-button' disabled>
                 Ajustes
               </button>
             </Tooltip>
@@ -102,7 +103,8 @@ export default function ProjectPage() {
       {activeTab === 'settings' && (
         <ProjectSettings
           project={project}
-          userRole={userRole}
+          setShouldRefresh={setShouldRefresh}
+          setActiveTab={setActiveTab}
         />
       )}
     </div>

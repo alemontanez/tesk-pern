@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import AddMembersModal from './AddMembersModal'
-import '../styles/MembersPanel.css'
 import Tooltip from './Tooltip'
+import '../styles/MembersPanel.css'
 
 export default function MembersPanel({ projectId, getMembers, userRole }) {
   const [members, setMembers] = useState([])

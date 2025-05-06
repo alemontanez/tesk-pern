@@ -15,9 +15,9 @@ export const BoardProvider = ({ children }) => {
 
   const [errors, setErrors] = useState([])
 
-  const fetchBoard = async (projectId, boardId) => {
+  const fetchBoard = async (projectId, boardId, sortBy, order) => {
     try {
-      const res = await getBoard(projectId, boardId)
+      const res = await getBoard(projectId, boardId, sortBy, order)
       return res.data
     } catch (error) {
       setErrors(error.response.data.error)
@@ -34,9 +34,9 @@ export const BoardProvider = ({ children }) => {
     }
   }
 
-  const searchTasks = async (projectId, boardId, query) => {
+  const searchTasks = async (projectId, boardId, query, sortBy, order) => {
     try {
-      const res = await searchBoardTasks(projectId, boardId, query)
+      const res = await searchBoardTasks(projectId, boardId, query, sortBy, order)
       return res.data
     } catch (error) {
       console.log(error)

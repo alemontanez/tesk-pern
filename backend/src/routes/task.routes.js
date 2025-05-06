@@ -6,7 +6,7 @@ import { createTask, deleteTask, getTask, getTasks, searchTasks, updateTask } fr
 
 const router = Router()
 
-router.get('/projects/:projectId/boards/:boardId/tasks', getTasks)
+router.get('/projects/:projectId/boards/:boardId/tasks', permissionMiddleware('can_view'), getTasks)
 router.get('/projects/:projectId/boards/:boardId/tasks/search', permissionMiddleware('can_view'), searchTasks)
 router.get('/projects/:projectId/boards/:boardId/tasks/:taskId', getTask)
 router.post('/projects/:projectId/boards/:boardId/tasks', validateSchema(createTaskSchema), createTask)

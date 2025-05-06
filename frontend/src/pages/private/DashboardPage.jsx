@@ -1,10 +1,20 @@
+import { useEffect, useState } from 'react'
 import { useProject } from '../../context/ProjectContext'
 import { Link } from 'react-router-dom'
 import ProjectCard from '../../components/ProjectCard'
 import '../../styles/DashboardPage.css'
 
 export default function DashboardPage() {
-  const { projects } = useProject()
+  const { fetchProjects } = useProject()
+  const [projects, setProjects] = useState([])
+
+  useEffect(() => {
+    (async function() {
+      const data = await fetchProjects()
+      setProjects(data)
+    })()
+  }, [])
+
 
   return (
     <div className='dashboard-page'>

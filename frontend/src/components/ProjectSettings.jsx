@@ -1,11 +1,14 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { useProject } from '../context/ProjectContext'
 import '../styles/ProjectSettings.css'
 
-const ProjectSettings = ({ project, onUpdateSuccess }) => {
+const ProjectSettings = ({ project, setShouldRefresh, setActiveTab }) => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm()
-  const { updateProject, clearErrors, errors: apiErrors } = useProject()
+  const { updateProject, deleteProject, clearErrors, errors: apiErrors } = useProject()
+
+  const navigate = useNavigate()
 
   // Setear valores iniciales del formulario
   useEffect(() => {
@@ -26,18 +29,16 @@ const ProjectSettings = ({ project, onUpdateSuccess }) => {
   }, [apiErrors, clearErrors])
 
   const onSubmit = async (data) => {
-    try {
-      await updateProject(project.id, data)
-      Swal.fire({
-        title: '¡Cambios guardados!',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      })
-      onUpdateSuccess()
-    } catch (error) {
-      // El error ya es manejado por el contexto
-    }
+    await updateProject(project.id, data)
+    alert('Proyecto actualizado')
+    setShouldRefresh(prev => !prev)
+    setActiveTab('boards')
+  }
+
+  const onDelete = async () => {
+    await deleteProject(project.id)
+    alert('Proyecto eliminado')
+    navigate('/dashboard')
   }
 
   return (
@@ -64,9 +65,15 @@ const ProjectSettings = ({ project, onUpdateSuccess }) => {
             />
           </div>
 
-          <button type="submit" className="save-button">
-            Guardar Cambios
-          </button>
+          <div className='project-settings-buttons'>
+            <button type="submit" className="save-button">
+              Guardar Cambios
+            </button>
+            <button className='delete-project-btn' onClick={onDelete}>
+              Eliminar proyecto
+            </button>
+          </div>
+
         </div>
       </form>
     </div>

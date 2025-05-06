@@ -8,9 +8,7 @@ import Project_users from '../models/project_users.model.js'
 import { checkPermissions } from '../utils/checkPermissions.js'
 import { Op, fn, col } from 'sequelize'
 
-export const fetchTasks = async (userId, projectId, boardId) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_view) throw new Error('Forbidden')
+export const fetchTasks = async (projectId, boardId, sort, order) => {
   const board = await Board.findOne({
     where: {
       id: boardId,
@@ -18,41 +16,56 @@ export const fetchTasks = async (userId, projectId, boardId) => {
     }
   })
   if (!board) throw new Error('Board not found')
+
+  const allowedSortFields = ['id', 'title', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by']
+  const sortField = sort?.toString().trim()
+  const filter = allowedSortFields.includes(sortField) ? sort : 'id'
+
+  const direction = order?.toLowerCase() === 'desc' ? 'DESC' : 'ASC'
+
   const tasks = await Board.findOne({
-    where: {
-      id: boardId,
-    },
-    include: [{
-      model: Task,
-      where: {
-        board_id: boardId
-      },
-      attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt'],
-      required: false,
-      include: [
-        { model: Label, attributes: ['hex_code'] },
-        { model: Priority, attributes: ['name'] },
-        { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo' },
-        { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy' }
-      ]
-    }]
+    where: { id: boardId },
+    include: [
+      {
+        model: Task,
+        where: { board_id: boardId },
+        required: false,
+        attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by'],
+        include: [
+          { model: Label, attributes: ['hex_code'] },
+          { model: Priority, attributes: ['name'] },
+          { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo' },
+          { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy' }
+        ]
+      }
+    ],
+    order: [[{ model: Task }, filter, direction]]
   })
+
   return tasks
 }
 
-export const searchTasksService = async (boardId, query) => {
+export const searchTasksService = async (boardId, query, sort, order) => {
+
+  const allowedSortFields = ['id', 'title', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by']
+  const sortField = sort?.toString().trim()
+  const filter = allowedSortFields.includes(sortField) ? sort : 'id'
+
+  const direction = order?.toLowerCase() === 'desc' ? 'DESC' : 'ASC'
+
   const tasks = await Task.findAll({
     where: {
       board_id: boardId,
       title: { [Op.iLike]: `%${query}%` }
     },
-    attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt'],
+    attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by'],
     include: [
       { model: Label, attributes: ['hex_code'] },
       { model: Priority, attributes: ['name'] },
       { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo' },
       { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy' }
-    ]
+    ],
+    order: [[filter, direction]]
   })
   return tasks
 }

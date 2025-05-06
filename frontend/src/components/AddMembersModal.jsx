@@ -58,8 +58,8 @@ export default function AddMembersModal({ projectId, handleClose }) {
 
         {/* Sección principal del contenido */}
         <div className='modal-body'>
-          <h3 className='modal-title'>Add Members Modal</h3>
-          <p className='modal-subtitle'>Search and add team members to this project.</p>
+          <h3 className='modal-title'>Agregar usuario al equipo</h3>
+          <p className='modal-subtitle'>Buscar y añadir miembros del equipo a este proyecto.</p>
 
           <input
             type='text'

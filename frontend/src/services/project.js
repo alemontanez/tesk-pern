@@ -35,3 +35,7 @@ export const updateProjectService = async (projectId, data) => {
 export const fetchPermissions = async (projectId) => {
   return api.get(`/projects/${projectId}/permissions`)
 }
+
+export const deleteProjectService = async (projectId) => {
+  return api.delete(`/projects/${projectId}`)
+}

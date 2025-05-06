@@ -5,6 +5,7 @@ import { useBoard } from '../../context/BoardContext'
 import TaskCard from '../../components/TaskCard'
 import Tooltip from '../../components/Tooltip'
 import Spinner from '../../components/Spinner'
+import SortTasksButton from '../../components/SortTasksButton'
 import '../../styles/BoardPage.css'
 
 export default function BoardPage() {
@@ -15,12 +16,13 @@ export default function BoardPage() {
   const [tasks, setTasks] = useState([])
   const [userRole, setUserRole] = useState({})
   const [loading, setLoading] = useState(false)
-
+  const [sortBy, setSortBy] = useState('asc')
+  const [order, setOrder] = useState('id')
 
   useEffect(() => {
     async function getBoard(projectId, boardId) {
       setLoading(true)
-      const res = await fetchBoard(projectId, boardId)
+      const res = await fetchBoard(projectId, boardId, sortBy, order)
       setBoard(res)
       setTasks(res.Tasks)
       const permissions = await getPermissions(projectId)
@@ -28,7 +30,7 @@ export default function BoardPage() {
       setLoading(false)
     }
     getBoard(projectId, boardId)
-  }, [projectId, boardId])
+  }, [projectId, boardId, sortBy, order])
 
   if (errors.length > 0) {
     return (
@@ -48,7 +50,7 @@ export default function BoardPage() {
     if (timer) clearTimeout(timer)
 
     const newTimer = setTimeout(async () => {
-      const res = await searchTasks(projectId, boardId, query)
+      const res = await searchTasks(projectId, boardId, query, sortBy, order)
       setTasks(res)
       setLoading(false)
     }, 1000)
@@ -66,6 +68,12 @@ export default function BoardPage() {
             placeholder='Buscar tareas...'
             className='search-tasks'
             onChange={handleSearch}
+          />
+          <SortTasksButton
+            onSortChange={({ sortBy, order }) => {
+              setSortBy(sortBy)
+              setOrder(order)
+            }}
           />
 
           {userRole.can_edit ? (

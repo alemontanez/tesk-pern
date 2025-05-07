@@ -74,6 +74,13 @@ VALUES
 	('Alta'),
 	('Máxima');
 
+INSERT INTO roles (name, can_view, can_edit, can_manage, is_owner)
+VALUES
+	('viewer', true, false, false, false),
+	('edit', true, true, false, false),
+	('admin', true, true, true, false),
+	('owner', true, true, true, true);
+
 INSERT INTO labels (color, hex_code)
 VALUES 
     ('blue', '#13488f');

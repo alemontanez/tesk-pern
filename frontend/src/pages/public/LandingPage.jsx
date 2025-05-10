@@ -5,14 +5,19 @@ import { useEffect } from 'react';
 
 export default function LandingPage() {
 
-  const { isAuthenticated } = useAuth()
+  const { signin, isAuthenticated } = useAuth()
   const navigate = useNavigate()
-  
+
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/home')
+      navigate('/dashboard')
     }
   }, [])
+
+  const handleDemo = async () => {
+    await signin({email: 'ale@mail.com', password: 'Ale1234'})
+    navigate('/dashboard')
+  }
 
   return (
     <div className="landing-container">
@@ -22,6 +27,7 @@ export default function LandingPage() {
           <h1>Transforma tu forma de trabajar</h1>
           <p className="hero-subtitle">La plataforma todo en uno para gestión de proyectos y trabajo en equipo</p>
           <Link className="cta-button" to={'/login'}>Comenzar gratis</Link>
+          <button className='demo-button' onClick={handleDemo}>Usar cuenta DEMO</button>
 
         </div>
         <div className="hero-image">

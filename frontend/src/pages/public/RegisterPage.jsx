@@ -16,7 +16,7 @@ const RegisterPage = () => {
 
   useEffect(() => { 
     if (isAuthenticated) {
-      navigate('/home')
+      navigate('/dashboard')
     }
   }, [])
 
@@ -25,7 +25,7 @@ const RegisterPage = () => {
 
   const onSubmit = async (data) => {
     await signup(data)
-    navigate('/home')
+    navigate('/dashboard')
   }
 
   return (

@@ -40,6 +40,7 @@ export default function Navbar () {
             <span className='logo-text'>Tesk</span>
           </div>
           <div className='nav-links'>
+            <NavLink to='/'>Inicio</NavLink>
             <NavLink to='/'>Características</NavLink>
             <NavLink to='/'>Precios</NavLink>
             <NavLink to='/'>Sobre nosotros</NavLink>

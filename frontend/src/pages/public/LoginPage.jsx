@@ -16,13 +16,14 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/home')
+      navigate('/dashboard')
     }
   }, [])
 
   const onSubmit = async (data) => {
-    await signin(data)
-    navigate('/home')
+    // await signin(data)
+    console.log()
+    navigate('/dashboard')
   }
 
   return (

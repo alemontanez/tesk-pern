@@ -1,8 +1,9 @@
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
+import BackdropSpinner from '../../components/BackdropSpinner'
 import '../../styles/LoginPage.css'
-import { useEffect } from 'react'
 
 const LoginPage = () => {
   const { isAuthenticated, signin, errors: authErrors } = useAuth()
@@ -13,6 +14,8 @@ const LoginPage = () => {
   } = useForm()
   const navigate = useNavigate()
 
+  const [loading, setLoading] = useState(false)
+
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -21,13 +24,19 @@ const LoginPage = () => {
   }, [])
 
   const onSubmit = async (data) => {
-    // await signin(data)
-    console.log()
+    setLoading(true)
+    await signin(data)
+    setLoading(false)
     navigate('/dashboard')
   }
 
   return (
     <div className="login-container">
+      {
+        loading && (
+          <BackdropSpinner />
+        )
+      }
       <div className="login-box">
         <h2 className="login-title">Ingresar a mi usuario</h2>
         <p className="login-subtitle">Introduce tus credenciales para poder acceder</p>

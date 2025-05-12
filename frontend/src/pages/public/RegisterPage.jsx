@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
 import '../../styles/RegisterPage.css'
-import { useEffect } from 'react'
+import BackdropSpinner from '../../components/BackdropSpinner'
 
 const RegisterPage = () => {
   const { isAuthenticated, signup, errors: authErrors } = useAuth()
@@ -14,22 +15,30 @@ const RegisterPage = () => {
   } = useForm()
   const navigate = useNavigate()
 
-  useEffect(() => { 
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
     if (isAuthenticated) {
       navigate('/dashboard')
     }
   }, [])
 
-
   const passwordValue = watch('password', '')
 
   const onSubmit = async (data) => {
+    setLoading(true)
     await signup(data)
+    setLoading(false)
     navigate('/dashboard')
   }
 
   return (
     <div className="register-container">
+      {
+        loading && (
+          <BackdropSpinner />
+        )
+      }
       <div className="register-box">
         <h1 className="register-title">Crear una cuenta</h1>
         <p className="register-subtitle">Ingresa tus datos para registrarte</p>

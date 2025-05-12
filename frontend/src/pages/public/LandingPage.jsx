@@ -1,10 +1,12 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import '../../styles/LandingPage.css';
-import { useEffect } from 'react';
+import BackdropSpinner from '../../components/BackdropSpinner'
+import '../../styles/LandingPage.css'
 
 export default function LandingPage() {
 
+  const [loading, setLoading] = useState(false)
   const { signin, isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
@@ -15,12 +17,20 @@ export default function LandingPage() {
   }, [])
 
   const handleDemo = async () => {
-    await signin({email: 'ale@mail.com', password: 'Ale1234'})
+    setLoading(true)
+    await signin({ email: 'ale@mail.com', password: 'Ale1234' })
+    setLoading(false)
     navigate('/dashboard')
   }
 
   return (
     <div className="landing-container">
+      {
+        loading && (
+          <BackdropSpinner />
+        )
+      }
+
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
@@ -84,5 +94,5 @@ export default function LandingPage() {
         </div>
       </section>
     </div>
-  );
+  )
 }

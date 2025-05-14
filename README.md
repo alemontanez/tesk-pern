@@ -30,7 +30,7 @@ Al realizar este proyecto aprendí a crear un sistema con una robustez superior 
 
 ## 🔗 Despliegue
 
-[El despliegue todavía está pendiente a realizar.](https://github.com/alemontanez/tesk-pern)
+[https://tesk-frontend.onrender.com/](https://tesk-frontend.onrender.com/)
 
 ## 📚 Correr la aplicación de forma local
 

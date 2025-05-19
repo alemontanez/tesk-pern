@@ -5,6 +5,7 @@ import Label from '../models/label.model.js'
 import User from '../models/user.model.js'
 import Comment from '../models/comment.model.js'
 import Project_users from '../models/project_users.model.js'
+import Role from '../models/role.model.js'
 import { checkPermissions } from '../utils/checkPermissions.js'
 import { Op, fn, col } from 'sequelize'
 
@@ -95,11 +96,20 @@ export const fetchTask = async (userId, projectId, boardId, taskId) => {
   })
   if (!task) throw new Error('Task not found')
 
+  const viewerRole = await Role.findOne({
+    where: { name: 'viewer' }
+  })
+  console.log(viewerRole)
+
+
   const users = await User.findAll({
     attributes: ['id', [fn('CONCAT', col('first_name'), ' ', col('last_name')), 'name']],
     include: [{
       model: Project_users,
-      where: { project_id: projectId },
+      where: {
+        project_id: projectId,
+        [Op.not]: [{ role_id: viewerRole.id }]
+      },
       attributes: []
     }]
   })

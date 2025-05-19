@@ -1,5 +1,17 @@
-import { createProject, getProjects, getProject, searchProjectBoards, getProjectMembers, fetchUsers, addProjectMember, updateProjectService, fetchPermissions, deleteProjectService } from '../services/project'
-import { useState, createContext, useContext, useEffect } from 'react'
+import { useState, createContext, useContext } from 'react'
+import { toast } from 'sonner'
+import {
+  createProject,
+  getProjects,
+  getProject,
+  searchProjectBoards,
+  getProjectMembers,
+  fetchUsers,
+  addProjectMember,
+  updateProjectService,
+  fetchPermissions,
+  deleteProjectService
+} from '../services/project'
 
 const ProjectContext = createContext()
 
@@ -12,7 +24,6 @@ export const useProject = () => {
 }
 
 export const ProjectProvider = ({ children }) => {
-  const [projects, setProjects] = useState([])
   const [errors, setErrors] = useState([])
 
   const fetchProjects = async () => {
@@ -21,7 +32,7 @@ export const ProjectProvider = ({ children }) => {
       const res = await getProjects()
       return res.data
     } catch (error) {
-      console.log(error)
+      toast.error('Error al intentar cargar los proyectos')
       setErrors(error.response.data.error)
     }
   }
@@ -30,8 +41,10 @@ export const ProjectProvider = ({ children }) => {
     try {
       setErrors([])
       await createProject(project)
+      toast.success('Proyecto creado correctamente')
       fetchProjects()
     } catch (error) {
+      toast.error('Error al intentar crear un proyecto')
       setErrors(error.response.data.error)
     }
   }
@@ -42,6 +55,7 @@ export const ProjectProvider = ({ children }) => {
       const res = await getProject(projectId)
       return res
     } catch (error) {
+      toast.error('Error al intentar cargar el proyecto')
       setErrors(error.response.data.error)
     }
   }
@@ -52,7 +66,7 @@ export const ProjectProvider = ({ children }) => {
       const res = await searchProjectBoards(projectId, query)
       return res.data
     } catch (error) {
-      console.log(error)
+      toast.error('Error al intentar buscar tableros')
       setErrors(error.response.data.error)
     }
   }
@@ -63,7 +77,7 @@ export const ProjectProvider = ({ children }) => {
       const res = await getProjectMembers(projectId)
       return res.data
     } catch (error) {
-      console.log(error)
+      toast.error('Error al intentar obtener miembros del proyecto')
       setErrors(error.response.data.error)
     }
   }
@@ -74,7 +88,7 @@ export const ProjectProvider = ({ children }) => {
       const res = await fetchUsers(projectId, query)
       return res.data
     } catch (error) {
-      console.log(error)
+      toast.error('Error al intentar buscar usuarios')
       setErrors(error.response.data.error)
     }
   }
@@ -83,8 +97,9 @@ export const ProjectProvider = ({ children }) => {
     try {
       setErrors([])
       addProjectMember(projectId, memberId)
+      toast.success('Usuario agregado al proyecto')
     } catch (error) {
-      console.log(error)
+      toast.error('Error al intentar agregar el usuario')
       setErrors(error.response.data.error)
     }
   }
@@ -92,8 +107,9 @@ export const ProjectProvider = ({ children }) => {
   const updateProject = async (projectId, data) => {
     try {
       await updateProjectService(projectId, data)
+      toast.success('Proyecto actualizado con éxito')
     } catch (error) {
-      console.log(error)
+      toast.error('Error al intentar actualizar el proyecto')
       setErrors(error.response.data.error)
     }
   }
@@ -101,8 +117,9 @@ export const ProjectProvider = ({ children }) => {
   const deleteProject = async (projectId) => {
     try {
       await deleteProjectService(projectId)
+      toast.success('Proyecto eliminado con éxito')
     } catch (error) {
-      console.log(error)
+      toast.error('Error al intentar eliminar el proyecto')
       setErrors(error.response.data.error)
     }
   }

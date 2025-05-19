@@ -94,3 +94,10 @@
     grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
   }
 }
+
+.projects-not-found {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  color: rgb(165, 165, 165);
+}

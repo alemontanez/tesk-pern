@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { Toaster } from 'sonner'
 import Navbar from './components/Navbar'
 import LandingPage from './pages/public/LandingPage'
 import LoginPage from './pages/public/LoginPage'
@@ -15,9 +16,11 @@ import BoardForm from './pages/private/BoardForm'
 import TaskForm from './pages/private/TaskForm'
 import TaskDetailPage from './pages/private/TaskDetailPage'
 
+
 function App() {
   return (
     <>
+      <Toaster richColors position='bottom-center' />
       <AuthProvider>
         <BrowserRouter>
           <Navbar />

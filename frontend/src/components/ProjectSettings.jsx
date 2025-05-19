@@ -4,9 +4,19 @@ import { useNavigate } from 'react-router-dom'
 import { useProject } from '../context/ProjectContext'
 import '../styles/ProjectSettings.css'
 
-const ProjectSettings = ({ project, setShouldRefresh, setActiveTab }) => {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm()
-  const { updateProject, deleteProject, clearErrors, errors: apiErrors } = useProject()
+export default function ProjectSettings({ project, setShouldRefresh, setActiveTab }) {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm()
+  const {
+    updateProject,
+    deleteProject,
+    clearErrors,
+    errors: apiErrors
+  } = useProject()
 
   const navigate = useNavigate()
 
@@ -30,14 +40,12 @@ const ProjectSettings = ({ project, setShouldRefresh, setActiveTab }) => {
 
   const onSubmit = async (data) => {
     await updateProject(project.id, data)
-    alert('Proyecto actualizado')
     setShouldRefresh(prev => !prev)
     setActiveTab('boards')
   }
 
   const onDelete = async () => {
     await deleteProject(project.id)
-    alert('Proyecto eliminado')
     navigate('/dashboard')
   }
 
@@ -69,7 +77,7 @@ const ProjectSettings = ({ project, setShouldRefresh, setActiveTab }) => {
             <button type="submit" className="save-button">
               Guardar Cambios
             </button>
-            <button className='delete-project-btn' onClick={onDelete}>
+            <button type='button' className='delete-project-btn' onClick={onDelete}>
               Eliminar proyecto
             </button>
           </div>
@@ -79,5 +87,3 @@ const ProjectSettings = ({ project, setShouldRefresh, setActiveTab }) => {
     </div>
   )
 }
-
-export default ProjectSettings

@@ -9,7 +9,7 @@ export default function DashboardPage() {
   const [projects, setProjects] = useState([])
 
   useEffect(() => {
-    (async function() {
+    (async function () {
       const data = await fetchProjects()
       setProjects(data)
     })()
@@ -37,11 +37,19 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className='cards-container'>
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </div>
+      {
+        projects.length == 0 ? (
+          <div className='projects-not-found'>
+            <p>No se encontraron proyectos.</p>
+          </div>
+        ) : (
+          <div className='cards-container'>
+            {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        )
+      }
     </div>
   )
 }

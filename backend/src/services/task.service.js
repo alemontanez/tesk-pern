@@ -90,7 +90,11 @@ export const fetchTask = async (userId, projectId, boardId, taskId) => {
       {
         model: Comment,
         where: { task_id: taskId },
-        required: false
+        required: false,
+        include: [{
+          model: User,
+          attributes: ['first_name', 'last_name']
+        }]
       }
     ]
   })
@@ -99,8 +103,6 @@ export const fetchTask = async (userId, projectId, boardId, taskId) => {
   const viewerRole = await Role.findOne({
     where: { name: 'viewer' }
   })
-  console.log(viewerRole)
-
 
   const users = await User.findAll({
     attributes: ['id', [fn('CONCAT', col('first_name'), ' ', col('last_name')), 'name']],

@@ -2,6 +2,10 @@ import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
+import swaggerUI from 'swagger-ui-express'
+import { swaggerSpec } from './swagger/swagger.js'
+import { authRequired } from './middlewares/jwtValidator.middleware.js'
+import { FRONTEND_URL } from './config/config.js'
 
 import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
@@ -15,8 +19,6 @@ import taskRoutes from './routes/task.routes.js'
 import commentRoutes from './routes/comment.routes.js'
 import membershipsRoutes from './routes/memberships.routes.js'
 import './models/relationships.js'
-import { authRequired } from './middlewares/jwtValidator.middleware.js'
-import { FRONTEND_URL } from './config/config.js'
 
 const app = express()
 
@@ -37,7 +39,8 @@ app.get('/', (req, res) => {
 })
 
 // Rutas públicas
-app.use('/api', authRoutes)
+app.use('/api/auth', authRoutes)
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
 // Rutas privadas
 app.use('/api', authRequired, userRoutes)

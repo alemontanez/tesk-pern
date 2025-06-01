@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useTask } from '../../context/TaskContext'
 import { format } from 'date-fns'
+import Spinner from '../../components/Spinner'
 import '../../styles/TaskDetailPage.css'
 
 export default function TaskDetailPage() {
@@ -66,7 +67,11 @@ export default function TaskDetailPage() {
   }
 
   if (loading) {
-    return <p className='loading'>Cargando...</p>
+    return (
+      <div className='loading'>
+        <Spinner />
+      </div>
+    )
   }
 
   return (
@@ -175,6 +180,9 @@ export default function TaskDetailPage() {
                 <p className='comment-content'>{comment.content}</p>
                 <p className='comment-date'>
                   Creado: {new Date(comment.createdAt).toLocaleString()}
+                </p>
+                <p className='comment-user'>
+                  Usuario: {`${comment.User.first_name} ${comment.User.last_name}`}
                 </p>
               </div>
             ))

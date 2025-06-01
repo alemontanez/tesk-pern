@@ -40,5 +40,6 @@ export const verifyTokenService = async (token) => {
     
     return userFound
   })
+
   return user
 }

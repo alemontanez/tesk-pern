@@ -5,7 +5,7 @@ import { createComment, deleteComment, getComments, updateComment } from '../con
 
 const router = Router()
 
-router.get('/projects/:projectId/boards/:boardId/tasks/:taskId/comments', getComments)
+router.get('/projects/:projectId/boards/:boardId/tasks/:taskId/comments', getComments) // no se usa
 router.post('/projects/:projectId/boards/:boardId/tasks/:taskId/comments', validateSchema(commentSchema), createComment)
 router.patch('/projects/:projectId/boards/:boardId/tasks/:taskId/comments/:commentId', validateSchema(commentSchema), updateComment)
 router.delete('/projects/:projectId/boards/:boardId/tasks/:taskId/comments/:commentId', deleteComment)

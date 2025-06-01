@@ -1,5 +1,6 @@
 import { createCommentService, deleteCommentService, getCommentsService, updateCommentService } from '../services/comment.service.js'
 
+// Esta función no se usa
 export const getComments = async (req, res) => {
   const userId = req.user.id
   const { projectId, boardId, taskId } = req.params

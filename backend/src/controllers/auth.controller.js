@@ -4,13 +4,10 @@ import { createAccessToken } from '../utils/jwt.js'
 export const register = async (req, res) => {
   const { username, email, firstName, lastName, password } = req.body
   try {
-    const user = await registerUser({ username, email, firstName, lastName, password })
+    await registerUser({ username, email, firstName, lastName, password })
     const token = await createAccessToken({ id: user.id })
     res.cookie('token', token)
-    res.status(201).json({
-      message: 'User created successfully',
-      user
-    })
+    res.status(201).json({ message: 'User created successfully' })
   } catch (error) {
     console.log(error)
     if (error.message === 'Username already exists' || error.message === 'Email already exists') {
@@ -30,7 +27,7 @@ export const login = async (req, res) => {
   } catch (error) {
     console.log(error)
     if (error.message === 'Invalid credentials') {
-      return res.status(400).json({ error: [error.message] })
+      return res.status(401).json({ error: [error.message] })
     }
     return res.status(500).json({ error: ['Internal error'] })
   }
@@ -44,7 +41,6 @@ export const logout = (req, res) => {
 export const verifyToken = async (req, res) => {
   const { token } = req.cookies
   if (!token) return res.send(false)
-
   try {
     const user = await verifyTokenService(token)
     return res.json(user)

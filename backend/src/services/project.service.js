@@ -99,7 +99,7 @@ export const updateProjectData = async (userId, projectId, name, description) =>
   } else {
     throw new Error('The user does not have permissions')
   }
-}
+} // Agregar verificación de nombre del proyecto, como en createProject
 
 export const deleteProjectWithDependencies = async (userId, projectId) => {
   const project = await Project.findByPk(projectId)

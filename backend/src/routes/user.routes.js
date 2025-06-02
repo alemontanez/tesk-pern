@@ -5,8 +5,15 @@ import { changePasswordSchema, updateProfileSchema } from '../schemas/user.schem
 
 const router = Router()
 
-router.get('/profile', getUser)
-router.patch('/profile', validateSchema(updateProfileSchema), updateUser)
-router.patch('/profile/change-password', validateSchema(changePasswordSchema), changePassword)
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: Endpoints para la información del usuario
+ */
+
+router.get('/', getUser)
+router.patch('/', validateSchema(updateProfileSchema), updateUser)
+router.patch('/change-password', validateSchema(changePasswordSchema), changePassword)
 
 export default router

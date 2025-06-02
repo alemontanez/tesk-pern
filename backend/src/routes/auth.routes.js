@@ -162,7 +162,7 @@ router.post('/login', validateSchema(loginSchema), login)
  *       200:
  *         description: Sesión cerrada.
  *         content:
- *           text:
+ *           text/plain:
  *             schema:
  *               type: text
  *               example: OK
@@ -175,8 +175,7 @@ router.post('/logout', logout)
  *   get:
  *     summary: Verifica el token del usuario autenticado.
  *     description: Verifica si el token JWT presente en las cookies es válido y devuelve los datos del usuario.
- *     tags:
- *       - Auth
+ *     tags: [Auth]
  *     responses:
  *       200:
  *         description: Token válido. Devuelve los datos del usuario.

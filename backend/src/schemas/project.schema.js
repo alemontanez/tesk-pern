@@ -23,3 +23,4 @@ export const updateProjectSchema = z.object({
     .trim()
     .max(255, { message: 'Description must not exceed 255 characters' })
 })
+// Sacar los required de updateproject y verificar funcionamiento

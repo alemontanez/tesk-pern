@@ -44,7 +44,6 @@ export const RegisterSchema = {
 
 export const UserSchema = {
   type: 'object',
-  sacar: ['id', 'username', 'email', 'first_name', 'last_name', 'password_hash', 'is_active', 'createdAt', 'updatedAt'],
   properties: {
     id: {
       type: 'uuid',
@@ -73,10 +72,12 @@ export const UserSchema = {
     },
     createdAt: {
       type: 'string',
+      format: 'date-time',
       example: '2025-03-01T20:04:24.382Z'
     },
     updatedAt: {
       type: 'string',
+      format: 'date-time',
       example: '2025-03-05T19:08:08.833Z'
     }
   }

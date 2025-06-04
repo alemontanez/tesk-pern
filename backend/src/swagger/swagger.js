@@ -4,6 +4,7 @@ import { CreateProjectSchema, ProjectSchema, ProjectWithBoardsSchema } from './s
 import { BoardSchema } from './schemas/board.schema.js'
 import { LabelSchema } from './schemas/label.schema.js'
 import { RoleSchema } from './schemas/role.schema.js'
+import { ChangePasswordSchema, UpdateProfileSchema } from './schemas/user.schema.js'
 
 const options = {
   definition: {
@@ -36,7 +37,9 @@ const options = {
         ProjectWithBoardsSchema,
         BoardSchema,
         LabelSchema,
-        RoleSchema
+        RoleSchema,
+        UpdateProfileSchema,
+        ChangePasswordSchema
       }
     },
     security: [

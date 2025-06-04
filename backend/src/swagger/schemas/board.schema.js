@@ -36,3 +36,7 @@ export const BoardSchema = {
     Label: LabelSchema
   }
 }
+
+export const CreateBoardSchema = {
+  
+}

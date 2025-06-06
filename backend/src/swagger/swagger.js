@@ -1,7 +1,7 @@
 import swaggerJSDoc from 'swagger-jsdoc'
 import { LoginSchema, RegisterSchema, UserSchema } from './schemas/auth.schema.js'
 import { CreateProjectSchema, ProjectSchema, ProjectWithBoardsSchema } from './schemas/project.schema.js'
-import { BoardSchema } from './schemas/board.schema.js'
+import { BoardPayloadSchema, BoardSchema, UpdateBoardLabelSchema } from './schemas/board.schema.js'
 import { LabelSchema } from './schemas/label.schema.js'
 import { RoleSchema } from './schemas/role.schema.js'
 import { ChangePasswordSchema, UpdateProfileSchema } from './schemas/user.schema.js'
@@ -39,7 +39,9 @@ const options = {
         LabelSchema,
         RoleSchema,
         UpdateProfileSchema,
-        ChangePasswordSchema
+        ChangePasswordSchema,
+        BoardPayloadSchema,
+        UpdateBoardLabelSchema
       }
     },
     security: [

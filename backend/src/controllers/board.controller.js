@@ -1,21 +1,40 @@
-import { changeLabel, createProjectBoard, deleteBoardService, searchBoardsService, updateBoardName } from '../services/board.service.js'
+import { 
+  changeLabel, 
+  createProjectBoard, 
+  deleteBoardService, 
+  searchBoardsService, 
+  updateBoardName 
+} from '../services/board.service.js'
+
+
+export const searchBoards = async (req, res) => {
+  const { projectId } = req.params
+  const userId = req.user.id
+  try {
+    const boards = await searchBoardsService(userId, projectId, req.query.search)
+    res.status(200).json(boards)
+  } catch (error) {
+    console.log(error)
+    if (error.message === 'Forbidden') {
+      return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
+    }
+    return res.status(500).json({ error: ['Internal error'] })
+  }
+}
 
 export const createBoard = async (req, res) => {
   const { projectId } = req.params
   const { name } = req.body
   const userId = req.user.id
   try {
-    const board = await createProjectBoard(userId, projectId, name)
-    res.status(201).json({
-      message: 'Board created successfully',
-      board
-    })
+    await createProjectBoard(userId, projectId, name)
+    res.status(201).json({ message: 'Board created successfully' })
   } catch (error) {
     console.log(error)
     if (error.message === 'Forbidden') {
       return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
     }
-    if (error.message === 'The selected name is already in use') {
+    if (error.message === 'Board name already exists') {
       return res.status(409).json({ error: [error.message] })
     }
     return res.status(500).json({ error: ['Internal error'] })
@@ -47,24 +66,6 @@ export const updateBoard = async (req, res) => {
   }
 }
 
-export const updateBoardLabel = async (req, res) => {
-  const { projectId, boardId } = req.params
-  const { labelId } = req.body
-  const userId = req.user.id
-  try {
-    await changeLabel(userId, projectId, boardId, labelId)
-    res.status(200).json({ message: 'Label changed successfully' })
-  } catch (error) {
-    console.log(error)
-    if (error.message === 'Forbidden') {
-      return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
-    }
-    if (error.message === 'Board not found' || error.message === 'Label not found') {
-      return res.status(404).json({ error: [error.message] })
-    }
-    return res.status(500).json({ error: ['Internal error'] })
-  }
-}
 
 export const deleteBoard = async (req, res) => {
   const { projectId, boardId } = req.params
@@ -84,18 +85,21 @@ export const deleteBoard = async (req, res) => {
   }
 }
 
-export const searchBoards = async (req, res) => {
-  const { projectId } = req.params
+export const updateBoardLabel = async (req, res) => {
+  const { projectId, boardId } = req.params
+  const { labelId } = req.body
   const userId = req.user.id
   try {
-    const boards = await searchBoardsService(userId, projectId, req.query.search)
-    res.status(200).json(boards)
+    await changeLabel(userId, projectId, boardId, labelId)
+    res.status(200).json({ message: 'Label changed successfully' })
   } catch (error) {
     console.log(error)
     if (error.message === 'Forbidden') {
       return res.status(403).json({ error: ['Access denied: insufficient permissions'] })
     }
+    if (error.message === 'Board not found' || error.message === 'Label not found') {
+      return res.status(404).json({ error: [error.message] })
+    }
     return res.status(500).json({ error: ['Internal error'] })
   }
 }
-

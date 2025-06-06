@@ -45,7 +45,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 // Rutas privadas
 app.use('/api/profile', authRequired, userRoutes)
 app.use('/api/projects', authRequired, projectRoutes)
-app.use('/api', authRequired, boardRoutes)
+app.use('/api/projects', authRequired, boardRoutes)
 app.use('/api', authRequired, taskRoutes)
 app.use('/api', authRequired, labelRoutes)
 app.use('/api', authRequired, roleRoutes)

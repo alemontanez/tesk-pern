@@ -37,6 +37,22 @@ export const BoardSchema = {
   }
 }
 
-export const CreateBoardSchema = {
-  
+export const BoardPayloadSchema = {
+  type: 'object',
+  properties: {
+    name: {
+      type: 'string',
+      example: 'Pending tasks'
+    }
+  }
+}
+
+export const UpdateBoardLabelSchema = {
+  type: 'object',
+  properties: {
+    name: {
+      type: 'integer',
+      example: 1
+    }
+  }
 }

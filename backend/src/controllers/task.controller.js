@@ -1,4 +1,11 @@
-import { fetchTask, fetchTasks, createTaskService, updateTaskService, deleteTaskService, searchTasksService } from '../services/task.service.js'
+import {
+  fetchTask,
+  fetchTasks,
+  createTaskService,
+  updateTaskService,
+  deleteTaskService,
+  searchTasksService
+} from '../services/task.service.js'
 
 export const getTasks = async (req, res) => {
   const { sort, order } = req.query
@@ -18,6 +25,7 @@ export const getTasks = async (req, res) => {
 export const searchTasks = async (req, res) => {
   const { boardId } = req.params
   const { query, sort, order } = req.query
+  console.log('llega')
   try {
     const tasks = await searchTasksService(boardId, query, sort, order)
     res.status(200).json(tasks)
@@ -72,11 +80,8 @@ export const updateTask = async (req, res) => {
   const { projectId, boardId, taskId } = req.params
   const { title, description, assignedTo, dueDate, priorityId, labelId } = req.body
   try {
-    const task = await updateTaskService(userId, projectId, boardId, taskId, title, description, assignedTo, dueDate, priorityId, labelId)
-    res.status(200).json({
-      message: 'Task updated successfully',
-      task
-    })
+    await updateTaskService(userId, projectId, boardId, taskId, title, description, assignedTo, dueDate, priorityId, labelId)
+    res.status(200).json({ message: 'Task updated successfully' })
   } catch (error) {
     console.log(error)
     if (error.message === 'Access denied: insufficient permissions') {

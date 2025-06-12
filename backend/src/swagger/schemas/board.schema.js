@@ -1,4 +1,5 @@
 import { LabelSchema } from './label.schema.js'
+import { TaskPreviewSchema } from './task.schema.js'
 
 export const BoardSchema = {
   type: 'object',
@@ -53,6 +54,39 @@ export const UpdateBoardLabelSchema = {
     name: {
       type: 'integer',
       example: 1
+    }
+  }
+}
+
+
+export const BoardWithTasksSchema = {
+  type: 'object',
+  properties: {
+    id: {
+      type: 'integer',
+      example: 1
+    },
+    name: {
+      type: 'string',
+      example: 'Pendings'
+    },
+    project_id: {
+      type: 'integer',
+      example: 1
+    },
+    label_id: {
+      type: 'integer',
+      example: 1
+    },
+    createdAt: {
+      type: 'string', format: 'date-time'
+    },
+    updatedAt: {
+      type: 'string', format: 'date-time'
+    },
+    Tasks: {
+      type: 'array',
+      items: TaskPreviewSchema
     }
   }
 }

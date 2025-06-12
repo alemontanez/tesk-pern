@@ -9,5 +9,5 @@ export const createBoard = async (projectId, board) => {
 }
 
 export const searchBoardTasks = async (projectId, boardId, query, sortBy, order) => {
-  return api.get(`/projects/${projectId}/boards/${boardId}/tasks/search?query=${query}&sort=${sortBy}&order=${order}`)
+  return api.get(`/projects/${projectId}/boards/${boardId}/tasks-search?query=${query}&sort=${sortBy}&order=${order}`)
 }

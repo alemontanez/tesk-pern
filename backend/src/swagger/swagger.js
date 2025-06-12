@@ -1,10 +1,11 @@
 import swaggerJSDoc from 'swagger-jsdoc'
 import { LoginSchema, RegisterSchema, UserSchema } from './schemas/auth.schema.js'
 import { CreateProjectSchema, ProjectSchema, ProjectWithBoardsSchema } from './schemas/project.schema.js'
-import { BoardPayloadSchema, BoardSchema, UpdateBoardLabelSchema } from './schemas/board.schema.js'
+import { BoardPayloadSchema, BoardSchema, BoardWithTasksSchema, UpdateBoardLabelSchema } from './schemas/board.schema.js'
 import { LabelSchema } from './schemas/label.schema.js'
 import { RoleSchema } from './schemas/role.schema.js'
 import { ChangePasswordSchema, UpdateProfileSchema } from './schemas/user.schema.js'
+import { CreateTaskSchema, TaskPreviewSchema, UpdateTaskSchema } from './schemas/task.schema.js'
 
 const options = {
   definition: {
@@ -41,7 +42,11 @@ const options = {
         UpdateProfileSchema,
         ChangePasswordSchema,
         BoardPayloadSchema,
-        UpdateBoardLabelSchema
+        UpdateBoardLabelSchema,
+        BoardWithTasksSchema,
+        CreateTaskSchema,
+        UpdateTaskSchema,
+        TaskPreviewSchema
       }
     },
     security: [

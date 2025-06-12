@@ -48,6 +48,8 @@ export const fetchTasks = async (projectId, boardId, sort, order) => {
 
 export const searchTasksService = async (boardId, query, sort, order) => {
 
+  console.log('llego aca?')
+
   const allowedSortFields = ['id', 'title', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by']
   const sortField = sort?.toString().trim()
   const filter = allowedSortFields.includes(sortField) ? sort : 'id'

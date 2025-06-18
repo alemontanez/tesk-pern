@@ -6,6 +6,9 @@ import { LabelSchema } from './schemas/label.schema.js'
 import { RoleSchema } from './schemas/role.schema.js'
 import { ChangePasswordSchema, UpdateProfileSchema } from './schemas/user.schema.js'
 import { CreateTaskSchema, TaskPreviewSchema, UpdateTaskSchema } from './schemas/task.schema.js'
+import { PrioritiesSchema } from './schemas/priorities.schema.js'
+import { CommentPayloadSchema, CommentSchema } from './schemas/comment.schema.js'
+import { AddMemberSchema, ProjectMemberSchema, UserSearchResultSchema } from './schemas/memberships.schema.js'
 
 const options = {
   definition: {
@@ -46,7 +49,13 @@ const options = {
         BoardWithTasksSchema,
         CreateTaskSchema,
         UpdateTaskSchema,
-        TaskPreviewSchema
+        TaskPreviewSchema,
+        PrioritiesSchema,
+        CommentSchema,
+        CommentPayloadSchema,
+        ProjectMemberSchema,
+        UserSearchResultSchema,
+        AddMemberSchema
       }
     },
     security: [

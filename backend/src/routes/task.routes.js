@@ -103,9 +103,6 @@ const router = Router()
 router.get('/projects/:projectId/boards/:boardId/tasks', permissionMiddleware('can_view'), getTasks)
 
 
-
-
-
 /**
  * @swagger
  * /projects/{projectId}/boards/{boardId}/tasks:

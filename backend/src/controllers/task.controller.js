@@ -25,7 +25,6 @@ export const getTasks = async (req, res) => {
 export const searchTasks = async (req, res) => {
   const { boardId } = req.params
   const { query, sort, order } = req.query
-  console.log('llega')
   try {
     const tasks = await searchTasksService(boardId, query, sort, order)
     res.status(200).json(tasks)

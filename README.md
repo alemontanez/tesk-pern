@@ -10,7 +10,7 @@ Software de gestión de equipos y tareas, basado en Jira/Asana/Monday.
 
 Tesk es una aplicacion de gestión de proyectos construida con el stack PERN (PostgreSQL, Express.js, React, Node.js).
 
-Se constituye separando por un lado el backend el cual consiste en una API REST y por otro lado el frontend; basándose en la arquitectura MVC.
+Se constituye separando por un lado el backend el cual consiste en una API REST basada en la `arquitectura en capas` (Layered Architecture) y el frontend que se componete de una `arquitectura basada en componentes`.
 
 Dentro de varias características, podemos destacar la implementación de medidas de seguridad como la autenticación mediante JWT (tanto al momento de autenticar como en la sesión activa del usuario), la encriptación (hash) de contraseñas de los usuarios en la base de datos, validaciones de los datos recibidos a través de esquemas realizados con Zod y la verificación de permisos en cada solicitud realizada por un usuario gestionada a través de un middleware validador, entre otros.
 

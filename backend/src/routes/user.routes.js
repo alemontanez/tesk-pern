@@ -217,4 +217,6 @@ router.patch('/', validateSchema(updateProfileSchema), updateUser)
  */
 router.patch('/change-password', validateSchema(changePasswordSchema), changePassword)
 
+// estos endpoints no se usan todavía, pero son útiles para futuro
+
 export default router

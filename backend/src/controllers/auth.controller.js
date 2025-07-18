@@ -4,7 +4,7 @@ import { createAccessToken } from '../utils/jwt.js'
 export const register = async (req, res) => {
   const { username, email, firstName, lastName, password } = req.body
   try {
-    await registerUser({ username, email, firstName, lastName, password })
+    const user = await registerUser({ username, email, firstName, lastName, password })
     const token = await createAccessToken({ id: user.id })
     res.cookie('token', token)
     res.status(201).json({ message: 'User created successfully' })

@@ -100,7 +100,7 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/projects/:projectId/boards/:boardId/tasks', permissionMiddleware('can_view'), getTasks)
+router.get('/projects/:projectId/boards/:boardId/tasks', permissionMiddleware('can_view'), getTasks) // se usa
 
 
 /**
@@ -193,7 +193,7 @@ router.get('/projects/:projectId/boards/:boardId/tasks', permissionMiddleware('c
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/projects/:projectId/boards/:boardId/tasks', validateSchema(createTaskSchema), createTask)
+router.post('/projects/:projectId/boards/:boardId/tasks', validateSchema(createTaskSchema), createTask) // se usa
 
 
 /**
@@ -276,7 +276,7 @@ router.post('/projects/:projectId/boards/:boardId/tasks', validateSchema(createT
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/projects/:projectId/boards/:boardId/tasks/:taskId', getTask)
+router.get('/projects/:projectId/boards/:boardId/tasks/:taskId', getTask) // se usa
 
 /**
  * @swagger
@@ -388,7 +388,7 @@ router.get('/projects/:projectId/boards/:boardId/tasks/:taskId', getTask)
  *                   example: 
  *                     -  'Internal error'
  */
-router.patch('/projects/:projectId/boards/:boardId/tasks/:taskId', validateSchema(updateTaskSchema), updateTask)
+router.patch('/projects/:projectId/boards/:boardId/tasks/:taskId', validateSchema(updateTaskSchema), updateTask) // se usa
 
 /**
  * @swagger
@@ -458,7 +458,7 @@ router.patch('/projects/:projectId/boards/:boardId/tasks/:taskId', validateSchem
  *                   example: 
  *                     -  'Internal error'
  */
-router.delete('/projects/:projectId/boards/:boardId/tasks/:taskId', deleteTask)
+router.delete('/projects/:projectId/boards/:boardId/tasks/:taskId', deleteTask) // se usa
 
 /**
  * @swagger
@@ -533,7 +533,7 @@ router.delete('/projects/:projectId/boards/:boardId/tasks/:taskId', deleteTask)
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/projects/:projectId/boards/:boardId/tasks-search', permissionMiddleware('can_view'), searchTasks)
+router.get('/projects/:projectId/boards/:boardId/tasks-search', permissionMiddleware('can_view'), searchTasks) // se usa
 
 
 export default router

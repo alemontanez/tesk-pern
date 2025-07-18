@@ -12,6 +12,8 @@ export const registerSchema = z.object({
     .trim()
     .email({ message: 'Invalid email' })
     .transform((value) => value.toLowerCase()),
+    // z.string().email() está deprecado, se debe corregir a z.email()
+    // https://zod.dev/v4/changelog#deprecates-email-etc
   firstName: z
     .string({ required_error: 'First name is required' })
     .trim()

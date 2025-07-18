@@ -10,7 +10,6 @@ import { FRONTEND_URL } from './config/config.js'
 import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
 import projectRoutes from './routes/project.routes.js'
-import projectUsersRoutes from './routes/project_users.routes.js'
 import roleRoutes from './routes/role.routes.js'
 import boardRoutes from './routes/board.routes.js'
 import labelRoutes from './routes/label.routes.js'
@@ -51,7 +50,6 @@ app.use('/api/labels', authRequired, labelRoutes)
 app.use('/api/roles', authRequired, roleRoutes)
 app.use('/api/priorities', authRequired, prioritiesRoutes)
 app.use('/api', authRequired, commentRoutes)
-app.use('/api', authRequired, projectUsersRoutes)
 app.use('/api', authRequired, membershipsRoutes)
 
 export default app

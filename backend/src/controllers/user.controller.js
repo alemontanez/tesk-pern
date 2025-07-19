@@ -1,9 +1,13 @@
-import { passwordService, updateProfile, userProfile } from '../services/user.service.js'
+import {
+  findUserProfileById,
+  editUserProfile,
+  changeUserPassword
+} from '../services/user.service.js'
 
-export const getUser = async (req, res) => {
+export const getUserProfile = async (req, res) => {
   const { id } = req.user
   try {
-    const user = await userProfile(id)
+    const user = await findUserProfileById(id)
     res.json(user)
   } catch (error) {
     console.log(error)
@@ -14,10 +18,10 @@ export const getUser = async (req, res) => {
   }
 }
 
-export const updateUser = async (req, res) => {
+export const updateUserProfile = async (req, res) => {
   const { id } = req.user
   try {
-    await updateProfile(id, req.body)
+    await editUserProfile(id, req.body)
     res.status(200).json({ message: 'User profile updated successfully' })
   } catch (error) {
     console.log(error)
@@ -31,11 +35,11 @@ export const updateUser = async (req, res) => {
   }
 }
 
-export const changePassword = async (req, res) => {
+export const updateUserPassword = async (req, res) => {
   const { id } = req.user
   const { password, newPassword } = req.body
   try {
-    await passwordService(id, password, newPassword)
+    await changeUserPassword(id, password, newPassword)
     res.status(200).json({ message: 'Password changed successfully' })
   } catch (error) {
     if (error.message === 'User not found') {

@@ -1,8 +1,12 @@
 import { Router } from 'express'
-import { addMember, getMembers, searchUsers } from '../controllers/memberships.controller.js'
 import { permissionMiddleware } from '../middlewares/permission.middleware.js'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
 import { memberSchema } from '../schemas/memberships.schema.js'
+import {
+  addMemberToProject,
+  getProjectMembers,
+  findPotentialMembers
+} from '../controllers/memberships.controller.js'
 
 const router = Router()
 /**
@@ -48,7 +52,7 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/projects/:projectId/memberships', permissionMiddleware('can_view'), getMembers)
+router.get('/projects/:projectId/memberships', permissionMiddleware('can_view'), getProjectMembers)
 
 /**
  * @swagger
@@ -92,7 +96,7 @@ router.get('/projects/:projectId/memberships', permissionMiddleware('can_view'),
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/projects/:projectId/memberships/users', permissionMiddleware('can_manage'), searchUsers)
+router.get('/projects/:projectId/memberships/users', permissionMiddleware('can_manage'), findPotentialMembers)
 
 /**
  * @swagger
@@ -190,7 +194,7 @@ router.get('/projects/:projectId/memberships/users', permissionMiddleware('can_m
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/projects/:projectId/memberships', permissionMiddleware('can_manage'), validateSchema(memberSchema), addMember)
+router.post('/projects/:projectId/memberships', permissionMiddleware('can_manage'), validateSchema(memberSchema), addMemberToProject)
 
 export default router
 

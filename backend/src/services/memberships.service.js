@@ -3,7 +3,7 @@ import User from '../models/user.model.js'
 import Role from '../models/role.model.js'
 import { Op } from 'sequelize'
 
-export const getMembersService = async (projectId) => {
+export const findAllMembersOfProject = async (projectId) => {
   const members = await Project_users.findAll({
     where: { project_id: projectId },
     attributes: [],
@@ -25,7 +25,7 @@ export const getMembersService = async (projectId) => {
   return members
 }
 
-export const searchUsersService = async (projectId, query) => {
+export const searchUsersNotInProject = async (projectId, query) => {
   const users = await User.findAll({
     subQuery: false,
     include: [{
@@ -46,7 +46,7 @@ export const searchUsersService = async (projectId, query) => {
   return users
 }
 
-export const addMemberService = async (projectId, memberId) => {
+export const createMembership = async (projectId, memberId) => {
   const userExists = await User.findByPk(memberId)
   if (!userExists) throw new Error('User not found')
   

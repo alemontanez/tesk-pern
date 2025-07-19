@@ -1,9 +1,13 @@
-import { addMemberService, getMembersService, searchUsersService } from '../services/memberships.service.js'
+import {
+  createMembership,
+  findAllMembersOfProject,
+  searchUsersNotInProject
+} from '../services/memberships.service.js'
 
-export const getMembers = async (req, res) => {
+export const getProjectMembers = async (req, res) => {
   const { projectId } = req.params
   try {
-    const members = await getMembersService(projectId)
+    const members = await findAllMembersOfProject(projectId)
     res.status(200).json(members)
   } catch (error) {
     console.log(error)
@@ -11,10 +15,10 @@ export const getMembers = async (req, res) => {
   }
 }
 
-export const searchUsers = async (req, res) => {
+export const findPotentialMembers = async (req, res) => {
   const { projectId } = req.params
   try {
-    const users = await searchUsersService(projectId, req.query.search)
+    const users = await searchUsersNotInProject(projectId, req.query.search)
     res.status(200).json(users)
   } catch (error) {
     console.log(error)
@@ -22,11 +26,11 @@ export const searchUsers = async (req, res) => {
   }
 }
 
-export const addMember = async (req, res) => {
+export const addMemberToProject = async (req, res) => {
   const { projectId } = req.params
   const { memberId } = req.body
   try {
-    await addMemberService(projectId, memberId)
+    await createMembership(projectId, memberId)
     res.status(201).json('Membership created')
   } catch (error) {
     console.log(error)

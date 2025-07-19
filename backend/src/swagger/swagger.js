@@ -5,7 +5,7 @@ import { BoardPayloadSchema, BoardSchema, BoardWithTasksSchema, UpdateBoardLabel
 import { LabelSchema } from './schemas/label.schema.js'
 import { RoleSchema } from './schemas/role.schema.js'
 import { ChangePasswordSchema, UpdateProfileSchema } from './schemas/user.schema.js'
-import { CreateTaskSchema, TaskPreviewSchema, UpdateTaskSchema } from './schemas/task.schema.js'
+import { CreateTaskSchema, TaskDetailedSchema, TaskPreviewSchema, UpdateTaskSchema } from './schemas/task.schema.js'
 import { PrioritiesSchema } from './schemas/priorities.schema.js'
 import { CommentPayloadSchema, CommentSchema } from './schemas/comment.schema.js'
 import { AddMemberSchema, ProjectMemberSchema, UserSearchResultSchema } from './schemas/memberships.schema.js'
@@ -50,6 +50,7 @@ const options = {
         CreateTaskSchema,
         UpdateTaskSchema,
         TaskPreviewSchema,
+        TaskDetailedSchema,
         PrioritiesSchema,
         CommentSchema,
         CommentPayloadSchema,

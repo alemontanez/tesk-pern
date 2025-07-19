@@ -3,12 +3,12 @@ import { permissionMiddleware } from '../middlewares/permission.middleware.js'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
 import { createTaskSchema, updateTaskSchema } from '../schemas/task.schema.js'
 import {
-  createTask,
-  deleteTask,
-  getTask,
   getTasks,
-  searchTasks,
-  updateTask
+  createTask,
+  updateTask,
+  deleteTask,
+  getTaskById,
+  searchTasks
 } from '../controllers/task.controller.js'
 
 const router = Router()
@@ -102,7 +102,6 @@ const router = Router()
  */
 router.get('/projects/:projectId/boards/:boardId/tasks', permissionMiddleware('can_view'), getTasks)
 
-
 /**
  * @swagger
  * /projects/{projectId}/boards/{boardId}/tasks:
@@ -194,89 +193,6 @@ router.get('/projects/:projectId/boards/:boardId/tasks', permissionMiddleware('c
  *                     -  'Internal error'
  */
 router.post('/projects/:projectId/boards/:boardId/tasks', validateSchema(createTaskSchema), createTask)
-
-
-/**
- * @swagger
- * /projects/{projectId}/boards/{boardId}/tasks:
- *   get:
- *     summary: Obtiene las tareas del tablero.
- *     tags: [Tasks]
- *     parameters:
- *       - in: path
- *         name: projectId
- *         required: true
- *         schema:
- *           type: integer
- *         description: Id del proyecto requerido.
- *       - in: path
- *         name: boardId
- *         required: true
- *         schema:
- *           type: integer
- *         description: Id del tablero requerido.
- *       - in: query
- *         name: sort
- *         required: true
- *         schema:
- *           type: string
- *         description: Opción para clasificar el orden de las tareas.
- *       - in: query
- *         name: order
- *         required: true
- *         schema:
- *           type: string
- *         description: Opción ordenar las tareas por ascendente o descendente.
- *     responses:
- *       200:
- *         description: Lista de tareas.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/BoardWithTasksSchema'
- *       403:
- *         description: Permisos insuficientes.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: array
- *                   items:
- *                     type: string
- *                   example: 
- *                     -  'Forbidden'
- *       404:
- *         description: Tablero no encontrado.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: array
- *                   items:
- *                     type: string
- *                   example: 
- *                     -  'Board not found'
- *       500:
- *         description: Error interno del servidor.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: array
- *                   items:
- *                     type: string
- *                   example: 
- *                     -  'Internal error'
- */
-router.get('/projects/:projectId/boards/:boardId/tasks/:taskId', getTask)
 
 /**
  * @swagger
@@ -387,7 +303,7 @@ router.get('/projects/:projectId/boards/:boardId/tasks/:taskId', getTask)
  *                     type: string
  *                   example: 
  *                     -  'Internal error'
- */
+*/
 router.patch('/projects/:projectId/boards/:boardId/tasks/:taskId', validateSchema(updateTaskSchema), updateTask)
 
 /**
@@ -457,8 +373,90 @@ router.patch('/projects/:projectId/boards/:boardId/tasks/:taskId', validateSchem
  *                     type: string
  *                   example: 
  *                     -  'Internal error'
- */
+*/
 router.delete('/projects/:projectId/boards/:boardId/tasks/:taskId', deleteTask)
+
+/**
+ * @swagger
+ * /projects/{projectId}/boards/{boardId}/tasks/{taskId}:
+ *   get:
+ *     summary: Obtiene una tarea.
+ *     tags: [Tasks]
+ *     parameters:
+ *       - in: path
+ *         name: projectId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Id del proyecto requerido.
+ *       - in: path
+ *         name: boardId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Id del tablero requerido.
+ *       - in: query
+ *         name: sort
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Opción para clasificar el orden de las tareas.
+ *       - in: query
+ *         name: order
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Opción ordenar las tareas por ascendente o descendente.
+ *     responses:
+ *       200:
+ *         description: Lista de tareas.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/TaskDetailedSchema'
+ *       403:
+ *         description: Permisos insuficientes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: 
+ *                     -  'Forbidden'
+ *       404:
+ *         description: Tarea no encontrada.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: 
+ *                     -  'Task not found'
+ *       500:
+ *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: 
+ *                     -  'Internal error'
+ */
+router.get('/projects/:projectId/boards/:boardId/tasks/:taskId', getTaskById)
 
 /**
  * @swagger
@@ -532,8 +530,7 @@ router.delete('/projects/:projectId/boards/:boardId/tasks/:taskId', deleteTask)
  *                     type: string
  *                   example: 
  *                     -  'Internal error'
- */
+*/
 router.get('/projects/:projectId/boards/:boardId/tasks-search', permissionMiddleware('can_view'), searchTasks)
-
 
 export default router

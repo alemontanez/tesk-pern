@@ -1,16 +1,16 @@
 import {
-  createProjectService,
+  initializeNewProject,
   deleteProjectWithDependencies,
-  getProjectService,
-  getUserProjectsService,
-  getUserRoleService,
-  updateProjectData
+  findProjectById,
+  findProjectsByUserId,
+  findUserRoleForProject,
+  updateProjectDetails
 } from '../services/project.service.js'
 
 export const getUserProjects = async (req, res) => {
   const userId = req.user.id
   try {
-    const projects = await getUserProjectsService(userId)
+    const projects = await findProjectsByUserId(userId)
     res.status(200).json(projects)
   } catch (error) {
     console.log(error)
@@ -18,11 +18,11 @@ export const getUserProjects = async (req, res) => {
   }
 }
 
-export const getProject = async (req, res) => {
+export const getProjectById = async (req, res) => {
   const { projectId } = req.params
   const userId = req.user.id
   try {
-    const project = await getProjectService(userId, projectId)
+    const project = await findProjectById(userId, projectId)
     res.status(200).json(project)
   } catch (error) {
     console.log(error)
@@ -33,11 +33,11 @@ export const getProject = async (req, res) => {
   }
 }
 
-export const getUserRole = async (req, res) => {
+export const getUserRoleInProject = async (req, res) => {
   const { projectId } = req.params
   const userId = req.user.id
   try {
-    const data = await getUserRoleService(userId, projectId)
+    const data = await findUserRoleForProject(userId, projectId)
     res.status(200).json(data)
   } catch (error) {
     console.log(error)
@@ -52,7 +52,7 @@ export const createProject = async (req, res) => {
   const userId = req.user.id
   const { name, description } = req.body
   try {
-    await createProjectService(userId, name, description)
+    await initializeNewProject(userId, name, description)
     res.status(201).json({ message: 'Project created successfully' })
   } catch (error) {
     console.log(error)
@@ -68,7 +68,7 @@ export const updateProject = async (req, res) => {
   const userId = req.user.id
   const { name, description } = req.body
   try {
-    const project = await updateProjectData(userId, projectId, name, description)
+    const project = await updateProjectDetails(userId, projectId, name, description)
     res.status(200).json({
       message: 'Project updated successfully',
       project

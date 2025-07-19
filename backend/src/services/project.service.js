@@ -7,24 +7,7 @@ import Task from '../models/task.model.js'
 import { checkPermissions } from '../utils/checkPermissions.js'
 import { Sequelize } from 'sequelize'
 
-
-export const createProjectService = async (userId, name, description) => {
-  const checkName = await Project.findOne({
-    where: {
-      owner_id: userId,
-      name: name
-    }
-  })
-  if (checkName) throw new Error('Project name already exists')
-  const project = await Project.create({
-    name,
-    description,
-    owner_id: userId
-  })
-  return project
-}
-
-export const getUserProjectsService = async (userId) => {
+export const findProjectsByUserId = async (userId) => {
   const projects = await Project.findAll({
     include: [{
       model: Project_users,
@@ -38,7 +21,7 @@ export const getUserProjectsService = async (userId) => {
   return projects
 }
 
-export const getProjectService = async (userId, projectId) => {
+export const findProjectById = async (userId, projectId) => {
   const role = await checkPermissions(userId, projectId)
   if (!role.can_view) throw new Error('Forbidden')
   const project = await Project.findOne({
@@ -79,7 +62,43 @@ export const getProjectService = async (userId, projectId) => {
   return project
 }
 
-export const updateProjectData = async (userId, projectId, name, description) => {
+export const findUserRoleForProject = async (userId, projectId) => {
+  const project = await Project.findByPk(projectId)
+  if (!project) throw new Error('Project not found')
+
+  const getRole = await Project_users.findOne({
+    where: {
+      user_id: userId,
+      project_id: projectId
+    },
+    attributes: [],
+    include: [{
+      model: Role,
+      as: 'role',
+    }]
+  })
+  if (!getRole) throw new Error('Member not found')
+
+  return getRole.role
+}
+
+export const initializeNewProject = async (userId, name, description) => {
+  const checkName = await Project.findOne({
+    where: {
+      owner_id: userId,
+      name: name
+    }
+  })
+  if (checkName) throw new Error('Project name already exists')
+  const project = await Project.create({
+    name,
+    description,
+    owner_id: userId
+  })
+  return project
+}
+
+export const updateProjectDetails = async (userId, projectId, name, description) => {
   const project = await Project.findByPk(projectId)
   if (!project) throw new Error('Project not found')
 
@@ -119,22 +138,3 @@ export const deleteProjectWithDependencies = async (userId, projectId) => {
   }
 }
 
-export const getUserRoleService = async (userId, projectId) => {
-  const project = await Project.findByPk(projectId)
-  if (!project) throw new Error('Project not found')
-
-  const getRole = await Project_users.findOne({
-    where: {
-      user_id: userId,
-      project_id: projectId
-    },
-    attributes: [],
-    include: [{
-      model: Role,
-      as: 'role',
-    }]
-  })
-  if (!getRole) throw new Error('Member not found')
-
-  return getRole.role
-}

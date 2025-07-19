@@ -1,10 +1,10 @@
-import { loginUser, registerUser, verifyTokenService } from '../services/auth.service.js'
+import { authenticateUser, createUserAccount, validateAndDecodeToken } from '../services/auth.service.js'
 import { createAccessToken } from '../utils/jwt.js'
 
-export const register = async (req, res) => {
+export const registerUser = async (req, res) => {
   const { username, email, firstName, lastName, password } = req.body
   try {
-    const user = await registerUser({ username, email, firstName, lastName, password })
+    const user = await createUserAccount({ username, email, firstName, lastName, password })
     const token = await createAccessToken({ id: user.id })
     res.cookie('token', token)
     res.status(201).json({ message: 'User created successfully' })
@@ -17,10 +17,10 @@ export const register = async (req, res) => {
   }
 }
 
-export const login = async (req, res) => {
+export const loginUser = async (req, res) => {
   const { email, password } = req.body
   try {
-    const user = await loginUser({ email, password })
+    const user = await authenticateUser({ email, password })
     const token = await createAccessToken({ id: user.id })
     res.cookie('token', token)
     res.status(200).json({ message: `User ${user.username} logged successfully` })
@@ -33,7 +33,7 @@ export const login = async (req, res) => {
   }
 }
 
-export const logout = (req, res) => {
+export const logoutUser = (req, res) => {
   res.clearCookie('token')
   return res.sendStatus(200)
 }
@@ -42,7 +42,7 @@ export const verifyToken = async (req, res) => {
   const { token } = req.cookies
   if (!token) return res.send(false)
   try {
-    const user = await verifyTokenService(token)
+    const user = await validateAndDecodeToken(token)
     return res.json(user)
   } catch (error) {
     console.log(error)

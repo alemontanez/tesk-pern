@@ -2,9 +2,9 @@ import { Router } from 'express'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
 import { loginSchema, registerSchema } from '../schemas/auth.schema.js'
 import {
-  login,
-  logout,
-  register,
+  loginUser,
+  logoutUser,
+  registerUser,
   verifyToken
 } from '../controllers/auth.controller.js'
 
@@ -84,7 +84,7 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/register', validateSchema(registerSchema), register)
+router.post('/register', validateSchema(registerSchema), registerUser)
 
 /**
  * @swagger
@@ -150,7 +150,7 @@ router.post('/register', validateSchema(registerSchema), register)
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/login', validateSchema(loginSchema), login)
+router.post('/login', validateSchema(loginSchema), loginUser)
 
 /**
  * @swagger
@@ -167,7 +167,7 @@ router.post('/login', validateSchema(loginSchema), login)
  *               type: text
  *               example: OK
  */
-router.post('/logout', logout)
+router.post('/logout', logoutUser)
 
 /**
  * @swagger

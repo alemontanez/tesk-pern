@@ -49,7 +49,7 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/', getUserProjects) // se usa
+router.get('/', getUserProjects)
 
 /**
  * @swagger
@@ -98,7 +98,7 @@ router.get('/', getUserProjects) // se usa
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/:projectId', getProject) // se usa
+router.get('/:projectId', getProject)
 
 /**
  * @swagger
@@ -160,7 +160,7 @@ router.get('/:projectId', getProject) // se usa
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/:projectId/permissions', permissionMiddleware('can_view'), getUserRole) // se usa
+router.get('/:projectId/permissions', permissionMiddleware('can_view'), getUserRole)
 
 /**
  * @swagger
@@ -226,7 +226,7 @@ router.get('/:projectId/permissions', permissionMiddleware('can_view'), getUserR
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/', validateSchema(createProjectSchema), createProject) // se usa
+router.post('/', validateSchema(createProjectSchema), createProject)
 
 /**
  * @swagger
@@ -312,7 +312,7 @@ router.post('/', validateSchema(createProjectSchema), createProject) // se usa
  *                   example: 
  *                     -  'Internal error'
  */
-router.patch('/:projectId', validateSchema(updateProjectSchema), updateProject) // se usa
+router.patch('/:projectId', validateSchema(updateProjectSchema), updateProject)
 
 /**
  * @swagger
@@ -370,7 +370,7 @@ router.patch('/:projectId', validateSchema(updateProjectSchema), updateProject) 
  *                   example: 
  *                     -  'Internal error'
  */
-router.delete('/:projectId', deleteProject) // se usa
+router.delete('/:projectId', deleteProject)
 
 
 export default router

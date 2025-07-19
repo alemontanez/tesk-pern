@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config/config.js'
 
-export const registerUser = async ({ username, email, firstName, lastName, password }) => {
+export const createUserAccount = async ({ username, email, firstName, lastName, password }) => {
   const passwordHash = await bcrypt.hash(password, 10)
   const existingUsername = await User.findOne({ where: { username: username } })
   if (existingUsername) throw new Error('Username already exists')
@@ -21,7 +21,7 @@ export const registerUser = async ({ username, email, firstName, lastName, passw
   return user
 }
 
-export const loginUser = async ({ email, password }) => {
+export const authenticateUser = async ({ email, password }) => {
   const existingUser = await User.findOne({ where: { email: email } })
   if (!existingUser) throw new Error('Invalid credentials')
 
@@ -31,7 +31,7 @@ export const loginUser = async ({ email, password }) => {
   return existingUser
 }
 
-export const verifyTokenService = async (token) => {
+export const validateAndDecodeToken = async (token) => {
   const user = jwt.verify(token, TOKEN_SECRET, async (error, user) => {
     if (error) throw new Error('Unauthorized')
 

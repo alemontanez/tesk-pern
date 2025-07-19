@@ -73,7 +73,7 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/:projectId/boards', searchBoards) // se usa
+router.get('/:projectId/boards', searchBoards) 
 
 /**
  * @swagger
@@ -158,7 +158,7 @@ router.get('/:projectId/boards', searchBoards) // se usa
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/:projectId/boards', validateSchema(boardSchema), createBoard) // se usa
+router.post('/:projectId/boards', validateSchema(boardSchema), createBoard) 
 
 /**
  * @swagger
@@ -262,7 +262,7 @@ router.post('/:projectId/boards', validateSchema(boardSchema), createBoard) // s
  *                   example: 
  *                     -  'Internal error'
  */
-router.patch('/:projectId/boards/:boardId', validateSchema(boardSchema), updateBoard) // no se usa pero debería usarse
+router.patch('/:projectId/boards/:boardId', validateSchema(boardSchema), updateBoard) 
 
 /**
  * @swagger
@@ -326,7 +326,7 @@ router.patch('/:projectId/boards/:boardId', validateSchema(boardSchema), updateB
  *                   example: 
  *                     -  'Internal error'
  */
-router.delete('/:projectId/boards/:boardId', deleteBoard) // no se usa pero debería usarse
+router.delete('/:projectId/boards/:boardId', deleteBoard) 
 
 /**
  * @swagger
@@ -418,6 +418,6 @@ router.delete('/:projectId/boards/:boardId', deleteBoard) // no se usa pero debe
  *                   example: 
  *                     -  'Internal error'
  */
-router.patch('/:projectId/boards/:boardId/change-label', validateSchema(updateBoardLabelSchema), updateBoardLabel) // no se usa, debería usarse o estar dentro de updateBoard
+router.patch('/:projectId/boards/:boardId/change-label', validateSchema(updateBoardLabelSchema), updateBoardLabel) 
 
 export default router

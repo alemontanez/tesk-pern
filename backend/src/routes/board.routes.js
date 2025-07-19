@@ -4,7 +4,7 @@ import { boardSchema, updateBoardLabelSchema } from '../schemas/board.schema.js'
 import {
   createBoard,
   deleteBoard,
-  searchBoards,
+  getBoards,
   updateBoard,
   updateBoardLabel
 } from '../controllers/board.controller.js'
@@ -73,7 +73,7 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/:projectId/boards', searchBoards) 
+router.get('/:projectId/boards', getBoards) 
 
 /**
  * @swagger

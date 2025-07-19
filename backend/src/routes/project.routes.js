@@ -3,12 +3,12 @@ import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
 import { createProjectSchema, updateProjectSchema } from '../schemas/project.schema.js'
 import { permissionMiddleware } from '../middlewares/permission.middleware.js'
 import {
-  getProject,
   getUserProjects,
+  getProjectById,
+  getUserRoleInProject,
   createProject,
   updateProject,
-  deleteProject,
-  getUserRole
+  deleteProject
 } from '../controllers/project.controller.js'
 
 const router = Router()
@@ -98,7 +98,7 @@ router.get('/', getUserProjects)
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/:projectId', getProject)
+router.get('/:projectId', getProjectById)
 
 /**
  * @swagger
@@ -160,7 +160,7 @@ router.get('/:projectId', getProject)
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/:projectId/permissions', permissionMiddleware('can_view'), getUserRole)
+router.get('/:projectId/permissions', permissionMiddleware('can_view'), getUserRoleInProject)
 
 /**
  * @swagger

@@ -26,7 +26,7 @@ export const getProjectById = async (req, res) => {
     res.status(200).json(project)
   } catch (error) {
     console.log(error)
-    if (error.message === 'Project not found' || error.message === 'Forbidden') {
+    if (error.message === 'Project not found') {
       return res.status(404).json({ error: ['Project not found'] })
     }
     return res.status(500).json({ error: ['Internal error'] })
@@ -74,11 +74,11 @@ export const updateProject = async (req, res) => {
       project
     })
   } catch (error) {
-    if (error.message === 'The user does not have permissions') {
-      return res.status(403).json({ error: [error.message] })
-    }
     if (error.message === 'Project not found') {
       return res.status(404).json({ error: [error.message] })
+    }
+    if (error.message === 'Project name already exists') {
+      return res.status(409).json({ error: [error.message] })
     }
     return res.status(500).json({ error: ['Internal error'] })
   }
@@ -92,9 +92,6 @@ export const deleteProject = async (req, res) => {
     res.sendStatus(204)
   } catch (error) {
     console.log(error)
-    if (error.message === 'The user does not have permissions') {
-      return res.status(403).json({ error: [error.message] })
-    }
     if (error.message === 'Project not found') {
       return res.status(404).json({ error: [error.message] })
     }

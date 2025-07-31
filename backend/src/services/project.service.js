@@ -22,8 +22,6 @@ export const findProjectsByUserId = async (userId) => {
 }
 
 export const findProjectById = async (userId, projectId) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_view) throw new Error('Forbidden')
   const project = await Project.findOne({
     where: { id: projectId },
     include: [
@@ -101,40 +99,23 @@ export const initializeNewProject = async (userId, name, description) => {
 export const updateProjectDetails = async (userId, projectId, name, description) => {
   const project = await Project.findByPk(projectId)
   if (!project) throw new Error('Project not found')
-
-  const verifyPermissions = await Project_users.findOne({
-    where: { project_id: projectId, user_id: userId }
+  const checkName = await Project.findOne({
+    where: {
+      owner_id: userId,
+      name: name
+    }
   })
-  if (!verifyPermissions) throw new Error('The user does not have permissions')
-  const role = await Role.findOne({
-    where: { id: verifyPermissions.role_id }
+  if (checkName) throw new Error('Project name already exists')
+  const updatedProject = await project.update({
+    name,
+    description
   })
-  if (role.name === 'admin' || role.name === 'owner') {
-    await project.update({
-      name,
-      description
-    })
-    return project
-  } else {
-    throw new Error('The user does not have permissions')
-  }
-} // Agregar verificación de nombre del proyecto, como en createProject
+  return updatedProject
+}
 
 export const deleteProjectWithDependencies = async (userId, projectId) => {
   const project = await Project.findByPk(projectId)
   if (!project) throw new Error('Project not found')
-
-  const verifyPermissions = await Project_users.findOne({
-    where: { project_id: projectId, user_id: userId }
-  })
-  if (!verifyPermissions) throw new Error('The user does not have permissions')
-  const role = await Role.findOne({
-    where: { id: verifyPermissions.role_id }
-  })
-  if (role.name === 'owner') {
-    await project.destroy({ force: true })
-  } else {
-    throw new Error('The user does not have permissions')
-  }
+  await project.destroy({ force: true })
 }
 

@@ -49,7 +49,10 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/', getUserProjects)
+router.get(
+  '/',
+  getUserProjects
+)
 
 /**
  * @swagger
@@ -98,7 +101,11 @@ router.get('/', getUserProjects)
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/:projectId', getProjectById)
+router.get(
+  '/:projectId',
+  permissionMiddleware('can_view'),
+  getProjectById
+)
 
 /**
  * @swagger
@@ -160,7 +167,11 @@ router.get('/:projectId', getProjectById)
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/:projectId/permissions', permissionMiddleware('can_view'), getUserRoleInProject)
+router.get(
+  '/:projectId/permissions',
+  permissionMiddleware('can_view'),
+  getUserRoleInProject
+)
 
 /**
  * @swagger
@@ -226,7 +237,11 @@ router.get('/:projectId/permissions', permissionMiddleware('can_view'), getUserR
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/', validateSchema(createProjectSchema), createProject)
+router.post(
+  '/',
+  validateSchema(createProjectSchema),
+  createProject
+)
 
 /**
  * @swagger
@@ -312,7 +327,12 @@ router.post('/', validateSchema(createProjectSchema), createProject)
  *                   example: 
  *                     -  'Internal error'
  */
-router.patch('/:projectId', validateSchema(updateProjectSchema), updateProject)
+router.patch(
+  '/:projectId',
+  permissionMiddleware('can_edit'),
+  validateSchema(updateProjectSchema),
+  updateProject
+)
 
 /**
  * @swagger
@@ -370,7 +390,11 @@ router.patch('/:projectId', validateSchema(updateProjectSchema), updateProject)
  *                   example: 
  *                     -  'Internal error'
  */
-router.delete('/:projectId', deleteProject)
+router.delete(
+  '/:projectId',
+  permissionMiddleware('is_owner'),
+  deleteProject
+)
 
 
 export default router

@@ -16,11 +16,11 @@ export const permissionMiddleware = (requiredPermission) => {
       })
 
       if (!projectUser) {
-        return res.status(403).json({ error: 'Forbidden' })
+        return res.status(403).json({ error: 'Access denied: insufficient permissions' })
       }
 
       if (!projectUser.role[requiredPermission]) {
-        return res.status(403).json({ error: 'Forbidden' })
+        return res.status(403).json({ error: 'Access denied: insufficient permissions' })
       }
 
       req.role = projectUser.role

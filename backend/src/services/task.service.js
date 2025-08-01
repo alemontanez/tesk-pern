@@ -6,8 +6,9 @@ import User from '../models/user.model.js'
 import Comment from '../models/comment.model.js'
 import Project_users from '../models/project_users.model.js'
 import Role from '../models/role.model.js'
-import { checkPermissions } from '../utils/checkPermissions.js'
 import { Op, fn, col } from 'sequelize'
+
+import { checkPermissions } from '../utils/checkPermissions.js'
 
 export const findAllTasks = async (projectId, boardId, sort, order) => {
   const board = await Board.findOne({
@@ -43,8 +44,6 @@ export const findAllTasks = async (projectId, boardId, sort, order) => {
 }
 
 export const addNewTask = async (userId, projectId, boardId, title, description, dueDate, priorityId) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_edit) throw new Error('Forbidden')
   const boardValidation = await Board.findOne({
     where: {
       id: boardId,
@@ -66,9 +65,7 @@ export const addNewTask = async (userId, projectId, boardId, title, description,
   return task
 }
 
-export const editTask = async (userId, projectId, boardId, taskId, title, description, assignedTo, dueDate, priorityId, labelId) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_edit) throw new Error('Forbidden')
+export const editTask = async (projectId, boardId, taskId, title, description, assignedTo, dueDate, priorityId, labelId) => {
   const verifyAssignedUser = await checkPermissions(assignedTo, projectId)
   if (!verifyAssignedUser.can_edit) throw new Error('Access denied: insufficient permissions')
   const task = await Task.findOne({
@@ -100,9 +97,7 @@ export const editTask = async (userId, projectId, boardId, taskId, title, descri
   return updatedTask
 }
 
-export const removeTask = async (userId, projectId, boardId, taskId) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_manage) throw new Error('Forbidden')
+export const removeTask = async (projectId, boardId, taskId) => {
   const task = await Task.findOne({
     where: {
       id: taskId
@@ -120,10 +115,7 @@ export const removeTask = async (userId, projectId, boardId, taskId) => {
   await task.destroy({ force: true })
 }
 
-
-export const findTaskById = async (userId, projectId, boardId, taskId) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_view) throw new Error('Forbidden')
+export const findTaskById = async (projectId, boardId, taskId) => {
   const task = await Task.findOne({
     where: {
       id: taskId
@@ -184,7 +176,6 @@ export const findTaskById = async (userId, projectId, boardId, taskId) => {
     assignedUser
   }
 }
-
 
 export const searchTasksByCriteria = async (boardId, criteria) => {
   const allowedSortFields = ['id', 'title', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by']

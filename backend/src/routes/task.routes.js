@@ -1,7 +1,10 @@
 import { Router } from 'express'
 import { permissionMiddleware } from '../middlewares/permission.middleware.js'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
-import { createTaskSchema, updateTaskSchema } from '../schemas/task.schema.js'
+import {
+  createTaskSchema,
+  updateTaskSchema
+} from '../schemas/task.schema.js'
 import {
   getTasks,
   createTask,
@@ -100,7 +103,11 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/projects/:projectId/boards/:boardId/tasks', permissionMiddleware('can_view'), getTasks)
+router.get(
+  '/projects/:projectId/boards/:boardId/tasks',
+  permissionMiddleware('can_view'),
+  getTasks
+)
 
 /**
  * @swagger
@@ -192,7 +199,12 @@ router.get('/projects/:projectId/boards/:boardId/tasks', permissionMiddleware('c
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/projects/:projectId/boards/:boardId/tasks', validateSchema(createTaskSchema), createTask)
+router.post(
+  '/projects/:projectId/boards/:boardId/tasks',
+  permissionMiddleware('can_edit'),
+  validateSchema(createTaskSchema),
+  createTask
+)
 
 /**
  * @swagger
@@ -304,7 +316,12 @@ router.post('/projects/:projectId/boards/:boardId/tasks', validateSchema(createT
  *                   example: 
  *                     -  'Internal error'
 */
-router.patch('/projects/:projectId/boards/:boardId/tasks/:taskId', validateSchema(updateTaskSchema), updateTask)
+router.patch(
+  '/projects/:projectId/boards/:boardId/tasks/:taskId',
+  permissionMiddleware('can_edit'),
+  validateSchema(updateTaskSchema),
+  updateTask
+)
 
 /**
  * @swagger
@@ -374,7 +391,11 @@ router.patch('/projects/:projectId/boards/:boardId/tasks/:taskId', validateSchem
  *                   example: 
  *                     -  'Internal error'
 */
-router.delete('/projects/:projectId/boards/:boardId/tasks/:taskId', deleteTask)
+router.delete(
+  '/projects/:projectId/boards/:boardId/tasks/:taskId',
+  permissionMiddleware('can_manage'),
+  deleteTask
+)
 
 /**
  * @swagger
@@ -456,7 +477,11 @@ router.delete('/projects/:projectId/boards/:boardId/tasks/:taskId', deleteTask)
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/projects/:projectId/boards/:boardId/tasks/:taskId', getTaskById)
+router.get(
+  '/projects/:projectId/boards/:boardId/tasks/:taskId',
+  permissionMiddleware('can_view'),
+  getTaskById
+)
 
 /**
  * @swagger
@@ -531,6 +556,10 @@ router.get('/projects/:projectId/boards/:boardId/tasks/:taskId', getTaskById)
  *                   example: 
  *                     -  'Internal error'
 */
-router.get('/projects/:projectId/boards/:boardId/tasks-search', permissionMiddleware('can_view'), searchTasks)
+router.get(
+  '/projects/:projectId/boards/:boardId/tasks-search',
+  permissionMiddleware('can_view'),
+  searchTasks
+)
 
 export default router

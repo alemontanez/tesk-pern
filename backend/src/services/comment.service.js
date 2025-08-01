@@ -1,11 +1,9 @@
 import Board from '../models/board.model.js'
 import Task from '../models/task.model.js'
 import Comment from '../models/comment.model.js'
-import { checkPermissions } from '../utils/checkPermissions.js'
+
 
 export const addNewComment = async (userId, projectId, boardId, taskId, content) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_view) throw new Error('Forbidden')
   const board = await Board.findOne({
     where: {
       id: boardId,
@@ -29,8 +27,6 @@ export const addNewComment = async (userId, projectId, boardId, taskId, content)
 }
 
 export const editCommentContent = async (userId, projectId, boardId, taskId, commentId, content) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_view) throw new Error('Forbidden')
   const board = await Board.findOne({
     where: {
       id: boardId,
@@ -54,13 +50,12 @@ export const editCommentContent = async (userId, projectId, boardId, taskId, com
   })
   if (!comment) throw new Error('Comment not found')
   await comment.update({
-    content
+    content,
+    user_id: userId
   })
 }
 
-export const removeComment = async (userId, projectId, boardId, taskId, commentId) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_manage) throw new Error('Forbidden')
+export const removeComment = async (projectId, boardId, taskId, commentId) => {
   const board = await Board.findOne({
     where: {
       id: boardId,

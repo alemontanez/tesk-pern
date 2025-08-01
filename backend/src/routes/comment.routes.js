@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { permissionMiddleware } from '../middlewares/permission.middleware.js'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
 import { commentSchema } from '../schemas/comment.schema.js'
 import {
@@ -111,7 +112,12 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/projects/:projectId/boards/:boardId/tasks/:taskId/comments', validateSchema(commentSchema), createComment)
+router.post(
+  '/projects/:projectId/boards/:boardId/tasks/:taskId/comments',
+  permissionMiddleware('can_view'),
+  validateSchema(commentSchema), 
+  createComment
+)
 
 /**
  * @swagger
@@ -214,7 +220,12 @@ router.post('/projects/:projectId/boards/:boardId/tasks/:taskId/comments', valid
  *                   example: 
  *                     -  'Internal error'
  */
-router.patch('/projects/:projectId/boards/:boardId/tasks/:taskId/comments/:commentId', validateSchema(commentSchema), updateComment)
+router.patch(
+  '/projects/:projectId/boards/:boardId/tasks/:taskId/comments/:commentId',
+  permissionMiddleware('can_edit'),
+  validateSchema(commentSchema), 
+  updateComment
+)
 
 /**
  * @swagger
@@ -290,6 +301,10 @@ router.patch('/projects/:projectId/boards/:boardId/tasks/:taskId/comments/:comme
  *                   example: 
  *                     -  'Internal error'
  */
-router.delete('/projects/:projectId/boards/:boardId/tasks/:taskId/comments/:commentId', deleteComment)
+router.delete(
+  '/projects/:projectId/boards/:boardId/tasks/:taskId/comments/:commentId',
+  permissionMiddleware('can_manage'),
+  deleteComment
+)
 
 export default router

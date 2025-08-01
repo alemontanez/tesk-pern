@@ -4,7 +4,6 @@ import Project from '../models/project.model.js'
 import Project_users from '../models/project_users.model.js'
 import Role from '../models/role.model.js'
 import Task from '../models/task.model.js'
-import { checkPermissions } from '../utils/checkPermissions.js'
 import { Sequelize } from 'sequelize'
 
 export const findProjectsByUserId = async (userId) => {

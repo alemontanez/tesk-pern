@@ -1,12 +1,9 @@
 import Board from '../models/board.model.js'
 import Label from '../models/label.model.js'
 import Task from '../models/task.model.js'
-import { checkPermissions } from '../utils/checkPermissions.js'
 import { Op } from 'sequelize'
 
-export const findAllBoards = async (userId, projectId, query) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_view) throw new Error('Forbidden')
+export const findAllBoards = async (projectId, query) => {
   const boards = await Board.findAll({
     where: {
       project_id: projectId,
@@ -27,13 +24,14 @@ export const findAllBoards = async (userId, projectId, query) => {
   return boardsWithCount
 }
 
-export const createProjectBoard = async (userId, projectId, name) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_manage) throw new Error('Forbidden')
+export const createProjectBoard = async (projectId, name) => {
   const verifyName = await Board.findOne({
-    where: { name: name, project_id: projectId }
+    where: {
+      name: name,
+      project_id: projectId
+    }
   })
-  if (verifyName) throw new Error('The selected name is already in use')
+  if (verifyName) throw new Error('Board name already exists')
   const board = await Board.create({
     name,
     project_id: projectId
@@ -41,12 +39,20 @@ export const createProjectBoard = async (userId, projectId, name) => {
   return board
 }
 
-export const updateBoardDetails = async (userId, projectId, boardId, newName) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_manage) throw new Error('Forbidden')
-  const board = await Board.findByPk(boardId)
+export const updateBoardDetails = async (projectId, boardId, newName) => {
+  const board = await Board.findOne({
+    where: {
+      id: boardId,
+      project_id: projectId
+    }
+  })
   if (!board) throw new Error('Board not found')
-  const existingBoardName = await Board.findOne({ where: { name: newName } })
+  const existingBoardName = await Board.findOne({
+    where: {
+      name: newName,
+      project_id: projectId,
+    }
+  })
   if (existingBoardName) throw new Error('Board name already exists')
   await board.update({
     name: newName
@@ -54,10 +60,24 @@ export const updateBoardDetails = async (userId, projectId, boardId, newName) =>
   return board
 }
 
-export const updateLabelOnBoard = async (userId, projectId, boardId, labelId) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_manage) throw new Error('Forbidden')
-  const board = await Board.findByPk(boardId)
+export const removeBoard = async (projectId, boardId) => {
+  const board = await Board.findOne({
+    where: {
+      id: boardId,
+      project_id: projectId
+    }
+  })
+  if (!board) throw new Error('Board not found')
+  board.destroy({ force: true })
+}
+
+export const updateLabelOnBoard = async (projectId, boardId, labelId) => {
+  const board = await Board.findOne({
+    where: {
+      id: boardId,
+      project_id: projectId
+    }
+  })
   if (!board) throw new Error('Board not found')
   const label = await Label.findByPk(labelId)
   if (!label) throw new Error('Label not found')
@@ -65,12 +85,3 @@ export const updateLabelOnBoard = async (userId, projectId, boardId, labelId) =>
     label_id: labelId
   })
 }
-
-export const removeBoard = async (userId, projectId, boardId) => {
-  const role = await checkPermissions(userId, projectId)
-  if (!role.can_manage) throw new Error('Forbidden')
-  const board = await Board.findByPk(boardId)
-  if (!board) throw new Error('Board not found')
-  board.destroy({ force: true })
-}
-

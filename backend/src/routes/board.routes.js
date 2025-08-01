@@ -1,12 +1,16 @@
 import { Router } from 'express'
+import { permissionMiddleware } from '../middlewares/permission.middleware.js'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
-import { boardSchema, updateBoardLabelSchema } from '../schemas/board.schema.js'
 import {
-  createBoard,
-  deleteBoard,
+  boardSchema,
+  updateBoardLabelSchema,
+} from '../schemas/board.schema.js'
+import {
   getBoards,
+  createBoard,
   updateBoard,
-  updateBoardLabel
+  deleteBoard,
+  updateBoardLabel,
 } from '../controllers/board.controller.js'
 
 const router = Router()
@@ -73,7 +77,11 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/:projectId/boards', getBoards) 
+router.get(
+  '/:projectId/boards',
+  permissionMiddleware('can_view'),
+  getBoards
+)
 
 /**
  * @swagger
@@ -158,7 +166,12 @@ router.get('/:projectId/boards', getBoards)
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/:projectId/boards', validateSchema(boardSchema), createBoard) 
+router.post(
+  '/:projectId/boards',
+  permissionMiddleware('can_manage'),
+  validateSchema(boardSchema),
+  createBoard
+)
 
 /**
  * @swagger
@@ -262,7 +275,12 @@ router.post('/:projectId/boards', validateSchema(boardSchema), createBoard)
  *                   example: 
  *                     -  'Internal error'
  */
-router.patch('/:projectId/boards/:boardId', validateSchema(boardSchema), updateBoard) 
+router.patch(
+  '/:projectId/boards/:boardId',
+  permissionMiddleware('can_manage'),
+  validateSchema(boardSchema),
+  updateBoard
+)
 
 /**
  * @swagger
@@ -326,7 +344,11 @@ router.patch('/:projectId/boards/:boardId', validateSchema(boardSchema), updateB
  *                   example: 
  *                     -  'Internal error'
  */
-router.delete('/:projectId/boards/:boardId', deleteBoard) 
+router.delete(
+  '/:projectId/boards/:boardId',
+  permissionMiddleware('can_manage'),
+  deleteBoard
+)
 
 /**
  * @swagger
@@ -418,6 +440,10 @@ router.delete('/:projectId/boards/:boardId', deleteBoard)
  *                   example: 
  *                     -  'Internal error'
  */
-router.patch('/:projectId/boards/:boardId/change-label', validateSchema(updateBoardLabelSchema), updateBoardLabel) 
+router.patch(
+  '/:projectId/boards/:boardId/change-label',
+  permissionMiddleware('can_manage'),
+  validateSchema(updateBoardLabelSchema),
+  updateBoardLabel)
 
 export default router

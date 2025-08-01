@@ -1,7 +1,10 @@
 import { Router } from 'express'
-import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
-import { createProjectSchema, updateProjectSchema } from '../schemas/project.schema.js'
 import { permissionMiddleware } from '../middlewares/permission.middleware.js'
+import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
+import {
+  createProjectSchema,
+  updateProjectSchema
+} from '../schemas/project.schema.js'
 import {
   getUserProjects,
   getProjectById,

@@ -1,6 +1,9 @@
 import { Router } from 'express'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
-import { changePasswordSchema, updateProfileSchema } from '../schemas/user.schema.js'
+import {
+  changePasswordSchema,
+  updateProfileSchema
+} from '../schemas/user.schema.js'
 import {
   getUserProfile,
   updateUserProfile,
@@ -56,7 +59,11 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/', getUserProfile)
+router.get(
+  '/',
+  getUserProfile
+
+)
 
 /**
  * @swagger
@@ -137,7 +144,11 @@ router.get('/', getUserProfile)
  *                   example: 
  *                     -  'Internal error'
  */
-router.patch('/', validateSchema(updateProfileSchema), updateUserProfile)
+router.patch(
+  '/',
+  validateSchema(updateProfileSchema),
+  updateUserProfile
+)
 
 /**
  * @swagger
@@ -219,7 +230,11 @@ router.patch('/', validateSchema(updateProfileSchema), updateUserProfile)
  *                   example: 
  *                     -  'Internal error'
  */
-router.patch('/change-password', validateSchema(changePasswordSchema), updateUserPassword)
+router.patch(
+  '/change-password',
+  validateSchema(changePasswordSchema),
+  updateUserPassword
+)
 
 // estos endpoints no se usan todavía, pero son útiles para futuro
 

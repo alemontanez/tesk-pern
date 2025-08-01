@@ -1,6 +1,9 @@
 import { Router } from 'express'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
-import { loginSchema, registerSchema } from '../schemas/auth.schema.js'
+import {
+  loginSchema,
+  registerSchema
+} from '../schemas/auth.schema.js'
 import {
   loginUser,
   logoutUser,

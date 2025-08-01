@@ -444,6 +444,7 @@ router.patch(
   '/:projectId/boards/:boardId/change-label',
   permissionMiddleware('can_manage'),
   validateSchema(updateBoardLabelSchema),
-  updateBoardLabel)
+  updateBoardLabel
+)
 
 export default router

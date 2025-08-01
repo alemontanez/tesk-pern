@@ -52,7 +52,11 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/projects/:projectId/memberships', permissionMiddleware('can_view'), getProjectMembers)
+router.get(
+  '/projects/:projectId/memberships',
+  permissionMiddleware('can_view'),
+  getProjectMembers
+)
 
 /**
  * @swagger
@@ -96,7 +100,11 @@ router.get('/projects/:projectId/memberships', permissionMiddleware('can_view'),
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/projects/:projectId/memberships/users', permissionMiddleware('can_manage'), findPotentialMembers)
+router.get(
+  '/projects/:projectId/memberships/users',
+  permissionMiddleware('can_manage'),
+  findPotentialMembers
+)
 
 /**
  * @swagger
@@ -194,7 +202,12 @@ router.get('/projects/:projectId/memberships/users', permissionMiddleware('can_m
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/projects/:projectId/memberships', permissionMiddleware('can_manage'), validateSchema(memberSchema), addMemberToProject)
+router.post(
+  '/projects/:projectId/memberships',
+  permissionMiddleware('can_manage'),
+  validateSchema(memberSchema),
+  addMemberToProject
+)
 
 export default router
 

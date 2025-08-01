@@ -7,14 +7,16 @@ import { swaggerSpec } from './swagger/swagger.js'
 import { authRequired } from './middlewares/jwtValidator.middleware.js'
 import { FRONTEND_URL } from './config/config.js'
 
-import authRoutes from './routes/auth.routes.js'
-import userRoutes from './routes/user.routes.js'
-import projectRoutes from './routes/project.routes.js'
-import boardRoutes from './routes/board.routes.js'
-import taskRoutes from './routes/task.routes.js'
-import commentRoutes from './routes/comment.routes.js'
-import membershipsRoutes from './routes/memberships.routes.js'
 import './models/relationships.js'
+import {
+  authRoutes,
+  userRoutes,
+  projectRoutes,
+  boardRoutes,
+  taskRoutes,
+  commentRoutes,
+  membershipsRoutes
+} from './routes/index.js'
 
 const app = express()
 

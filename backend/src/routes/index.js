@@ -1,0 +1,7 @@
+export { default as authRoutes } from './auth.routes.js'
+export { default as userRoutes } from './user.routes.js'
+export { default as projectRoutes } from './project.routes.js'
+export { default as boardRoutes } from './board.routes.js'
+export { default as taskRoutes } from './task.routes.js'
+export { default as commentRoutes } from './comment.routes.js'
+export { default as membershipsRoutes } from './memberships.routes.js'

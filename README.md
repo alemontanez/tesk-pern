@@ -1,9 +1,7 @@
 
-# Proyecto: Tesk
+# Tesk
 
 Software de gestión de equipos y tareas, basado en Jira/Asana/Monday.
-
-
 
 
 ## 📌 Descripción
@@ -21,7 +19,9 @@ Dentro de varias características, podemos destacar la implementación de medida
 
 **Cliente:** React, React Router Dom, React Hook Form, Axios, date-fns, js-cookie, CSS.
 
+## 🏰 Diagrama de la Base de Datos
 
+![Diagrama de la Base de Datos](./backend/docs/db-diagram.png)
 
 ## 📖 Lecciones aprendidas
 
@@ -96,7 +96,7 @@ VALUES
 ```
 
 
-## Variables de entorno
+## 🧭 Variables de entorno
 
 Para ejecutar este proyecto, se necesita agregar las siguientes variables de entorno en un archivo .env dentro de la carpeta `backend`.
 

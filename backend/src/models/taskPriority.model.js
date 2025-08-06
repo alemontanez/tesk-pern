@@ -1,24 +1,24 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../config/database.js'
 
-class Priority extends Model {}
+class TaskPriority extends Model {}
 
-Priority.init({
+TaskPriority.init({
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.SMALLINT,
     autoIncrement: true,
     primaryKey: true
   },
   name: {
-    type: DataTypes.STRING(30),
+    type: DataTypes.STRING(50),
     unique: true,
     allowNull: false
   }
 }, {
   sequelize,
   timestamps: false,
-  modelName: 'Priority',
-  tableName: 'priorities',
+  modelName: 'TaskPriority',
+  tableName: 'task_priorities',
 })
 
-export default Priority
+export default TaskPriority

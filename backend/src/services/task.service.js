@@ -1,6 +1,6 @@
 import Board from '../models/board.model.js'
 import Task from '../models/task.model.js'
-import Priority from '../models/priority.model.js'
+import TaskPriority from '../models/taskPriority.model.js'
 import Label from '../models/label.model.js'
 import User from '../models/user.model.js'
 import Comment from '../models/comment.model.js'
@@ -32,7 +32,7 @@ export const findAllTasks = async (projectId, boardId, sort, order) => {
         attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by'],
         include: [
           { model: Label, attributes: ['hex_code'] },
-          { model: Priority, attributes: ['name'] },
+          { model: TaskPriority, attributes: ['name'] },
           { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo' },
           { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy' }
         ]
@@ -51,7 +51,7 @@ export const addNewTask = async (userId, projectId, boardId, title, description,
     }
   })
   if (!boardValidation) throw new Error('Board not found')
-  const priority = await Priority.findByPk(priorityId)
+  const priority = await TaskPriority.findByPk(priorityId)
   if (!priority) throw new Error('Priority not found')
   const task = await Task.create({
     title,
@@ -82,7 +82,7 @@ export const editTask = async (projectId, boardId, taskId, title, description, a
     }]
   })
   if (!task) throw new Error('Task not found')
-  const priority = await Priority.findByPk(priorityId)
+  const priority = await TaskPriority.findByPk(priorityId)
   if (!priority) throw new Error('Priority not found')
   const label = await Label.findByPk(labelId)
   if (!label) throw new Error('Label not found')
@@ -155,7 +155,7 @@ export const findTaskById = async (projectId, boardId, taskId) => {
       attributes: []
     }]
   })
-  const priorities = await Priority.findAll({
+  const priorities = await TaskPriority.findAll({
     attributes: ['id', 'name']
   })
   const creator = await User.findOne({
@@ -190,7 +190,7 @@ export const searchTasksByCriteria = async (boardId, criteria) => {
     attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by'],
     include: [
       { model: Label, attributes: ['hex_code'] },
-      { model: Priority, attributes: ['name'] },
+      { model: TaskPriority, attributes: ['name'] },
       { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo' },
       { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy' }
     ],

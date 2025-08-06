@@ -5,7 +5,7 @@ import Project_users from './project_users.model.js'
 import Role from './role.model.js'
 import Board from './board.model.js'
 import Comment from './comment.model.js'
-import Priority from './priority.model.js'
+import TaskPriority from './taskPriority.model.js'
 import Label from './label.model.js'
 
 // Relaciones User
@@ -50,6 +50,6 @@ Task.belongsTo(Label, { foreignKey: 'label_id' })
 Label.hasMany(Board, { foreignKey: 'label_id' })
 Board.belongsTo(Label, { foreignKey: 'label_id' })
 
-// Relaciones Priority
-Priority.hasMany(Task, { foreignKey: 'priority_id' })
-Task.belongsTo(Priority, { foreignKey: 'priority_id' })
+// Relaciones TaskPriority
+TaskPriority.hasMany(Task, { foreignKey: 'priority_id' })
+Task.belongsTo(TaskPriority, { foreignKey: 'priority_id' })

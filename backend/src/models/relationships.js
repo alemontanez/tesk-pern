@@ -6,7 +6,7 @@ import Role from './role.model.js'
 import Board from './board.model.js'
 import Comment from './comment.model.js'
 import TaskPriority from './taskPriority.model.js'
-import Label from './label.model.js'
+import BoardColor from './boardColor.model.js'
 
 // Relaciones User
 User.hasMany(Task, { foreignKey: 'created_by', onDelete: 'SET NULL' })
@@ -44,11 +44,8 @@ Board.hasMany(Task, { foreignKey: 'board_id', onDelete: 'CASCADE', hooks: true }
 Task.belongsTo(Board, { foreignKey: 'board_id' })
 
 // Relaciones Label
-Label.hasMany(Task, { foreignKey: 'label_id' })
-Task.belongsTo(Label, { foreignKey: 'label_id' })
-
-Label.hasMany(Board, { foreignKey: 'label_id' })
-Board.belongsTo(Label, { foreignKey: 'label_id' })
+BoardColor.hasMany(Board, { foreignKey: 'label_id' })
+Board.belongsTo(BoardColor, { foreignKey: 'label_id' })
 
 // Relaciones TaskPriority
 TaskPriority.hasMany(Task, { foreignKey: 'priority_id' })

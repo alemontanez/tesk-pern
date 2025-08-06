@@ -1,7 +1,6 @@
 import Board from '../models/board.model.js'
 import Task from '../models/task.model.js'
 import TaskPriority from '../models/taskPriority.model.js'
-import Label from '../models/label.model.js'
 import User from '../models/user.model.js'
 import Comment from '../models/comment.model.js'
 import Project_users from '../models/project_users.model.js'
@@ -31,7 +30,6 @@ export const findAllTasks = async (projectId, boardId, sort, order) => {
         required: false,
         attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by'],
         include: [
-          { model: Label, attributes: ['hex_code'] },
           { model: TaskPriority, attributes: ['name'] },
           { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo' },
           { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy' }
@@ -65,7 +63,7 @@ export const addNewTask = async (userId, projectId, boardId, title, description,
   return task
 }
 
-export const editTask = async (projectId, boardId, taskId, title, description, assignedTo, dueDate, priorityId, labelId) => {
+export const editTask = async (projectId, boardId, taskId, title, description, assignedTo, dueDate, priorityId) => {
   const verifyAssignedUser = await checkPermissions(assignedTo, projectId)
   if (!verifyAssignedUser.can_edit) throw new Error('Access denied: insufficient permissions')
   const task = await Task.findOne({
@@ -84,15 +82,12 @@ export const editTask = async (projectId, boardId, taskId, title, description, a
   if (!task) throw new Error('Task not found')
   const priority = await TaskPriority.findByPk(priorityId)
   if (!priority) throw new Error('Priority not found')
-  const label = await Label.findByPk(labelId)
-  if (!label) throw new Error('Label not found')
   const updatedTask = await task.update({
     title,
     description,
     assigned_to: assignedTo,
     due_date: new Date(dueDate),
     priority_id: priorityId,
-    label_id: labelId
   })
   return updatedTask
 }
@@ -189,7 +184,6 @@ export const searchTasksByCriteria = async (boardId, criteria) => {
     },
     attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by'],
     include: [
-      { model: Label, attributes: ['hex_code'] },
       { model: TaskPriority, attributes: ['name'] },
       { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo' },
       { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy' }

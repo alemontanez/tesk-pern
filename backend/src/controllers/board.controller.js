@@ -3,7 +3,7 @@ import {
   createProjectBoard,
   updateBoardDetails,
   removeBoard,
-  updateLabelOnBoard,
+  editBoardColor,
 } from '../services/board.service.js'
 
 
@@ -70,15 +70,15 @@ export const deleteBoard = async (req, res) => {
   }
 }
 
-export const updateBoardLabel = async (req, res) => {
+export const updateBoardColor = async (req, res) => {
   const { projectId, boardId } = req.params
-  const { labelId } = req.body
+  const { boardColorId } = req.body
   try {
-    await updateLabelOnBoard(projectId, boardId, labelId)
-    res.status(200).json({ message: 'Label changed successfully' })
+    await editBoardColor(projectId, boardId, boardColorId)
+    res.status(200).json({ message: 'Board color changed successfully' })
   } catch (error) {
     console.log(error)
-    if (error.message === 'Board not found' || error.message === 'Label not found') {
+    if (error.message === 'Board not found' || error.message === 'Color not found') {
       return res.status(404).json({ error: [error.message] })
     }
     return res.status(500).json({ error: ['Internal error'] })

@@ -1,20 +1,20 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../config/database.js'
 
-class Label extends Model {}
+class BoardColor extends Model {}
 
-Label.init({
+BoardColor.init({
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.SMALLINT,
     autoIncrement: true,
     primaryKey: true
   },
   color: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(50),
     unique: true,
     allowNull: false
   },
-  hex_code: {
+  hexCode: {
     type: DataTypes.STRING(7),
     unique: true,
     allowNull: false
@@ -22,8 +22,9 @@ Label.init({
 }, {
   sequelize,
   timestamps: false,
-  modelName: 'Label',
-  tableName: 'labels',
+  underscored: true,
+  modelName: 'BoardColor',
+  tableName: 'board_colors',
 })
 
-export default Label
+export default BoardColor

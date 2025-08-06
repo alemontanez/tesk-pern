@@ -1,5 +1,5 @@
 import Board from '../models/board.model.js'
-import Label from '../models/label.model.js'
+import BoardColor from '../models/boardColor.model.js'
 import Project from '../models/project.model.js'
 import Project_users from '../models/project_users.model.js'
 import Role from '../models/role.model.js'
@@ -34,7 +34,7 @@ export const findProjectById = async (userId, projectId) => {
         where: { project_id: projectId },
         include: [
           {
-            model: Label,
+            model: BoardColor,
             attributes: ['hex_code']
           },
           {

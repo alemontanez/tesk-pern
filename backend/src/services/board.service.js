@@ -1,5 +1,5 @@
 import Board from '../models/board.model.js'
-import Label from '../models/label.model.js'
+import BoardColor from '../models/boardColor.model.js'
 import Task from '../models/task.model.js'
 import { Op } from 'sequelize'
 
@@ -71,7 +71,7 @@ export const removeBoard = async (projectId, boardId) => {
   board.destroy({ force: true })
 }
 
-export const updateLabelOnBoard = async (projectId, boardId, labelId) => {
+export const editBoardColor = async (projectId, boardId, colorId) => {
   const board = await Board.findOne({
     where: {
       id: boardId,
@@ -79,8 +79,8 @@ export const updateLabelOnBoard = async (projectId, boardId, labelId) => {
     }
   })
   if (!board) throw new Error('Board not found')
-  const label = await Label.findByPk(labelId)
-  if (!label) throw new Error('Label not found')
+  const color = await BoardColor.findByPk(colorId)
+  if (!color) throw new Error('Color not found')
   await board.update({
     label_id: labelId
   })

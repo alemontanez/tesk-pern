@@ -10,7 +10,7 @@ import {
   createBoard,
   updateBoard,
   deleteBoard,
-  updateBoardLabel,
+  updateBoardColor,
 } from '../controllers/board.controller.js'
 
 const router = Router()
@@ -441,10 +441,10 @@ router.delete(
  *                     -  'Internal error'
  */
 router.patch(
-  '/:projectId/boards/:boardId/change-label',
+  '/:projectId/boards/:boardId/change-color',
   permissionMiddleware('can_manage'),
   validateSchema(updateBoardLabelSchema),
-  updateBoardLabel
+  updateBoardColor
 )
 
 export default router

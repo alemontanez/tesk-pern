@@ -14,9 +14,9 @@ export const createUserAccount = async ({ username, email, firstName, lastName, 
   const user = await User.create({
     username,
     email,
-    first_name: firstName,
-    last_name: lastName,
-    password_hash: passwordHash
+    firstName,
+    lastName,
+    passwordHash
   })
   return user
 }
@@ -25,7 +25,7 @@ export const authenticateUser = async ({ email, password }) => {
   const existingUser = await User.findOne({ where: { email: email } })
   if (!existingUser) throw new Error('Invalid credentials')
 
-  const isPasswordValid = await bcrypt.compare(password, existingUser.password_hash)
+  const isPasswordValid = await bcrypt.compare(password, existingUser.passwordHash)
   if (!isPasswordValid) throw new Error('Invalid credentials')
 
   return existingUser

@@ -87,7 +87,11 @@ const router = Router()
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/register', validateSchema(registerSchema), registerUser)
+router.post(
+  '/register',
+  validateSchema(registerSchema),
+  registerUser
+)
 
 /**
  * @swagger
@@ -153,7 +157,11 @@ router.post('/register', validateSchema(registerSchema), registerUser)
  *                   example: 
  *                     -  'Internal error'
  */
-router.post('/login', validateSchema(loginSchema), loginUser)
+router.post(
+  '/login',
+  validateSchema(loginSchema),
+  loginUser
+)
 
 /**
  * @swagger
@@ -170,7 +178,10 @@ router.post('/login', validateSchema(loginSchema), loginUser)
  *               type: text
  *               example: OK
  */
-router.post('/logout', logoutUser)
+router.post(
+  '/logout',
+  logoutUser
+)
 
 /**
  * @swagger
@@ -213,6 +224,9 @@ router.post('/logout', logoutUser)
  *                   example: 
  *                     -  'Internal error'
  */
-router.get('/verify', verifyToken)
+router.get(
+  '/verify',
+  verifyToken
+)
 
 export default router

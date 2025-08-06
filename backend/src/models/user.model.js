@@ -22,19 +22,19 @@ User.init({
       isEmail: true
     }
   },
-  first_name: {
+  firstName: {
     type: DataTypes.STRING(50),
     allowNull: false
   },
-  last_name: {
-    type: DataTypes.STRING(60),
+  lastName: {
+    type: DataTypes.STRING(50),
     allowNull: false
   },
-  password_hash: {
+  passwordHash: {
     type: DataTypes.STRING(255),
     allowNull: false,
   },
-  is_active: {
+  isActive: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: true

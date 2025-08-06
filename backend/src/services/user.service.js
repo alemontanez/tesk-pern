@@ -8,7 +8,7 @@ export const findUserProfileById = async (id) => {
 }
 
 export const editUserProfile = async (id, data) => {
-  const { username, email, first_name, last_name } = data
+  const { username, email, firstName, lastName } = data
   const user = await User.findByPk(id)
   if (!user) throw new Error('User not found')
   const existingUsername = await User.findOne({ where: { username: username } })
@@ -18,8 +18,8 @@ export const editUserProfile = async (id, data) => {
   await user.update({
     username,
     email,
-    first_name,
-    last_name
+    firstName,
+    lastName
   })
   return user
 }
@@ -27,12 +27,12 @@ export const editUserProfile = async (id, data) => {
 export const changeUserPassword = async (id, currentPassword, newPassword) => {
   const user = await User.findByPk(id)
   if (!user) throw new Error('User not found')
-  const isPasswordValid = await bcrypt.compare(currentPassword, user.password_hash)
+  const isPasswordValid = await bcrypt.compare(currentPassword, user.passwordHash)
   if (!isPasswordValid) throw new Error('Invalid current password')
-  const isCurrentPassword = await bcrypt.compare(newPassword, user.password_hash)
+  const isCurrentPassword = await bcrypt.compare(newPassword, user.passwordHash)
   if (isCurrentPassword) throw new Error('New password cannot be the same as the previous one')
-  const newPassword_hash = await bcrypt.hash(newPassword, 10)
+  const newPasswordHash = await bcrypt.hash(newPassword, 10)
   await user.update({
-    password_hash: newPassword_hash
+    passwordHash: newPasswordHash
   })
 }

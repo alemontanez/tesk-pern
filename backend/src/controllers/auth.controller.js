@@ -1,4 +1,8 @@
-import { authenticateUser, createUserAccount, validateAndDecodeToken } from '../services/auth.service.js'
+import {
+  authenticateUser,
+  createUserAccount,
+  validateAndDecodeToken
+} from '../services/auth.service.js'
 import { createAccessToken } from '../utils/jwt.js'
 
 export const registerUser = async (req, res) => {

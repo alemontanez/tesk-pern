@@ -1,10 +1,10 @@
 import {
-  initializeNewProject,
-  deleteProjectWithDependencies,
-  findProjectById,
   findProjectsByUserId,
+  findProjectById,
   findUserRoleForProject,
-  updateProjectDetails
+  initializeNewProject,
+  editProject,
+  removeProjectWithDependencies,
 } from '../services/project.service.js'
 
 export const getUserProjects = async (req, res) => {
@@ -68,7 +68,7 @@ export const updateProject = async (req, res) => {
   const userId = req.user.id
   const { name, description } = req.body
   try {
-    const project = await updateProjectDetails(userId, projectId, name, description)
+    const project = await editProject(userId, projectId, name, description)
     res.status(200).json({
       message: 'Project updated successfully',
       project
@@ -86,9 +86,8 @@ export const updateProject = async (req, res) => {
 
 export const deleteProject = async (req, res) => {
   const { projectId } = req.params
-  const userId = req.user.id
   try {
-    await deleteProjectWithDependencies(userId, projectId)
+    await removeProjectWithDependencies(projectId)
     res.sendStatus(204)
   } catch (error) {
     console.log(error)

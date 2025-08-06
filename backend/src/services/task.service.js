@@ -3,7 +3,7 @@ import Task from '../models/task.model.js'
 import TaskPriority from '../models/taskPriority.model.js'
 import User from '../models/user.model.js'
 import Comment from '../models/comment.model.js'
-import Project_users from '../models/project_users.model.js'
+import Membership from '../models/membership.model.js'
 import Role from '../models/role.model.js'
 import { Op, fn, col } from 'sequelize'
 
@@ -142,10 +142,10 @@ export const findTaskById = async (projectId, boardId, taskId) => {
   const users = await User.findAll({
     attributes: ['id', [fn('CONCAT', col('first_name'), ' ', col('last_name')), 'name']],
     include: [{
-      model: Project_users,
+      model: Membership,
       where: {
-        project_id: projectId,
-        [Op.not]: [{ role_id: viewerRole.id }]
+        projectId: projectId,
+        [Op.not]: [{ roleId: viewerRole.id }]
       },
       attributes: []
     }]

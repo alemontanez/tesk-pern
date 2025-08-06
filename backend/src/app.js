@@ -15,7 +15,7 @@ import {
   boardRoutes,
   taskRoutes,
   commentRoutes,
-  membershipsRoutes
+  membershipRoutes
 } from './routes/index.js'
 
 const app = express()
@@ -46,6 +46,6 @@ app.use('/api/projects', authRequired, projectRoutes)
 app.use('/api/projects', authRequired, boardRoutes)
 app.use('/api', authRequired, taskRoutes)
 app.use('/api', authRequired, commentRoutes)
-app.use('/api', authRequired, membershipsRoutes)
+app.use('/api', authRequired, membershipRoutes)
 
 export default app

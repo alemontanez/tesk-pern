@@ -1,12 +1,12 @@
 import { Router } from 'express'
 import { permissionMiddleware } from '../middlewares/permission.middleware.js'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
-import { memberSchema } from '../schemas/memberships.schema.js'
+import { memberSchema } from '../schemas/membership.schema.js'
 import {
-  addMemberToProject,
   getProjectMembers,
-  findPotentialMembers
-} from '../controllers/memberships.controller.js'
+  findPotentialMembers,
+  addMemberToProject,
+} from '../controllers/membership.controller.js'
 
 const router = Router()
 /**

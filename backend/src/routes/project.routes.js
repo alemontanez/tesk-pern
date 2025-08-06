@@ -399,5 +399,4 @@ router.delete(
   deleteProject
 )
 
-
 export default router

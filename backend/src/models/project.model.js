@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../config/database.js'
-import Project_users from './project_users.model.js'
+import Membership from './membership.model.js'
 import Role from './role.model.js'
 import Board from './board.model.js'
 
@@ -35,10 +35,10 @@ Project.addHook('afterCreate', async (project) => {
   const ownerRoleId = await Role.findOne({
     where: { name: 'owner'}
   })
-  await Project_users.create({
-    user_id: project.owner_id,
-    project_id: project.id,
-    role_id: ownerRoleId.id
+  await Membership.create({
+    userId: project.owner_id,
+    projectId: project.id,
+    roleId: ownerRoleId.id
   })
 })
 

@@ -1,8 +1,8 @@
 import {
-  createMembership,
   findAllMembersOfProject,
-  searchUsersNotInProject
-} from '../services/memberships.service.js'
+  searchUsersNotInProject,
+  createMembership,
+} from '../services/membership.service.js'
 
 export const getProjectMembers = async (req, res) => {
   const { projectId } = req.params

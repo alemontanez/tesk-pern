@@ -1,11 +1,11 @@
-import Project_users from '../models/project_users.model.js'
+import Membership from '../models/membership.model.js'
 import User from '../models/user.model.js'
 import Role from '../models/role.model.js'
 import { Op } from 'sequelize'
 
 export const findAllMembersOfProject = async (projectId) => {
-  const members = await Project_users.findAll({
-    where: { project_id: projectId },
+  const members = await Membership.findAll({
+    where: { projectId: projectId },
     attributes: [],
     include: [
       {
@@ -29,10 +29,10 @@ export const searchUsersNotInProject = async (projectId, query) => {
   const users = await User.findAll({
     subQuery: false,
     include: [{
-      model: Project_users,
+      model: Membership,
       required: false,
       where: {
-        project_id: projectId
+        projectId: projectId
       },
       attributes: []
     }],
@@ -50,10 +50,10 @@ export const createMembership = async (projectId, memberId) => {
   const userExists = await User.findByPk(memberId)
   if (!userExists) throw new Error('User not found')
   
-  const memberExists = await Project_users.findOne({
+  const memberExists = await Membership.findOne({
     where: {
-      project_id: projectId,
-      user_id: memberId
+      projectId: projectId,
+      userId: memberId
     }
   })
   if (memberExists) throw new Error('Member already exists')
@@ -62,10 +62,10 @@ export const createMembership = async (projectId, memberId) => {
     where: { name: 'viewer'}
   })
 
-  await Project_users.create({
-    user_id: memberId,
-    project_id: projectId,
-    role_id: role.id
+  await Membership.create({
+    userId: memberId,
+    projectId: projectId,
+    roleId: role.id
   })
 }
 

@@ -1,29 +1,29 @@
-import Project_users from '../models/project_users.model.js'
+import Membership from '../models/membership.model.js'
 import Role from '../models/role.model.js'
 
 export const permissionMiddleware = (requiredPermission) => {
   return async (req, res, next) => {
     try {
-      const userId = req.user.id
+      const { id: userId } = req.user
       const { projectId } = req.params
 
-      const projectUser = await Project_users.findOne({
-        where: { user_id: userId, project_id: projectId },
+      const membership = await Membership.findOne({
+        where: { userId: userId, projectId: projectId },
         include: [{
           model: Role,
           as: 'role'
         }]
       })
 
-      if (!projectUser) {
+      if (!membership) {
         return res.status(403).json({ error: 'Access denied: insufficient permissions' })
       }
 
-      if (!projectUser.role[requiredPermission]) {
+      if (!membership.role[requiredPermission]) {
         return res.status(403).json({ error: 'Access denied: insufficient permissions' })
       }
 
-      req.role = projectUser.role
+      req.role = membership.role
       next()
     } catch (error) {
       next(error)

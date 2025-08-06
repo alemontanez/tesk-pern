@@ -1,7 +1,7 @@
 import Board from '../models/board.model.js'
 import BoardColor from '../models/boardColor.model.js'
 import Project from '../models/project.model.js'
-import Project_users from '../models/project_users.model.js'
+import Membership from '../models/membership.model.js'
 import Role from '../models/role.model.js'
 import Task from '../models/task.model.js'
 import { Sequelize } from 'sequelize'
@@ -9,9 +9,9 @@ import { Sequelize } from 'sequelize'
 export const findProjectsByUserId = async (userId) => {
   const projects = await Project.findAll({
     include: [{
-      model: Project_users,
+      model: Membership,
       where: {
-        user_id: userId
+        userId: userId
       },
       attributes: []
     }]
@@ -25,8 +25,8 @@ export const findProjectById = async (userId, projectId) => {
     where: { id: projectId },
     include: [
       {
-        model: Project_users,
-        where: { user_id: userId },
+        model: Membership,
+        where: { userId: userId },
         attributes: []
       },
       {
@@ -63,10 +63,10 @@ export const findUserRoleForProject = async (userId, projectId) => {
   const project = await Project.findByPk(projectId)
   if (!project) throw new Error('Project not found')
 
-  const getRole = await Project_users.findOne({
+  const getRole = await Membership.findOne({
     where: {
-      user_id: userId,
-      project_id: projectId
+      userId: userId,
+      projectId: projectId
     },
     attributes: [],
     include: [{
@@ -95,7 +95,7 @@ export const initializeNewProject = async (userId, name, description) => {
   return project
 }
 
-export const updateProjectDetails = async (userId, projectId, name, description) => {
+export const editProject = async (userId, projectId, name, description) => {
   const project = await Project.findByPk(projectId)
   if (!project) throw new Error('Project not found')
   const checkName = await Project.findOne({
@@ -112,7 +112,7 @@ export const updateProjectDetails = async (userId, projectId, name, description)
   return updatedProject
 }
 
-export const deleteProjectWithDependencies = async (userId, projectId) => {
+export const removeProjectWithDependencies = async (projectId) => {
   const project = await Project.findByPk(projectId)
   if (!project) throw new Error('Project not found')
   await project.destroy({ force: true })

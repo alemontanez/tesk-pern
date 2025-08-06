@@ -1,9 +1,9 @@
-import Project_users from '../models/project_users.model.js'
+import Membership from '../models/membership.model.js'
 import Role from '../models/role.model.js'
 
 export const checkPermissions = async (userId, projectId) => {
-  const user = await Project_users.findOne({
-    where: { user_id: userId, project_id: projectId },
+  const user = await Membership.findOne({
+    where: { userId: userId, projectId: projectId },
     include: [{
       model: Role,
       as: 'role'

@@ -9,8 +9,8 @@ import {
 
 
 export const getTasks = async (req, res) => {
-  const { sort, order } = req.query
   const { projectId, boardId } = req.params
+  const { sort, order } = req.query
   try {
     const tasks = await findAllTasks(projectId, boardId, sort, order)
     res.status(200).json(tasks)
@@ -24,7 +24,7 @@ export const getTasks = async (req, res) => {
 }
 
 export const createTask = async (req, res) => {
-  const userId = req.user.id
+  const { id: userId } = req.user
   const { projectId, boardId } = req.params
   const { title, description, dueDate, priorityId } = req.body
   try {

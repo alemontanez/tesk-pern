@@ -13,11 +13,11 @@ export const findAllTasks = async (projectId, boardId, sort, order) => {
   const board = await Board.findOne({
     where: {
       id: boardId,
-      project_id: projectId
+      projectId
     }
   })
   if (!board) throw new Error('Board not found')
-  const allowedSortFields = ['id', 'title', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by']
+  const allowedSortFields = ['id', 'title', 'due_date', 'priority_id', 'assigned_to', 'created_by', 'created_at', 'updated_at']
   const sortField = sort?.toString().trim()
   const filter = allowedSortFields.includes(sortField) ? sort : 'id'
   const direction = order?.toLowerCase() === 'desc' ? 'DESC' : 'ASC'
@@ -26,13 +26,13 @@ export const findAllTasks = async (projectId, boardId, sort, order) => {
     include: [
       {
         model: Task,
-        where: { board_id: boardId },
+        where: { boardId },
         required: false,
-        attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by'],
+        attributes: ['id', 'title', 'description', 'due_date', 'priority_id', 'assigned_to', 'created_by', 'created_at', 'updated_at'],
         include: [
           { model: TaskPriority, attributes: ['name'] },
-          { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo' },
-          { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy' }
+          { model: User, attributes: ['first_name', 'last_name'], as: 'assignedUser' },
+          { model: User, attributes: ['first_name', 'last_name'], as: 'creatorUser' }
         ]
       }
     ],
@@ -45,7 +45,7 @@ export const addNewTask = async (userId, projectId, boardId, title, description,
   const boardValidation = await Board.findOne({
     where: {
       id: boardId,
-      project_id: projectId
+      projectId
     }
   })
   if (!boardValidation) throw new Error('Board not found')
@@ -54,11 +54,11 @@ export const addNewTask = async (userId, projectId, boardId, title, description,
   const task = await Task.create({
     title,
     description,
-    created_by: userId,
-    assigned_to: userId,
-    board_id: boardId,
-    due_date: new Date(dueDate),
-    priority_id: priorityId
+    createdBy: userId,
+    assignedTo: userId,
+    boardId,
+    dueDate: new Date(dueDate),
+    priorityId,
   })
   return task
 }
@@ -74,7 +74,7 @@ export const editTask = async (projectId, boardId, taskId, title, description, a
       model: Board,
       where: {
         id: boardId,
-        project_id: projectId
+        projectId
       },
       attributes: []
     }]
@@ -85,9 +85,9 @@ export const editTask = async (projectId, boardId, taskId, title, description, a
   const updatedTask = await task.update({
     title,
     description,
-    assigned_to: assignedTo,
-    due_date: new Date(dueDate),
-    priority_id: priorityId,
+    assignedTo,
+    dueDate: new Date(dueDate),
+    priorityId,
   })
   return updatedTask
 }
@@ -101,7 +101,7 @@ export const removeTask = async (projectId, boardId, taskId) => {
       model: Board,
       where: {
         id: boardId,
-        project_id: projectId
+        projectId
       },
       attributes: []
     }]
@@ -120,13 +120,13 @@ export const findTaskById = async (projectId, boardId, taskId) => {
         model: Board,
         where: {
           id: boardId,
-          project_id: projectId
+          projectId
         },
         attributes: []
       },
       {
         model: Comment,
-        where: { task_id: taskId },
+        where: { taskId },
         required: false,
         include: [{
           model: User,
@@ -154,12 +154,12 @@ export const findTaskById = async (projectId, boardId, taskId) => {
     attributes: ['id', 'name']
   })
   const creator = await User.findOne({
-    where: { id: task.created_by },
+    where: { id: task.createdBy },
     attributes: [[fn('CONCAT', col('first_name'), ' ', col('last_name')), 'name']]
   })
   if (!creator) throw new Error('Creator user not found')
   const assignedUser = await User.findOne({
-    where: { id: task.assigned_to },
+    where: { id: task.assignedTo },
     attributes: [[fn('CONCAT', col('first_name'), ' ', col('last_name')), 'name']]
   })
   if (!assignedUser) throw new Error('Assigned user not found')
@@ -179,14 +179,14 @@ export const searchTasksByCriteria = async (boardId, criteria) => {
   const direction = criteria.order?.toLowerCase() === 'desc' ? 'DESC' : 'ASC'
   const tasks = await Task.findAll({
     where: {
-      board_id: boardId,
+      boardId,
       title: { [Op.iLike]: `%${criteria.query}%` }
     },
     attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by'],
     include: [
       { model: TaskPriority, attributes: ['name'] },
-      { model: User, attributes: ['first_name', 'last_name'], as: 'assignedTo' },
-      { model: User, attributes: ['first_name', 'last_name'], as: 'createdBy' }
+      { model: User, attributes: ['first_name', 'last_name'], as: 'assignedUser' },
+      { model: User, attributes: ['first_name', 'last_name'], as: 'creatorUser' }
     ],
     order: [[filter, direction]]
   })

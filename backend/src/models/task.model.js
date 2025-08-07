@@ -17,34 +17,28 @@ Task.init({
     type: DataTypes.STRING(500),
     allowNull: false
   },
-  created_by: {
-    type: DataTypes.UUID,
-  },
-  assigned_to: {
-    type: DataTypes.UUID,
-  },
-  board_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  due_date: {
+  dueDate: {
     type: DataTypes.DATE,
     allowNull: false
   },
-  priority_id: {
+  createdBy: {
+    type: DataTypes.UUID,
+  },
+  assignedTo: {
+    type: DataTypes.UUID,
+  },
+  boardId: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  label_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    defaultValue: 1
+  priorityId: {
+    type: DataTypes.SMALLINT,
+    allowNull: false
   },
-  position: {
-    type: DataTypes.INTEGER,
+  statusId: {
+    type: DataTypes.SMALLINT,
     allowNull: false,
-    defaultValue: 0,
-    validate: { min: 0 }
+    defaultValue: 1 // Corregir esto cuando se implemente la funcionalidad de estados
   }
 }, {
   sequelize,
@@ -69,15 +63,6 @@ Task.init({
       fields: ['due_date']
     }
   ]
-})
-
-Task.addHook('beforeCreate', async (task) => {
-  if (!task.position) {
-    const maxPosition = await Task.max('position', {
-      where: { board_id: task.board_id }
-    })
-    task.position = (maxPosition || 0) + 1
-  }
 })
 
 export default Task

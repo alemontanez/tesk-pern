@@ -10,10 +10,10 @@ import BoardColor from './boardColor.model.js'
 
 // Relaciones User
 User.hasMany(Task, { foreignKey: 'created_by', onDelete: 'SET NULL' })
-Task.belongsTo(User, { foreignKey: 'created_by', as: 'createdBy' })
+Task.belongsTo(User, { foreignKey: 'created_by' })
 
 User.hasMany(Task, { foreignKey: 'assigned_to', onDelete: 'SET NULL' })
-Task.belongsTo(User, { foreignKey: 'assigned_to', as: 'assignedTo' })
+Task.belongsTo(User, { foreignKey: 'assigned_to' })
 
 User.hasMany(Membership, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true })
 Membership.belongsTo(User, { foreignKey: 'user_id' })

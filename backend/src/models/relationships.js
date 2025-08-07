@@ -7,6 +7,7 @@ import Board from './board.model.js'
 import Comment from './comment.model.js'
 import TaskPriority from './taskPriority.model.js'
 import BoardColor from './boardColor.model.js'
+import TaskStatus from './taskStatus.model.js'
 
 // Relaciones User
 User.hasMany(Task, { foreignKey: 'created_by', onDelete: 'SET NULL' })
@@ -50,3 +51,7 @@ Board.belongsTo(BoardColor, { foreignKey: 'color_id' })
 // Relaciones TaskPriority
 TaskPriority.hasMany(Task, { foreignKey: 'priority_id' })
 Task.belongsTo(TaskPriority, { foreignKey: 'priority_id' })
+
+// Relaciones TaskStatus
+TaskStatus.hasMany(Task, { foreignKey: 'status_id' })
+Task.belongsTo(TaskStatus, { foreignKey: 'status_id' })

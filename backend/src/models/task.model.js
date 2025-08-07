@@ -18,7 +18,7 @@ Task.init({
     allowNull: false
   },
   dueDate: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     allowNull: false
   },
   createdBy: {
@@ -38,7 +38,6 @@ Task.init({
   statusId: {
     type: DataTypes.SMALLINT,
     allowNull: false,
-    defaultValue: 1 // Corregir esto cuando se implemente la funcionalidad de estados
   }
 }, {
   sequelize,

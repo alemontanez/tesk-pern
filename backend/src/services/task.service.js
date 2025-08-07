@@ -1,6 +1,7 @@
 import Board from '../models/board.model.js'
 import Task from '../models/task.model.js'
 import TaskPriority from '../models/taskPriority.model.js'
+import TaskStatus from '../models/taskStatus.model.js'
 import User from '../models/user.model.js'
 import Comment from '../models/comment.model.js'
 import Membership from '../models/membership.model.js'
@@ -41,7 +42,7 @@ export const findAllTasks = async (projectId, boardId, sort, order) => {
   return tasks
 }
 
-export const addNewTask = async (userId, projectId, boardId, title, description, dueDate, priorityId) => {
+export const addNewTask = async (userId, projectId, boardId, title, description, dueDate, priorityId, statusId) => {
   const boardValidation = await Board.findOne({
     where: {
       id: boardId,
@@ -51,6 +52,8 @@ export const addNewTask = async (userId, projectId, boardId, title, description,
   if (!boardValidation) throw new Error('Board not found')
   const priority = await TaskPriority.findByPk(priorityId)
   if (!priority) throw new Error('Priority not found')
+  const status = await TaskStatus.findByPk(statusId)
+  if (!status) throw new Error('Status not found')
   const task = await Task.create({
     title,
     description,
@@ -59,11 +62,12 @@ export const addNewTask = async (userId, projectId, boardId, title, description,
     boardId,
     dueDate: new Date(dueDate),
     priorityId,
+    statusId
   })
   return task
 }
 
-export const editTask = async (projectId, boardId, taskId, title, description, assignedTo, dueDate, priorityId) => {
+export const editTask = async (projectId, boardId, taskId, title, description, assignedTo, dueDate, priorityId, statusId) => {
   const verifyAssignedUser = await checkPermissions(assignedTo, projectId)
   if (!verifyAssignedUser.can_edit) throw new Error('Access denied: insufficient permissions')
   const task = await Task.findOne({
@@ -82,12 +86,15 @@ export const editTask = async (projectId, boardId, taskId, title, description, a
   if (!task) throw new Error('Task not found')
   const priority = await TaskPriority.findByPk(priorityId)
   if (!priority) throw new Error('Priority not found')
+  const status = await TaskStatus.findByPk(statusId)
+  if (!status) throw new Error('Status not found')
   const updatedTask = await task.update({
     title,
     description,
     assignedTo,
     dueDate: new Date(dueDate),
     priorityId,
+    statusId
   })
   return updatedTask
 }

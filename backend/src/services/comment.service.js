@@ -2,26 +2,25 @@ import Board from '../models/board.model.js'
 import Task from '../models/task.model.js'
 import Comment from '../models/comment.model.js'
 
-
 export const addNewComment = async (userId, projectId, boardId, taskId, content) => {
   const board = await Board.findOne({
     where: {
       id: boardId,
-      project_id: projectId
+      projectId
     }
   })
   if (!board) throw new Error('Board not found')
   const task = await Task.findOne({
     where: {
       id: taskId,
-      board_id: boardId
+      boardId
     }
   })
   if (!task) throw new Error('Task not found')
   const comment = await Comment.create({
     content,
-    task_id: taskId,
-    user_id: userId
+    taskId,
+    userId
   })
   return comment
 }
@@ -30,14 +29,14 @@ export const editCommentContent = async (userId, projectId, boardId, taskId, com
   const board = await Board.findOne({
     where: {
       id: boardId,
-      project_id: projectId
+      projectId
     }
   })
   if (!board) throw new Error('Board not found')
   const task = await Task.findOne({
     where: {
       id: taskId,
-      board_id: boardId
+      boardId
     }
   })
   if (!task) throw new Error('Task not found')
@@ -45,13 +44,13 @@ export const editCommentContent = async (userId, projectId, boardId, taskId, com
   const comment = await Comment.findOne({
     where: {
       id: commentId,
-      task_id: taskId
+      taskId
     }
   })
   if (!comment) throw new Error('Comment not found')
   await comment.update({
     content,
-    user_id: userId
+    userId
   })
 }
 
@@ -59,14 +58,14 @@ export const removeComment = async (projectId, boardId, taskId, commentId) => {
   const board = await Board.findOne({
     where: {
       id: boardId,
-      project_id: projectId
+      projectId
     }
   })
   if (!board) throw new Error('Board not found')
   const task = await Task.findOne({
     where: {
       id: taskId,
-      board_id: boardId
+      boardId
     }
   })
   if (!task) throw new Error('Task not found')
@@ -74,7 +73,7 @@ export const removeComment = async (projectId, boardId, taskId, commentId) => {
   const comment = await Comment.findOne({
     where: {
       id: commentId,
-      task_id: taskId
+      taskId
     }
   })
   if (!comment) throw new Error('Comment not found')

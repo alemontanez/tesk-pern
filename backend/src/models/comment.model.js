@@ -13,11 +13,11 @@ Comment.init({
     type: DataTypes.STRING(500),
     allowNull: false
   },
-  task_id: {
+  taskId: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  user_id: {
+  userId: {
     type: DataTypes.UUID,
     allowNull: true
   }

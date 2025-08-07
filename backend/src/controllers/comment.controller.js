@@ -1,13 +1,13 @@
 import {
   addNewComment,
+  editCommentContent,
   removeComment,
-  editCommentContent
 } from '../services/comment.service.js'
 
 
 export const createComment = async (req, res) => {
-  const { projectId, boardId, taskId } = req.params
   const { id: userId } = req.user
+  const { projectId, boardId, taskId } = req.params
   const { content } = req.body
   try {
     const comment = await addNewComment(userId, projectId, boardId, taskId, content)
@@ -25,8 +25,8 @@ export const createComment = async (req, res) => {
 }
 
 export const updateComment = async (req, res) => {
-  const { projectId, boardId, taskId, commentId } = req.params
   const { id: userId } = req.user
+  const { projectId, boardId, taskId, commentId } = req.params
   const { content } = req.body
   try {
     await editCommentContent(userId, projectId, boardId, taskId, commentId, content)

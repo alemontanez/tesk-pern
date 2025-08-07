@@ -82,7 +82,7 @@ export const findUserRoleForProject = async (userId, projectId) => {
 export const initializeNewProject = async (userId, name, description) => {
   const checkName = await Project.findOne({
     where: {
-      owner_id: userId,
+      ownerId: userId,
       name: name
     }
   })
@@ -90,7 +90,7 @@ export const initializeNewProject = async (userId, name, description) => {
   const project = await Project.create({
     name,
     description,
-    owner_id: userId
+    ownerId: userId
   })
   return project
 }
@@ -100,7 +100,7 @@ export const editProject = async (userId, projectId, name, description) => {
   if (!project) throw new Error('Project not found')
   const checkName = await Project.findOne({
     where: {
-      owner_id: userId,
+      ownerId: userId,
       name: name
     }
   })

@@ -19,7 +19,7 @@ Project.init({
   description: {
     type: DataTypes.STRING(255),
   },
-  owner_id: {
+  ownerId: {
     type: DataTypes.UUID,
     allowNull: false,
   }
@@ -43,8 +43,8 @@ Project.addHook('afterCreate', async (project) => {
 })
 
 Project.addHook('afterCreate', async (project) => {
-  const status = ['Pendientes', 'En progreso', 'Completadas']
-  status.forEach((status) => {
+  const defaultBoards = ['Planificación General', 'Backlog e Ideas']
+  defaultBoards.forEach((status) => {
     Board.create({
       name: status,
       project_id: project.id,

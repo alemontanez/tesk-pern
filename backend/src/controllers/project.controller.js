@@ -8,7 +8,7 @@ import {
 } from '../services/project.service.js'
 
 export const getUserProjects = async (req, res) => {
-  const userId = req.user.id
+  const { id: userId } = req.user
   try {
     const projects = await findProjectsByUserId(userId)
     res.status(200).json(projects)
@@ -19,8 +19,8 @@ export const getUserProjects = async (req, res) => {
 }
 
 export const getProjectById = async (req, res) => {
+  const { id: userId } = req.user
   const { projectId } = req.params
-  const userId = req.user.id
   try {
     const project = await findProjectById(userId, projectId)
     res.status(200).json(project)
@@ -34,8 +34,8 @@ export const getProjectById = async (req, res) => {
 }
 
 export const getUserRoleInProject = async (req, res) => {
+  const { id: userId } = req.user
   const { projectId } = req.params
-  const userId = req.user.id
   try {
     const data = await findUserRoleForProject(userId, projectId)
     res.status(200).json(data)
@@ -49,7 +49,7 @@ export const getUserRoleInProject = async (req, res) => {
 }
 
 export const createProject = async (req, res) => {
-  const userId = req.user.id
+  const { id: userId } = req.user
   const { name, description } = req.body
   try {
     await initializeNewProject(userId, name, description)
@@ -64,8 +64,8 @@ export const createProject = async (req, res) => {
 }
 
 export const updateProject = async (req, res) => {
+  const { id: userId } = req.user
   const { projectId } = req.params
-  const userId = req.user.id
   const { name, description } = req.body
   try {
     const project = await editProject(userId, projectId, name, description)

@@ -6,7 +6,7 @@ import { Op } from 'sequelize'
 export const findAllBoards = async (projectId, query) => {
   const boards = await Board.findAll({
     where: {
-      project_id: projectId,
+      projectId: projectId,
       name: { [Op.iLike]: `${query}%` }
     }
   })
@@ -28,13 +28,13 @@ export const createProjectBoard = async (projectId, name) => {
   const verifyName = await Board.findOne({
     where: {
       name: name,
-      project_id: projectId
+      projectId: projectId
     }
   })
   if (verifyName) throw new Error('Board name already exists')
   const board = await Board.create({
     name,
-    project_id: projectId
+    projectId: projectId
   })
   return board
 }
@@ -43,14 +43,14 @@ export const updateBoardDetails = async (projectId, boardId, newName) => {
   const board = await Board.findOne({
     where: {
       id: boardId,
-      project_id: projectId
+      projectId: projectId
     }
   })
   if (!board) throw new Error('Board not found')
   const existingBoardName = await Board.findOne({
     where: {
       name: newName,
-      project_id: projectId,
+      projectId: projectId,
     }
   })
   if (existingBoardName) throw new Error('Board name already exists')
@@ -64,7 +64,7 @@ export const removeBoard = async (projectId, boardId) => {
   const board = await Board.findOne({
     where: {
       id: boardId,
-      project_id: projectId
+      projectId: projectId
     }
   })
   if (!board) throw new Error('Board not found')
@@ -75,13 +75,13 @@ export const editBoardColor = async (projectId, boardId, colorId) => {
   const board = await Board.findOne({
     where: {
       id: boardId,
-      project_id: projectId
+      projectId: projectId
     }
   })
   if (!board) throw new Error('Board not found')
   const color = await BoardColor.findByPk(colorId)
   if (!color) throw new Error('Color not found')
   await board.update({
-    label_id: labelId
+    colorId: colorId
   })
 }

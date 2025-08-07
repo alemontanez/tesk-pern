@@ -5,7 +5,7 @@ class Role extends Model {}
 
 Role.init({
   id: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER, // Cuando cambie esto, cambiar en el modelo Membership
     autoIncrement: true,
     primaryKey: true
   },

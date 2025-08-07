@@ -44,8 +44,8 @@ Board.hasMany(Task, { foreignKey: 'board_id', onDelete: 'CASCADE', hooks: true }
 Task.belongsTo(Board, { foreignKey: 'board_id' })
 
 // Relaciones Label -> BoardColor
-BoardColor.hasMany(Board, { foreignKey: 'label_id' })
-Board.belongsTo(BoardColor, { foreignKey: 'label_id' })
+BoardColor.hasMany(Board, { foreignKey: 'color_id' })
+Board.belongsTo(BoardColor, { foreignKey: 'color_id' })
 
 // Relaciones TaskPriority
 TaskPriority.hasMany(Task, { foreignKey: 'priority_id' })

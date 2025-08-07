@@ -13,12 +13,12 @@ Board.init({
     type: DataTypes.STRING(50),
     allowNull: false,
   },
-  project_id: {
+  projectId: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  label_id: {
-    type: DataTypes.INTEGER,
+  colorId: {
+    type: DataTypes.SMALLINT,
     allowNull: false,
     defaultValue: 1
   }

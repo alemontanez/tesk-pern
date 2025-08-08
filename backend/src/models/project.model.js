@@ -22,6 +22,7 @@ Project.init({
   ownerId: {
     type: DataTypes.UUID,
     allowNull: false,
+    field: 'owner_id',
   }
 }, {
   sequelize,
@@ -36,7 +37,7 @@ Project.addHook('afterCreate', async (project) => {
     where: { name: 'owner'}
   })
   await Membership.create({
-    userId: project.owner_id,
+    userId: project.ownerId,
     projectId: project.id,
     roleId: ownerRoleId.id
   })
@@ -47,7 +48,7 @@ Project.addHook('afterCreate', async (project) => {
   defaultBoards.forEach((status) => {
     Board.create({
       name: status,
-      project_id: project.id,
+      projectId: project.id,
     })
   })
 })

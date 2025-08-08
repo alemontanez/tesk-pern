@@ -4,7 +4,7 @@ import { PORT } from './config/config.js'
 
 const main = async () => {
   try {
-    await sequelize.sync()
+    await sequelize.sync({ alter: true })
     console.log('Connection to database has been established successfully')
     app.listen(PORT)
     console.log('Server running on port:', PORT)

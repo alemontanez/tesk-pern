@@ -19,8 +19,19 @@ Task.belongsTo(User, { foreignKey: 'assigned_to' })
 User.hasMany(Membership, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true })
 Membership.belongsTo(User, { foreignKey: 'user_id' })
 
-User.hasMany(Project, { foreignKey: 'owner_id', onDelete: 'CASCADE', hooks: true })
-Project.belongsTo(User, { foreignKey: 'owner_id', as: 'owner' })
+User.hasMany(Project, {
+  foreignKey: 'owner_id',
+  onDelete: 'CASCADE',
+  hooks: true
+})
+Project.belongsTo(User, {
+  as: 'owner',
+  foreignKey: {
+    name: 'ownerId',
+    field: 'owner_id',
+    allowNull: false
+  }
+})
 
 User.hasMany(Comment, { foreignKey: 'user_id', onDelete: 'SET NULL' })
 Comment.belongsTo(User, { foreignKey: 'user_id' })
@@ -31,7 +42,7 @@ Comment.belongsTo(Task, { foreignKey: 'task_id' })
 
 // Relaciones Project
 Project.hasMany(Membership, { foreignKey: 'project_id', onDelete: 'CASCADE', hooks: true })
-Membership.belongsTo(Project, { foreignKey: 'project_id'})
+Membership.belongsTo(Project, { foreignKey: 'project_id' })
 
 Project.hasMany(Board, { foreignKey: 'project_id', onDelete: 'CASCADE', hooks: true })
 Board.belongsTo(Project, { foreignKey: 'project_id' })

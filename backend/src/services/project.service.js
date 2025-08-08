@@ -8,10 +8,11 @@ import { Sequelize } from 'sequelize'
 
 export const findProjectsByUserId = async (userId) => {
   const projects = await Project.findAll({
+    attributes: ['id', 'name', 'description', 'ownerId', 'createdAt', 'updatedAt'],
     include: [{
       model: Membership,
       where: {
-        userId: userId
+        userId
       },
       attributes: []
     }]
@@ -23,6 +24,7 @@ export const findProjectsByUserId = async (userId) => {
 export const findProjectById = async (userId, projectId) => {
   const project = await Project.findOne({
     where: { id: projectId },
+    attributes: ['id', 'name', 'description', 'ownerId', 'createdAt', 'updatedAt'],
     include: [
       {
         model: Membership,

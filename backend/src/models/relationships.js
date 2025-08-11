@@ -20,7 +20,7 @@ User.hasMany(Membership, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: tr
 Membership.belongsTo(User, { foreignKey: 'user_id' })
 
 User.hasMany(Project, {
-  foreignKey: 'owner_id',
+  foreignKey: 'ownerId',
   onDelete: 'CASCADE',
   hooks: true
 })
@@ -28,7 +28,6 @@ Project.belongsTo(User, {
   as: 'owner',
   foreignKey: {
     name: 'ownerId',
-    field: 'owner_id',
     allowNull: false
   }
 })

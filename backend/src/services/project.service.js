@@ -8,7 +8,7 @@ import { Sequelize } from 'sequelize'
 
 export const findProjectsByUserId = async (userId) => {
   const projects = await Project.findAll({
-    attributes: ['id', 'name', 'description', 'ownerId', 'createdAt', 'updatedAt'],
+    // attributes: ['id', 'name', 'description', 'ownerId', 'createdAt', 'updatedAt'],
     include: [{
       model: Membership,
       where: {

@@ -18,18 +18,13 @@ Project.init({
   },
   description: {
     type: DataTypes.STRING(255),
-  },
-  ownerId: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    field: 'owner_id',
   }
 }, {
   sequelize,
   modelName: 'Project',
   tableName: 'projects',
   timestamps: true,
-  underscored: true
+  underscored: true,
 })
 
 Project.addHook('afterCreate', async (project) => {

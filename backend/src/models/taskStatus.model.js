@@ -13,7 +13,7 @@ TaskStatus.init({
     type: DataTypes.STRING(50),
     unique: true,
     allowNull: false
-  }
+  },
 }, {
   sequelize,
   timestamps: false,

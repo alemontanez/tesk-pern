@@ -13,14 +13,6 @@ Comment.init({
     type: DataTypes.STRING(500),
     allowNull: false
   },
-  taskId: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  userId: {
-    type: DataTypes.UUID,
-    allowNull: true
-  }
 }, {
   sequelize,
   modelName: 'Comment',

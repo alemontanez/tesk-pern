@@ -33,7 +33,7 @@ Role.init({
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: false
-  }
+  },
 }, {
   sequelize,
   timestamps: false,

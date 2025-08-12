@@ -18,7 +18,7 @@ BoardColor.init({
     type: DataTypes.STRING(7),
     unique: true,
     allowNull: false
-  }
+  },
 }, {
   sequelize,
   timestamps: false,

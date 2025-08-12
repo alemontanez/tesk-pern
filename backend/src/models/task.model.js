@@ -21,24 +21,6 @@ Task.init({
     type: DataTypes.DATEONLY,
     allowNull: false
   },
-  createdBy: {
-    type: DataTypes.UUID,
-  },
-  assignedTo: {
-    type: DataTypes.UUID,
-  },
-  boardId: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  priorityId: {
-    type: DataTypes.SMALLINT,
-    allowNull: false
-  },
-  statusId: {
-    type: DataTypes.SMALLINT,
-    allowNull: false,
-  }
 }, {
   sequelize,
   modelName: 'Task',

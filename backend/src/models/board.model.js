@@ -13,15 +13,6 @@ Board.init({
     type: DataTypes.STRING(50),
     allowNull: false,
   },
-  projectId: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  colorId: {
-    type: DataTypes.SMALLINT,
-    allowNull: false,
-    defaultValue: 1
-  }
 }, {
   sequelize,
   modelName: 'Board',

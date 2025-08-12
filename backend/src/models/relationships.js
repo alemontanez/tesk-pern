@@ -1,26 +1,65 @@
-import User from './user.model.js'
-import Task from './task.model.js'
-import Project from './project.model.js'
-import Membership from './membership.model.js'
-import Role from './role.model.js'
-import Board from './board.model.js'
-import Comment from './comment.model.js'
-import TaskPriority from './taskPriority.model.js'
-import BoardColor from './boardColor.model.js'
-import TaskStatus from './taskStatus.model.js'
+import {
+  Board,
+  BoardColor,
+  Comment,
+  Membership,
+  Project,
+  Role,
+  Task,
+  TaskPriority,
+  TaskStatus,
+  User,
+} from './index.js'
 
 // Relaciones User
-User.hasMany(Task, { foreignKey: 'created_by', onDelete: 'SET NULL' })
-Task.belongsTo(User, { foreignKey: 'created_by' })
+User.hasMany(Task, {
+  foreignKey: {
+    name: 'createdBy',
+    allowNull: false
+  },
+  onDelete: 'SET NULL'
+})
+Task.belongsTo(User, {
+  foreignKey: {
+    name: 'createdBy',
+    allowNull: false
+  }
+})
 
-User.hasMany(Task, { foreignKey: 'assigned_to', onDelete: 'SET NULL' })
-Task.belongsTo(User, { foreignKey: 'assigned_to' })
+User.hasMany(Task, {
+  foreignKey: {
+    name: 'assignedTo',
+    allowNull: false
+  },
+  onDelete: 'SET NULL'
+})
+Task.belongsTo(User, {
+  foreignKey: {
+    name: 'assignedTo',
+    allowNull: false
+  }
+})
 
-User.hasMany(Membership, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true })
-Membership.belongsTo(User, { foreignKey: 'user_id' })
+User.hasMany(Membership, {
+  foreignKey: {
+    name: 'userId',
+    allowNull: false
+  },
+  onDelete: 'CASCADE',
+  hooks: true
+})
+Membership.belongsTo(User, {
+  foreignKey: {
+    name: 'userId',
+    allowNull: false
+  }
+})
 
 User.hasMany(Project, {
-  foreignKey: 'ownerId',
+  foreignKey: {
+    name: 'ownerId',
+    allowNull: false
+  },
   onDelete: 'CASCADE',
   hooks: true
 })
@@ -32,36 +71,136 @@ Project.belongsTo(User, {
   }
 })
 
-User.hasMany(Comment, { foreignKey: 'user_id', onDelete: 'SET NULL' })
-Comment.belongsTo(User, { foreignKey: 'user_id' })
+User.hasMany(Comment, {
+  foreignKey: {
+    name: 'userId',
+    allowNull: false
+  },
+  onDelete: 'SET NULL'
+})
+Comment.belongsTo(User, {
+  foreignKey: {
+    name: 'userId',
+    allowNull: false
+  }
+})
 
 // Relaciones Task
-Task.hasMany(Comment, { foreignKey: 'task_id', onDelete: 'CASCADE' })
-Comment.belongsTo(Task, { foreignKey: 'task_id' })
+Task.hasMany(Comment, {
+  foreignKey: {
+    name: 'taskId',
+    allowNull: false
+  },
+  onDelete: 'CASCADE'
+})
+Comment.belongsTo(Task, {
+  foreignKey: {
+    name: 'taskId',
+    allowNull: false
+  }
+})
 
 // Relaciones Project
-Project.hasMany(Membership, { foreignKey: 'project_id', onDelete: 'CASCADE', hooks: true })
-Membership.belongsTo(Project, { foreignKey: 'project_id' })
+Project.hasMany(Membership, {
+  foreignKey: {
+    name: 'projectId',
+    allowNull: false
+  },
+  onDelete: 'CASCADE',
+  hooks: true
+})
+Membership.belongsTo(Project, {
+  foreignKey: {
+    name: 'projectId',
+    allowNull: false
+  },
+})
 
-Project.hasMany(Board, { foreignKey: 'project_id', onDelete: 'CASCADE', hooks: true })
-Board.belongsTo(Project, { foreignKey: 'project_id' })
+Project.hasMany(Board, {
+  foreignKey: {
+    name: 'projectId',
+    allowNull: false
+  },
+  onDelete: 'CASCADE',
+  hooks: true
+})
+Board.belongsTo(Project, {
+  foreignKey: {
+    name: 'projectId',
+    allowNull: false
+  }
+})
 
 // Relaciones Role
-Role.hasMany(Membership, { foreignKey: 'role_id' })
-Membership.belongsTo(Role, { foreignKey: 'role_id', as: 'role' })
+Role.hasMany(Membership, {
+  foreignKey: {
+    name: 'roleId',
+    allowNull: false
+  }
+})
+Membership.belongsTo(Role, {
+  foreignKey: {
+    name: 'roleId',
+    allowNull: false
+  },
+  as: 'role'
+})
 
 // Relaciones Board
-Board.hasMany(Task, { foreignKey: 'board_id', onDelete: 'CASCADE', hooks: true })
-Task.belongsTo(Board, { foreignKey: 'board_id' })
+Board.hasMany(Task, {
+  foreignKey: {
+    name: 'boardId',
+    allowNull: false
+  },
+  onDelete: 'CASCADE',
+  hooks: true
+})
+Task.belongsTo(Board, {
+  foreignKey: {
+    name: 'boardId',
+    allowNull: false
+  }
+})
 
-// Relaciones Label -> BoardColor
-BoardColor.hasMany(Board, { foreignKey: 'color_id' })
-Board.belongsTo(BoardColor, { foreignKey: 'color_id' })
+// Relaciones BoardColor
+BoardColor.hasMany(Board, {
+  foreignKey: {
+    name: 'colorId',
+    allowNull: false
+  }
+})
+Board.belongsTo(BoardColor, {
+  foreignKey: {
+    name: 'colorId',
+    allowNull: false,
+    defaultValue: 1
+  }
+})
 
 // Relaciones TaskPriority
-TaskPriority.hasMany(Task, { foreignKey: 'priority_id' })
-Task.belongsTo(TaskPriority, { foreignKey: 'priority_id' })
+TaskPriority.hasMany(Task, {
+  foreignKey: {
+    name: 'priorityId',
+    allowNull: false
+  }
+})
+Task.belongsTo(TaskPriority, {
+  foreignKey: {
+    name: 'priorityId',
+    allowNull: false
+  }
+})
 
 // Relaciones TaskStatus
-TaskStatus.hasMany(Task, { foreignKey: 'status_id' })
-Task.belongsTo(TaskStatus, { foreignKey: 'status_id' })
+TaskStatus.hasMany(Task, {
+  foreignKey: {
+    name: 'statusId',
+    allowNull: false
+  }
+})
+Task.belongsTo(TaskStatus, {
+  foreignKey: {
+    name: 'statusId',
+    allowNull: false
+  }
+})

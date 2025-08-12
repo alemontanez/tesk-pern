@@ -1,8 +1,10 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../config/database.js'
-import Membership from './membership.model.js'
-import Role from './role.model.js'
-import Board from './board.model.js'
+import {
+  Board,
+  Membership,
+  Role,
+} from './index.js'
 
 class Project extends Model {}
 
@@ -18,7 +20,7 @@ Project.init({
   },
   description: {
     type: DataTypes.STRING(255),
-  }
+  },
 }, {
   sequelize,
   modelName: 'Project',

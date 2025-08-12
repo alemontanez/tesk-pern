@@ -9,18 +9,6 @@ Membership.init({
     autoIncrement: true,
     primaryKey: true
   },
-  userId: {
-    type: DataTypes.UUID,
-    allowNull: false
-  },
-  projectId: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  roleId: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
 }, {
   sequelize,
   modelName: 'Membership',

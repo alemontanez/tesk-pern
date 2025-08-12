@@ -1,7 +1,7 @@
-import User from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { TOKEN_SECRET } from '../config/config.js'
+import { User } from '../models/index.js'
 
 export const createUserAccount = async ({ username, email, firstName, lastName, password }) => {
   const passwordHash = await bcrypt.hash(password, 10)
@@ -37,7 +37,7 @@ export const validateAndDecodeToken = async (token) => {
 
     const userFound = await User.findByPk(user.id)
     if (!userFound) throw new Error('Unauthorized')
-    
+
     return userFound
   })
 

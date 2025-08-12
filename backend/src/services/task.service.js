@@ -1,11 +1,13 @@
-import Board from '../models/board.model.js'
-import Task from '../models/task.model.js'
-import TaskPriority from '../models/taskPriority.model.js'
-import TaskStatus from '../models/taskStatus.model.js'
-import User from '../models/user.model.js'
-import Comment from '../models/comment.model.js'
-import Membership from '../models/membership.model.js'
-import Role from '../models/role.model.js'
+import {
+  Board,
+  Comment,
+  Membership,
+  Role,
+  Task,
+  TaskPriority,
+  TaskStatus,
+  User,
+} from '../models/index.js'
 import { Op, fn, col } from 'sequelize'
 
 import { checkPermissions } from '../utils/checkPermissions.js'

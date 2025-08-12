@@ -1,9 +1,11 @@
-import Board from '../models/board.model.js'
-import BoardColor from '../models/boardColor.model.js'
-import Project from '../models/project.model.js'
-import Membership from '../models/membership.model.js'
-import Role from '../models/role.model.js'
-import Task from '../models/task.model.js'
+import {
+  Board,
+  BoardColor,
+  Project,
+  Membership,
+  Role,
+  Task,
+} from '../models/index.js'
 import { Sequelize } from 'sequelize'
 
 export const findProjectsByUserId = async (userId) => {

@@ -1,6 +1,8 @@
-import Board from '../models/board.model.js'
-import Task from '../models/task.model.js'
-import Comment from '../models/comment.model.js'
+import {
+  Board,
+  Task,
+  Comment,
+} from '../models/index.js'
 
 export const addNewComment = async (userId, projectId, boardId, taskId, content) => {
   const board = await Board.findOne({

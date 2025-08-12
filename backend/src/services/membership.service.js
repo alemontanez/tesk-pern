@@ -1,6 +1,8 @@
-import Membership from '../models/membership.model.js'
-import User from '../models/user.model.js'
-import Role from '../models/role.model.js'
+import {
+  Membership,
+  User,
+  Role,
+} from '../models/index.js'
 import { Op } from 'sequelize'
 
 export const findAllMembersOfProject = async (projectId) => {

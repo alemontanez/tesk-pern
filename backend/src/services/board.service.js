@@ -1,6 +1,8 @@
-import Board from '../models/board.model.js'
-import BoardColor from '../models/boardColor.model.js'
-import Task from '../models/task.model.js'
+import {
+  Board,
+  BoardColor,
+  Task,
+} from '../models/index.js'
 import { Op } from 'sequelize'
 
 export const findAllBoards = async (projectId, query) => {

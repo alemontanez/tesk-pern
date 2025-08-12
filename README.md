@@ -67,12 +67,18 @@ Al realizar este proyecto aprendí a crear un sistema con una robustez superior 
 
 6- Ejecutar la siguiente consulta en la base de datos
 ```bash
-INSERT INTO priorities (name)
+INSERT INTO task_priorities (name)
 VALUES 
 	('Baja'),
 	('Media'),
 	('Alta'),
 	('Máxima');
+
+INSERT INTO task_status (name)
+VALUES
+	('Pendiente'),
+	('En curso'),
+	('Finalizada');
 
 INSERT INTO roles (name, can_view, can_edit, can_manage, is_owner)
 VALUES
@@ -81,7 +87,7 @@ VALUES
 	('admin', true, true, true, false),
 	('owner', true, true, true, true);
 
-INSERT INTO labels (color, hex_code)
+INSERT INTO board_colors (color, hex_code)
 VALUES 
     ('blue', '#13488f');
 ```

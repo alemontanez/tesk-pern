@@ -3,7 +3,7 @@ import { permissionMiddleware } from '../middlewares/permission.middleware.js'
 import { validateSchema } from '../middlewares/schemaValidator.middleware.js'
 import {
   boardSchema,
-  updateBoardLabelSchema,
+  updateBoardColorSchema,
 } from '../schemas/board.schema.js'
 import {
   getBoards,
@@ -443,7 +443,7 @@ router.delete(
 router.patch(
   '/:projectId/boards/:boardId/change-color',
   permissionMiddleware('can_manage'),
-  validateSchema(updateBoardLabelSchema),
+  validateSchema(updateBoardColorSchema),
   updateBoardColor
 )
 

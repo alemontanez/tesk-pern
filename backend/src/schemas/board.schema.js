@@ -8,11 +8,11 @@ export const boardSchema = z.object({
     .max(50, { message: 'Name must not exceed 50 characters' })
 })
 
-export const updateBoardLabelSchema = z.object({
-  labelId: z
+export const updateBoardColorSchema = z.object({
+  boardColorId: z
     .number({
-      required_error: 'labelId is required',
-      invalid_type_error: 'labelId must be a number'
+      required_error: 'boardColorId is required',
+      invalid_type_error: 'boardColorId must be a number'
     })
     .int()
     .positive()

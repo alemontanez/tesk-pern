@@ -26,7 +26,7 @@ export const getTasks = async (req, res) => {
 export const createTask = async (req, res) => {
   const { id: userId } = req.user
   const { projectId, boardId } = req.params
-  const { title, description, dueDate, priorityId } = req.body
+  const { title, description, dueDate, priorityId, statusId } = req.body
   try {
     const task = await addNewTask(userId, projectId, boardId, title, description, dueDate, priorityId, statusId)
     res.status(201).json({

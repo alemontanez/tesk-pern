@@ -20,6 +20,7 @@ User.hasMany(Task, {
   onDelete: 'SET NULL'
 })
 Task.belongsTo(User, {
+  as: 'creatorUser',
   foreignKey: {
     name: 'createdBy',
     allowNull: false
@@ -34,6 +35,7 @@ User.hasMany(Task, {
   onDelete: 'SET NULL'
 })
 Task.belongsTo(User, {
+  as: 'assignedUser',
   foreignKey: {
     name: 'assignedTo',
     allowNull: false

@@ -31,7 +31,7 @@ export const addMemberToProject = async (req, res) => {
   const { memberId } = req.body
   try {
     await createMembership(projectId, memberId)
-    res.status(201).json('Membership created')
+    res.status(201).json({ message: 'Membership created successfully' })
   } catch (error) {
     console.log(error)
     if (error.message === 'User not found') {

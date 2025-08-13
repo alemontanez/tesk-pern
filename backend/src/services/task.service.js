@@ -34,6 +34,7 @@ export const findAllTasks = async (projectId, boardId, sort, order) => {
         attributes: ['id', 'title', 'description', 'due_date', 'priority_id', 'assigned_to', 'created_by', 'created_at', 'updated_at'],
         include: [
           { model: TaskPriority, attributes: ['name'] },
+          { model: TaskStatus, attributes: ['name'] },
           { model: User, attributes: ['first_name', 'last_name'], as: 'assignedUser' },
           { model: User, attributes: ['first_name', 'last_name'], as: 'creatorUser' }
         ]

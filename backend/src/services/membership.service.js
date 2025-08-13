@@ -39,7 +39,7 @@ export const searchUsersNotInProject = async (projectId, query) => {
       attributes: []
     }],
     where: { 
-      '$Project_users.user_id$': { [Op.is]: null },
+      '$Memberships.user_id$': { [Op.is]: null },
       email: { [Op.like]: `%${query}%`}
     },
     attributes: ['id', 'first_name', 'last_name', 'email'],

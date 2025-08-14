@@ -12,14 +12,14 @@ export const updateProfileSchema = z.object({
     .trim()
     .email({ message: 'Invalid email' })
     .transform((value) => value.toLowerCase()),
-  first_name: z
-    .string({ required_error: 'First name is required' })
+  firstName: z
+    .string({ required_error: 'firstName is required' })
     .trim()
     .min(2, { message: 'First name must be at least 2 characters' })
     .max(50, { message: 'First name must not exceed 50 characters' })
     .regex(/^[A-Za-zÀ-ÿ]+(?:\s[A-Za-zÀ-ÿ]+)*$/, { message: 'First name can only contain letters' }),
-  last_name: z
-    .string({ required_error: 'Last name is required' })
+  lastName: z
+    .string({ required_error: 'lastName is required' })
     .trim()
     .min(2, { message: 'Last name must be at least 2 characters' })
     .max(50, { message: 'Last name must not exceed 50 characters' })

@@ -79,7 +79,7 @@ export default function AddMembersModal({ projectId, handleClose }) {
                       <div key={i} className='search-result'>
                         <div className='search-user-info'>
                           <p className='search-user-name'>
-                            {user.first_name} {user.last_name}
+                            {user.firstName} {user.lastName}
                           </p>
                           <p className='search-user-email'>
                             {user.email}

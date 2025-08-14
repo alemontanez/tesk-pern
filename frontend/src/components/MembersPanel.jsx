@@ -53,7 +53,7 @@ export default function MembersPanel({ projectId, getMembers, userRole }) {
       <div className='members-list'>
         {members.map((member, i) => {
           const user = member.User
-          const initials = getInitials(user.first_name, user.last_name)
+          const initials = getInitials(user.firstName, user.lastName)
 
           return (
             <div key={i} className='member-card'>
@@ -62,7 +62,7 @@ export default function MembersPanel({ projectId, getMembers, userRole }) {
               </div>
               <div className='member-info'>
                 <p className='member-name'>
-                  {user.first_name} {user.last_name}
+                  {user.firstName} {user.lastName}
                 </p>
                 <p className='member-email'>
                   {user.email}

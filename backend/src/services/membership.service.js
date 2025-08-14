@@ -12,7 +12,7 @@ export const findAllMembersOfProject = async (projectId) => {
     include: [
       {
         model: User,
-        attributes: ['first_name', 'last_name', 'email']
+        attributes: ['firstName', 'lastName', 'email']
       },
       {
         model: Role,
@@ -42,7 +42,7 @@ export const searchUsersNotInProject = async (projectId, query) => {
       '$Memberships.user_id$': { [Op.is]: null },
       email: { [Op.like]: `%${query}%`}
     },
-    attributes: ['id', 'first_name', 'last_name', 'email'],
+    attributes: ['id', 'firstName', 'lastName', 'email'],
     limit: 6,
   })
   return users

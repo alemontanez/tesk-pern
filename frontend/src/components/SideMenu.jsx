@@ -5,8 +5,8 @@ import { useUser } from '../context/UserContext'
 export default function SideMenu() {
 
   const { profile } = useUser()
-  const firstInitial = profile?.first_name ? profile.first_name.substring(0, 1).toUpperCase() : ''
-  const lastInitial = profile?.last_name ? profile.last_name.substring(0, 1).toUpperCase() : ''
+  const firstInitial = profile?.firstName ? profile.firstName.substring(0, 1).toUpperCase() : ''
+  const lastInitial = profile?.lastName ? profile.lastName.substring(0, 1).toUpperCase() : ''
   
 
   return (
@@ -14,7 +14,7 @@ export default function SideMenu() {
       <div className='user-info'>
         <div className='avatar'>{firstInitial}{lastInitial}</div>
         <div className='user-details'>
-          <h3>{profile.first_name} {profile.last_name}</h3>
+          <h3>{profile.firstName} {profile.lastName}</h3>
           <p>{profile.email}</p>
         </div>
       </div>

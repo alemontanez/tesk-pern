@@ -20,7 +20,8 @@ export default function TaskForm({ defaultValues }) {
       title: '',
       description: '',
       dueDate: format(new Date(), 'yyyy-MM-dd'),
-      priority: 1
+      priority: 1,
+      status: 1
     }
   })
 
@@ -34,7 +35,7 @@ export default function TaskForm({ defaultValues }) {
     const formattedData = {
       ...data,
       priorityId: parseInt(data.priorityId, 10), // Aseguramos que es número
-      statusId: 1 // Estado inicial por defecto
+      statusId: parseInt(data.statusId, 10), // Aseguramos que es número
     }
 
     if (defaultValues && defaultValues.id) {

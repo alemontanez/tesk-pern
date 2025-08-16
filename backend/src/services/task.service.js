@@ -20,7 +20,7 @@ export const findAllTasks = async (projectId, boardId, sort, order) => {
     }
   })
   if (!board) throw new Error('Board not found')
-  const allowedSortFields = ['id', 'title', 'due_date', 'priority_id', 'assigned_to', 'created_by', 'created_at', 'updated_at']
+  const allowedSortFields = ['id', 'title', 'dueDate', 'priorityId', 'assignedTo', 'createdBy', 'createdAt', 'updatedAt']
   const sortField = sort?.toString().trim()
   const filter = allowedSortFields.includes(sortField) ? sort : 'id'
   const direction = order?.toLowerCase() === 'desc' ? 'DESC' : 'ASC'
@@ -31,12 +31,12 @@ export const findAllTasks = async (projectId, boardId, sort, order) => {
         model: Task,
         where: { boardId },
         required: false,
-        attributes: ['id', 'title', 'description', 'due_date', 'priority_id', 'assigned_to', 'created_by', 'created_at', 'updated_at'],
+        attributes: ['id', 'title', 'description', 'dueDate', 'priorityId', 'assignedTo', 'createdBy', 'createdAt', 'updatedAt'],
         include: [
           { model: TaskPriority, attributes: ['name'] },
           { model: TaskStatus, attributes: ['name'] },
-          { model: User, attributes: ['first_name', 'last_name'], as: 'assignedUser' },
-          { model: User, attributes: ['first_name', 'last_name'], as: 'creatorUser' }
+          { model: User, attributes: ['firstName', 'lastName'], as: 'assignedUser' },
+          { model: User, attributes: ['firstName', 'lastName'], as: 'creatorUser' }
         ]
       }
     ],
@@ -183,7 +183,7 @@ export const findTaskById = async (projectId, boardId, taskId) => {
 }
 
 export const searchTasksByCriteria = async (boardId, criteria) => {
-  const allowedSortFields = ['id', 'title', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by']
+  const allowedSortFields = ['id', 'title', 'dueDate', 'createdAt', 'updatedAt', 'priorityId', 'assignedTo', 'createdBy']
   const sortField = criteria.sort?.toString().trim()
   const filter = allowedSortFields.includes(sortField) ? criteria.sort : 'id'
   const direction = criteria.order?.toLowerCase() === 'desc' ? 'DESC' : 'ASC'
@@ -192,11 +192,11 @@ export const searchTasksByCriteria = async (boardId, criteria) => {
       boardId,
       title: { [Op.iLike]: `%${criteria.query}%` }
     },
-    attributes: ['id', 'title', 'description', 'due_date', 'createdAt', 'updatedAt', 'priority_id', 'assigned_to', 'created_by'],
+    attributes: ['id', 'title', 'description', 'dueDate', 'createdAt', 'updatedAt', 'priorityId', 'assignedTo', 'createdBy'],
     include: [
       { model: TaskPriority, attributes: ['name'] },
-      { model: User, attributes: ['first_name', 'last_name'], as: 'assignedUser' },
-      { model: User, attributes: ['first_name', 'last_name'], as: 'creatorUser' }
+      { model: User, attributes: ['firstName', 'lastName'], as: 'assignedUser' },
+      { model: User, attributes: ['firstName', 'lastName'], as: 'creatorUser' }
     ],
     order: [[filter, direction]]
   })

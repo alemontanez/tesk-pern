@@ -1,9 +1,9 @@
-// src/pages/TaskForm.jsx
 import { useForm } from 'react-hook-form'
 import { useTask } from '../../context/TaskContext'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import '../../styles/TaskForm.css'
+import { format } from 'date-fns'
 
 export default function TaskForm({ defaultValues }) {
   const { createNewTask, updateTask } = useTask()
@@ -19,7 +19,7 @@ export default function TaskForm({ defaultValues }) {
     defaultValues: defaultValues || {
       title: '',
       description: '',
-      dueDate: '',
+      dueDate: format(new Date(), 'yyyy-MM-dd'),
       priority: 1
     }
   })
@@ -33,7 +33,8 @@ export default function TaskForm({ defaultValues }) {
   const onSubmit = async data => {
     const formattedData = {
       ...data,
-      priorityId: parseInt(data.priorityId, 10) // Aseguramos que es número
+      priorityId: parseInt(data.priorityId, 10), // Aseguramos que es número
+      statusId: 1 // Estado inicial por defecto
     }
 
     if (defaultValues && defaultValues.id) {
@@ -75,10 +76,19 @@ export default function TaskForm({ defaultValues }) {
       <div className='form-group'>
         <label>Prioridad</label>
         <select {...register('priorityId', { required: true })}>
-          <option value='1'>1 - Baja</option>
-          <option value='2'>2 - Media</option>
-          <option value='3'>3 - Alta</option>
-          <option value='4'>4 - Crítica</option>
+          <option value='1'>Baja</option>
+          <option value='2'>Media</option>
+          <option value='3'>Alta</option>
+          <option value='4'>Crítica</option>
+        </select>
+      </div>
+
+      <div className='form-group'>
+        <label>Estado</label>
+        <select {...register('statusId', { required: true })}>
+          <option value='1'>Pendiente</option>
+          <option value='2'>En curso</option>
+          <option value='3'>Finalizada</option>
         </select>
       </div>
 

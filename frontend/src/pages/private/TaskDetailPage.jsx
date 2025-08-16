@@ -39,8 +39,8 @@ export default function TaskDetailPage() {
       reset({
         title: data.task.title,
         description: data.task.description,
-        dueDate: format(data.task.due_date, 'yyyy-MM-dd'),
-        priority: data.task.priority_id ? data.task.priority_id.toString() : '1'
+        dueDate: format(data.task.dueDate, 'yyyy-MM-dd'),
+        priority: data.task.priorityId ? data.task.priorityId.toString() : '1'
       })
       setLoading(false)
     }
@@ -51,9 +51,9 @@ export default function TaskDetailPage() {
     const updatedData = {
       ...formData,
       priorityId: parseInt(formData.priority, 10),
-      createdBy: task.created_by,
-      boardId: task.board_id,
-      labelId: task.label_id
+      statusId: 1, // Mantener el estado actual (por ahora)
+      createdBy: task.createdBy,
+      boardId: task.boardId,
     }
     await updateTask(projectId, boardId, taskId, updatedData)
     navigate(`/dashboard/projects/${projectId}/boards/${boardId}`)

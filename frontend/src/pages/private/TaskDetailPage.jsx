@@ -21,6 +21,7 @@ export default function TaskDetailPage() {
       description: '',
       dueDate: '',
       priority: '1',
+      status: '1'
     }
   })
 
@@ -40,7 +41,8 @@ export default function TaskDetailPage() {
         title: data.task.title,
         description: data.task.description,
         dueDate: format(data.task.dueDate, 'yyyy-MM-dd'),
-        priority: data.task.priorityId ? data.task.priorityId.toString() : '1'
+        priority: data.task.priorityId ? data.task.priorityId.toString() : '1',
+        status: data.task.statusId ? data.task.statusId.toString() : '1'
       })
       setLoading(false)
     }
@@ -51,7 +53,7 @@ export default function TaskDetailPage() {
     const updatedData = {
       ...formData,
       priorityId: parseInt(formData.priority, 10),
-      statusId: 1, // Mantener el estado actual (por ahora)
+      statusId: parseInt(formData.status, 10),
       createdBy: task.createdBy,
       boardId: task.boardId,
     }
@@ -117,6 +119,14 @@ export default function TaskDetailPage() {
               <option value='2'>Media</option>
               <option value='3'>Alta</option>
               <option value='4'>Crítica</option>
+            </select>
+          </div>
+          <div className='form-group'>
+            <label>Estado</label>
+            <select {...register('status', { required: true })}>
+              <option value='1'>Pendiente</option>
+              <option value='2'>En curso</option>
+              <option value='3'>Finalizada</option>
             </select>
           </div>
 

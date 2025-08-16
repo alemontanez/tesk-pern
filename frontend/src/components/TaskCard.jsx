@@ -30,6 +30,9 @@ export default function TaskCard({ task, url }) {
           <strong>Prioridad:</strong> {task.TaskPriority?.name}
         </p>
         <p className='task-info'>
+          <strong>Estado:</strong> {task.TaskStatus?.name}
+        </p>
+        <p className='task-info'>
           <strong>Usuario asignado:</strong> {task.assignedUser?.firstName} {task.assignedUser?.lastName}
         </p>
       </div>

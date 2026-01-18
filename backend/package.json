@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon ./src/index.js",
     "start": "node ./src/index.js",
-    "docs": "jsdoc -c jsdoc.json"
+    "docs": "jsdoc -c jsdoc.json",
+    "test": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose --silent"
   },
   "keywords": [],
   "author": "Alejandro Montañez",
@@ -29,7 +30,11 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "cross-env": "^10.0.0",
+    "jest": "^30.0.5",
     "jsdoc": "^4.0.4",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "sequelize-cli": "^6.6.3",
+    "supertest": "^7.1.4"
   }
 }

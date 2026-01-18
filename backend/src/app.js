@@ -33,7 +33,7 @@ app.use(morgan('dev'))
 app.use(cookieParser())
 
 app.get('/', (req, res) => {
-  res.json('API funcionando.')
+  res.json('API up and running')
 })
 
 // Rutas públicas
